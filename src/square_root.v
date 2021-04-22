@@ -32,7 +32,7 @@ module square_root #(parameter N = 32)
     integer i;
     
     
-    always @(clock)
+    always @(posedge clock)
     begin
         //sq_root <= 0;
         a     = num;

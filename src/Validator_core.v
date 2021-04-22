@@ -18,10 +18,13 @@
 // Additional Comments:
 //
 //////////////////////////////////////////////////////////////////////////////////
+/*
+Main goal of this module 
 
+*/
 
 module validator_core #(parameter N = 16,
-                        DISNTANCE_MODULES = 32,
+                        DISTANCE_MODULES = 32,
                         NEIGHBOR_TRESHOLD = 30,
                         SEARCH_RADIUS = 200)
                        (input clock,
@@ -30,20 +33,17 @@ module validator_core #(parameter N = 16,
                         input wire [N-1:0] point_y,
                         input wire [N-1:0] point_z,
                         input wire [N*2-1:0] point_cloud_size,
-                        input wire [N*DISNTANCE_MODULES-1:0] cp_x,
-                        input wire [N*DISNTANCE_MODULES-1:0] cp_y,
-                        input wire [N*DISNTANCE_MODULES-1:0] cp_z,
+                        input wire [N*DISTANCE_MODULES-1:0] cp_x,
+                        input wire [N*DISTANCE_MODULES-1:0] cp_y,
+                        input wire [N*DISTANCE_MODULES-1:0] cp_z,
                         output reg inlier,
                         output reg outlier);
     
-    wire [(N-1):0] distances[DISNTANCE_MODULES-1:0];
+    wire [(N-1):0] distances[DISTANCE_MODULES-1:0];
     reg [N-1:0] neighbor_counter;
     reg [N-1:0] cycles;
     integer j,k ;
-    
-    
-    //always @(posedge reset or cp_x or cp_y or cp_z or point_x or point_y or point_z)
-    
+
     
     always @(posedge clock)
     begin
@@ -54,16 +54,16 @@ module validator_core #(parameter N = 16,
         end
         else
         begin
-            cycles <= cycles +DISNTANCE_MODULES;
-            if (neighbor_counter >= NEIGHBOR_TRESHOLD)
+            cycles <= cycles +DISTANCE_MODULES;
+            if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a inlier
             begin
                 inlier  <= 1;
                 outlier <= 0;
             end
-            else
+            else    //keep comparing 
             begin
                 inlier <= 0;
-                if (cycles >point_cloud_size)
+                if (cycles >= point_cloud_size) // reached max comparisons and point is a outlier
                     outlier <= 1;
                 else
                     outlier <= 0;
@@ -80,7 +80,7 @@ module validator_core #(parameter N = 16,
             neighbor_counter = 0;
         else
         begin
-            for (j = 0; j<DISNTANCE_MODULES;j = j+1)
+            for (j = 0; j<DISTANCE_MODULES;j = j+1)  //compare all the results from the distance modules
             begin
                 if (distances[j]<SEARCH_RADIUS)
                     neighbor_counter = neighbor_counter+1;
@@ -96,7 +96,7 @@ module validator_core #(parameter N = 16,
             
     generate
     genvar aux;
-    for (aux = 0; aux<DISNTANCE_MODULES; aux = aux+1)
+    for (aux = 0; aux<DISTANCE_MODULES; aux = aux+1)
     begin
         
         distance_calculator

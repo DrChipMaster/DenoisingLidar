@@ -37,7 +37,7 @@ module distance_calculator #(parameter N = 16,
     reg[N-1:0] vector_y;
     reg[N-1:0] vector_z;
     
-    always @(clock)
+    always @(posedge clock)
     begin
         vector_x = point_x1-point_x2;
         if (vector_x[N-1] == 1'b1) begin

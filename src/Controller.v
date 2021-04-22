@@ -21,13 +21,13 @@
 
 
 module Controller #(parameter N = 16,
-                    DISNTANCE_MODULES = 32,
+                    DISTANCE_MODULES = 4,
                     CORE_NUMBER = 2)
                    (input wire clock,
                     input wire reset,
-                    input wire [N*DISNTANCE_MODULES-1:0]cache_feeder_x,
-                    input wire [N*DISNTANCE_MODULES-1:0]cache_feeder_y,
-                    input wire [N*DISNTANCE_MODULES-1:0]cache_feeder_z,
+                    input wire [N*DISTANCE_MODULES-1:0]cache_feeder_x,
+                    input wire [N*DISTANCE_MODULES-1:0]cache_feeder_y,
+                    input wire [N*DISTANCE_MODULES-1:0]cache_feeder_z,
                     input wire [N*CORE_NUMBER-1:0] cache_x,
                     input wire [N*CORE_NUMBER-1:0] cache_y,
                     input wire [N*CORE_NUMBER-1:0] cache_z,
@@ -47,22 +47,20 @@ module Controller #(parameter N = 16,
     reg [N-1:0] point_pos_buffer [CORE_NUMBER-1:0];
     
     reg [N-1:0]fifo_write_size;
-    
-    reg[N-1:0] point_pos_final[1:0];
-    
+        
     reg [CORE_NUMBER-1:0]reset_core;
     
     reg write_fifo;
     
-    wire [N*DISNTANCE_MODULES-1:0] cp_x;
-    wire [N*DISNTANCE_MODULES-1:0] cp_y;
-    wire [N*DISNTANCE_MODULES-1:0] cp_z;
+    wire [N*DISTANCE_MODULES-1:0] cp_x;
+    wire [N*DISTANCE_MODULES-1:0] cp_y;
+    wire [N*DISTANCE_MODULES-1:0] cp_z;
     
     wire inlier [CORE_NUMBER-1:0];
     wire outlier [CORE_NUMBER-1:0];
     
     
-    reg [N*CORE_NUMBER-1:0] output_to_fifo ;
+    reg [N*2-1:0] output_to_fifo ;
     
     wire full;
     
@@ -123,15 +121,15 @@ module Controller #(parameter N = 16,
                         reset_core[i] <= 0;
                         end
                 end
-            if (fifo_write_size >= CORE_NUMBER)   // fifo_buffer has enough points to store
+            if (fifo_write_size >= 2)   // fifo_buffer has enough points to store
             begin
                 write_fifo = 1;
                 output_to_fifo = fifo_buffer[0];
-                for(k = 1 ; k< CORE_NUMBER ; k = k +1) //save core_number of outliers 
+                for(k = 1 ; k< 2 ; k = k +1) //save core_number of outliers 
                 begin
                     output_to_fifo = (output_to_fifo<<N)+fifo_buffer[k];
                 end
-                fifo_write_size = fifo_write_size-CORE_NUMBER; // update fifo buffer lenght
+                fifo_write_size = fifo_write_size-2; // update fifo buffer lenght
             end
             else write_fifo = 0;  //disable fifo write
             if (point_pos>=point_cloud_size)  // check if point cloud validation was finished
@@ -166,7 +164,7 @@ module Controller #(parameter N = 16,
             
             
             Feeder
-            #(.N(N),.DISNTANCE_MODULES(DISNTANCE_MODULES)) m_feeder(
+            #(.N(N),.DISTANCE_MODULES(DISTANCE_MODULES)) m_feeder(
             .clock(clock),
             .cache_x(cache_feeder_x),
             .cache_y(cache_feeder_y),
@@ -184,7 +182,7 @@ module Controller #(parameter N = 16,
             for (j = 0; j<CORE_NUMBER; j = j+1)
             begin
                 validator_core
-                #(.N(N),.DISNTANCE_MODULES(DISNTANCE_MODULES)) core(
+                #(.N(N),.DISTANCE_MODULES(DISTANCE_MODULES)) core(
                 .clock(clock),
                 .reset(reset_core[j]),
                 .point_x(point_x[j]),

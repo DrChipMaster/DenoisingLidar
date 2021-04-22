@@ -24,7 +24,7 @@ module tb_controller;
 
 reg clock;
 parameter N = 16;
-parameter M = 32;
+parameter M = 4;
 parameter point_cloud_size = 17500;
 parameter Clock_period = 10; 
 parameter core_number = 2;
@@ -63,7 +63,7 @@ wire fifo_empty;
 
 
 
-integer i,j,l,cycle_counter;
+integer i,j,l,k,cycle_counter;
 integer f_x,f_y,f_z;
 
 
@@ -76,9 +76,9 @@ begin
     read_fifo = 0;
     clock = 1;
     cycle_counter =0;
-    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_x.txt",x_array);
-    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_y.txt",y_array);
-    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_z.txt",z_array);
+    $readmemh("/home/andre/ror_filter/Points/SnowStopped_x.txt",x_array);
+    $readmemh("/home/andre/ror_filter/Points/SnowStopped_y.txt",y_array);
+    $readmemh("/home/andre/ror_filter/Points/SnowStopped_z.txt",z_array);
     f_x = $fopen("output_x_oultiers.txt","w");
     f_y = $fopen("output_y_oultiers.txt","w");
     f_z = $fopen("output_z_oultiers.txt","w");
@@ -125,7 +125,6 @@ always @(posedge clock) begin
     end
     end            
 end
-
 
 
 always @(posedge clock) begin
@@ -192,6 +191,8 @@ end
      end
      else if(reset ==0 && Controller_done==1)
      begin
+         read_fifo =0;
+
         $fclose(f_x); 
         $fclose(f_y); 
         $fclose(f_z);
@@ -209,7 +210,7 @@ end
 
 
 
- Controller#(.CORE_NUMBER(core_number)) m_controller(
+ Controller#(.CORE_NUMBER(core_number),.DISTANCE_MODULES(M)) m_controller(
         .clock(clock),
         .reset(reset),
         .cache_feeder_x(cache_feeder_x),

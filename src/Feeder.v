@@ -21,14 +21,14 @@
 
 
 module Feeder #(parameter N = 16,
-                DISNTANCE_MODULES = 32)
+                DISTANCE_MODULES = 32)
               (input wire clock,
-                input wire [N*DISNTANCE_MODULES-1:0]cache_x,
-                input wire [N*DISNTANCE_MODULES-1:0]cache_y,
-                input wire [N*DISNTANCE_MODULES-1:0]cache_z,
-                output reg [N*DISNTANCE_MODULES-1:0] cp_x,
-                output reg [N*DISNTANCE_MODULES-1:0] cp_y,
-                output reg [N*DISNTANCE_MODULES-1:0] cp_z
+                input wire [N*DISTANCE_MODULES-1:0]cache_x,
+                input wire [N*DISTANCE_MODULES-1:0]cache_y,
+                input wire [N*DISTANCE_MODULES-1:0]cache_z,
+                output reg [N*DISTANCE_MODULES-1:0] cp_x,
+                output reg [N*DISTANCE_MODULES-1:0] cp_y,
+                output reg [N*DISTANCE_MODULES-1:0] cp_z
                 );
     integer i,j;
 
