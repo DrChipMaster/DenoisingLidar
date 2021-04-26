@@ -24,7 +24,7 @@ module tb_controller;
 
 reg clock;
 parameter N = 16;
-parameter M = 4;
+parameter M = 8;
 parameter point_cloud_size = 17500;
 parameter Clock_period = 10; 
 parameter core_number = 2;

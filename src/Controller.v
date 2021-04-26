@@ -21,7 +21,7 @@
 
 
 module Controller #(parameter N = 16,
-                    DISTANCE_MODULES = 4,
+                    DISTANCE_MODULES = 8,
                     CORE_NUMBER = 2)
                    (input wire clock,
                     input wire reset,
