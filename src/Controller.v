@@ -21,8 +21,8 @@
 
 
 module Controller #(parameter N = 16,
-                    DISTANCE_MODULES = 8,
-                    CORE_NUMBER = 2)
+                    DISTANCE_MODULES = 64,
+                    CORE_NUMBER = 8)
                    (input wire clock,
                     input wire reset,
                     input wire [N*DISTANCE_MODULES-1:0]cache_feeder_x,
@@ -108,7 +108,7 @@ module Controller #(parameter N = 16,
                         fifo_buffer[fifo_write_size] = point_pos_buffer[i];
                         fifo_write_size              = fifo_write_size +1;
                     end
-                    point_pos           = point_pos + finish_counter;   //update core base point and saves the pointer
+                    point_pos           = point_pos + 1;   //update core base point and saves the pointer
                     point_pos_buffer[i] = point_pos;
                     point_x[i] <= cache_x[(finish_counter)*N-1 -:N];
                     point_y[i] <= cache_y[(finish_counter)*N-1 -:N];

@@ -54,7 +54,7 @@ module validator_core #(parameter N = 16,
         end
         else
         begin
-            cycles <= cycles +DISTANCE_MODULES;
+            cycles = cycles +DISTANCE_MODULES;
             if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a inlier
             begin
                 inlier  <= 1;
@@ -82,7 +82,7 @@ module validator_core #(parameter N = 16,
         begin
             for (j = 0; j<DISTANCE_MODULES;j = j+1)  //compare all the results from the distance modules
             begin
-                if (distances[j]<SEARCH_RADIUS)
+                if (distances[j]<=SEARCH_RADIUS)
                     neighbor_counter = neighbor_counter+1;
             end
         end           
