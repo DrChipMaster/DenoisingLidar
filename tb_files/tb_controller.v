@@ -24,10 +24,10 @@ module tb_controller;
 
 reg clock;
 parameter N = 16;
-parameter M = 1;
+parameter M = 16;
 parameter point_cloud_size = 17500;
 parameter Clock_period = 10; 
-parameter core_number = 1;
+parameter core_number = 2;
 reg reset;
 
 reg [N-1:0] x_array [point_cloud_size-1:0];
@@ -72,7 +72,7 @@ reg[N-1:0] feeder_pos;
 
 initial
 begin
-    reset = 1;
+    reset = 0;
     read_fifo = 0;
     clock = 1;
     cycle_counter =0;
@@ -82,9 +82,9 @@ begin
     $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_x.txt",x_array);
     $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_y.txt",y_array);
     $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_z.txt",z_array);
-    f_x = $fopen("output_x_oultiers.txt","w");
-    f_y = $fopen("output_y_oultiers.txt","w");
-    f_z = $fopen("output_z_oultiers.txt","w");
+    f_x = $fopen("output_x.txt","w");
+    f_y = $fopen("output_y.txt","w");
+    f_z = $fopen("output_z.txt","w");
 
     cache_x =  x_array[0];
     cache_y =  y_array[0];
@@ -110,14 +110,14 @@ begin
     feeder_pos = 0;
     #Clock_period;
    
-    reset = 0; 
+    reset = 1; 
 end
 
 
 
 
 always @(posedge clock) begin
-    if (reset ==0 && Controller_done ==0) begin
+    if (reset ==1 && Controller_done ==0) begin
         cache_x =  x_array[point_pos];
         cache_y =  y_array[point_pos];
         cache_z =  z_array[point_pos];
@@ -152,57 +152,68 @@ end
                     
                     
                     
-// always @(posedge clock) begin
-//     if(Controller_done) begin
-//         if (!fifo_empty) begin
-//            read_fifo =1;
-//         end
-//         else 
-//         begin
-//             read_fifo = 0;
-//             for (i =0 ;i<point_cloud_size ; i = i+1 ) begin
-//                 if (x_array[i] !=0) begin
-//                 $fwrite(f_x,"%h\n",x_array[i]);
-//                 $fwrite(f_y,"%h\n",y_array[i]);
-//                 $fwrite(f_z,"%h\n",z_array[i]);
-//                 end
-//             end
-//                #Clock_period;
-//                $fclose(f_x); 
-//                $fclose(f_y); 
-//                $fclose(f_z); 
-//            $stop;
-//         end
-//     end
-//     else  begin
-//        read_fifo =0;
-//     end
+ always @(posedge clock) begin
+     if(Controller_done) begin
+         if (!fifo_empty) begin
+            read_fifo =1;
+         end
+         else 
+         begin
+             read_fifo = 0;
+             for (i =0 ;i<point_cloud_size ; i = i+1 ) begin
+                 if (x_array[i] !=0) begin
+                 $fwrite(f_x,"%h\n",x_array[i]);
+                 $fwrite(f_y,"%h\n",y_array[i]);
+                 $fwrite(f_z,"%h\n",z_array[i]);
+                 end
+             end
+                #Clock_period;
+                $fclose(f_x); 
+                $fclose(f_y); 
+                $fclose(f_z); 
+            $stop;
+         end
+     end
+     else  begin
+        read_fifo =0;
+     end
 
      
-// end
-
- always @(posedge clock) begin
-     if (Controller_done==1 && !fifo_empty && reset==0) begin
-            if (!fifo_empty) begin
-            read_fifo =1;
-            end  
-        else 
-            read_fifo =0;
-       $fwrite(f_x,"%h\n",x_array[outlier_from_fifo]);
-       $fwrite(f_y,"%h\n",y_array[outlier_from_fifo]);
-       $fwrite(f_z,"%h\n",z_array[outlier_from_fifo]);
+ end
+ 
+ 
+ 
+ always @(outlier_from_fifo) begin
+     if (Controller_done && !fifo_empty) begin
+        x_array[outlier_from_fifo]=0;
+        x_array[outlier_from_fifo]=0;
+        x_array[outlier_from_fifo]=0;
      end
-     else if(reset ==0 && Controller_done==1)
-     begin
-         read_fifo =0;
 
-        $fclose(f_x); 
-        $fclose(f_y); 
-        $fclose(f_z);
-        $stop;  
-      end
+ end  
 
- end                   
+// always @(posedge clock) begin
+//     if (Controller_done==1 && !fifo_empty && reset==0) begin
+//            if (!fifo_empty) begin
+//            read_fifo =1;
+//            end  
+//        else 
+//            read_fifo =0;
+//       $fwrite(f_x,"%h\n",x_array[outlier_from_fifo]);
+//       $fwrite(f_y,"%h\n",y_array[outlier_from_fifo]);
+//       $fwrite(f_z,"%h\n",z_array[outlier_from_fifo]);
+//     end
+//     else if(reset ==0 && Controller_done==1)
+//     begin
+//         read_fifo =0;
+
+//        $fclose(f_x); 
+//        $fclose(f_y); 
+//        $fclose(f_z);
+//        $stop;  
+//      end
+
+// end                   
                 
                 
   always @(posedge clock) begin

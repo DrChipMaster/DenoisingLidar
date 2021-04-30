@@ -21,8 +21,8 @@
 
 
 module Controller #(parameter N = 16,
-                    DISTANCE_MODULES = 64,
-                    CORE_NUMBER = 8)
+                    DISTANCE_MODULES = 16,
+                    CORE_NUMBER = 16)
                    (input wire clock,
                     input wire reset,
                     input wire [N*DISTANCE_MODULES-1:0]cache_feeder_x,
@@ -43,7 +43,7 @@ module Controller #(parameter N = 16,
     reg [N-1:0] point_y [CORE_NUMBER-1:0];
     reg [N-1:0] point_z [CORE_NUMBER-1:0];
     
-    reg [N-1:0] fifo_buffer[CORE_NUMBER*2-1:0];
+    reg [N-1:0] fifo_buffer[CORE_NUMBER*4-1:0];
     reg [N-1:0] point_pos_buffer [CORE_NUMBER-1:0];
     
     reg [N-1:0]fifo_write_size;
@@ -72,7 +72,7 @@ module Controller #(parameter N = 16,
     
     always @(posedge clock)
     begin
-        if (reset == 1)
+        if (reset == 0)
         begin
             last_pointer       <= 0;
             point_pos          <= 0;
@@ -88,7 +88,7 @@ module Controller #(parameter N = 16,
                 point_y[i]    <= cache_y[(i+1)*N-1 -:N];
                 point_z[i]    <= cache_z[(i+1)*N-1 -:N];
             end
-            for (i = 0;i<CORE_NUMBER*2;i = i+1)
+            for (i = 0;i<CORE_NUMBER*4;i = i+1)
             begin
                 fifo_buffer[i] <= 0;     // Clear the fifo buffer
             end
@@ -109,7 +109,7 @@ module Controller #(parameter N = 16,
                         fifo_write_size              = fifo_write_size +1;
                     end
                     point_pos           = point_pos + 1;   //update core base point and saves the pointer
-                    point_pos_buffer[i] = point_pos;
+                    point_pos_buffer[i] <= point_pos;
                     point_x[i] <= cache_x[(finish_counter)*N-1 -:N];
                     point_y[i] <= cache_y[(finish_counter)*N-1 -:N];
                     point_z[i] <= cache_z[(finish_counter)*N-1 -:N];
@@ -121,14 +121,11 @@ module Controller #(parameter N = 16,
                         reset_core[i] <= 0;
                         end
                 end
-            if (fifo_write_size >= 2)   // fifo_buffer has enough points to store
+            if (fifo_write_size < 2)   // fifo_buffer has enough points to store
             begin
                 write_fifo = 1;
                 output_to_fifo = fifo_buffer[0];
-                for(k = 1 ; k< 2 ; k = k +1) //save core_number of outliers 
-                begin
-                    output_to_fifo = (output_to_fifo<<N)+fifo_buffer[k];
-                end
+                output_to_fifo = (output_to_fifo<<N)+fifo_buffer[1];
                 fifo_write_size = fifo_write_size-2; // update fifo buffer lenght
             end
             else write_fifo = 0;  //disable fifo write

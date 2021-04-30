@@ -25,8 +25,8 @@ Main goal of this module
 
 module validator_core #(parameter N = 16,
                         DISTANCE_MODULES = 8,
-                        NEIGHBOR_TRESHOLD = 30,
-                        SEARCH_RADIUS = 200)
+                        NEIGHBOR_TRESHOLD = 5,
+                        SEARCH_RADIUS = 50)
                        (input clock,
                         input reset,
                         input wire [N-1:0] point_x,
