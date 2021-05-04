@@ -43,7 +43,7 @@ module Controller #(parameter N = 16,
     reg [N-1:0] point_y [CORE_NUMBER-1:0];
     reg [N-1:0] point_z [CORE_NUMBER-1:0];
     
-    reg [N-1:0] fifo_buffer[CORE_NUMBER*4-1:0];
+    reg [N-1:0] fifo_buffer[CORE_NUMBER*2-1:0];
     reg [N-1:0] point_pos_buffer [CORE_NUMBER-1:0];
     
     reg [N-1:0]fifo_write_size;
@@ -60,7 +60,7 @@ module Controller #(parameter N = 16,
     wire outlier [CORE_NUMBER-1:0];
     
     
-    reg [N*2-1:0] output_to_fifo ;
+    reg [N-1:0] output_to_fifo ;
     
     wire full;
     
@@ -68,14 +68,14 @@ module Controller #(parameter N = 16,
     reg[N-1:0] last_pointer;
     
     
+    
     integer i,k;
     
     always @(posedge clock)
     begin
-        if (reset == 0)
+        if (reset == 1)
         begin
             last_pointer       <= 0;
-            point_pos          <= 0;
             finish_counter     <= 0;
             done               <= 0;
             output_to_fifo     <= 0;
@@ -88,20 +88,24 @@ module Controller #(parameter N = 16,
                 point_y[i]    <= cache_y[(i+1)*N-1 -:N];
                 point_z[i]    <= cache_z[(i+1)*N-1 -:N];
             end
-            for (i = 0;i<CORE_NUMBER*4;i = i+1)
+            for (i = 0;i<CORE_NUMBER*2;i = i+1)
             begin
                 fifo_buffer[i] <= 0;     // Clear the fifo buffer
+                point_pos_buffer[i] =i;
             end
+            point_pos <=CORE_NUMBER-1;
             //point_pos_buffer[0] = i;
         end
         else if (done == 0)  // Prevent controller from overdoing point validation 
         begin
+
+
+
             finish_counter     = 0;
             for (i = 0;i<CORE_NUMBER;i = i+1)    // Analize every core output
             begin
                 if ((inlier[i] == 1 || outlier[i] == 1) &&  reset_core[i] == 0)   // core finished and needs new point
                 begin
-                    finish_counter = finish_counter+1;   // update core finish counter to know wich point of the cache needs to be loaded
                     
                     if (outlier[i] == 1)   // if the point is an outlier save it in the fif o buffer and update the fif o buffer size
                     begin
@@ -109,26 +113,27 @@ module Controller #(parameter N = 16,
                         fifo_write_size              = fifo_write_size +1;
                     end
                     point_pos           = point_pos + 1;   //update core base point and saves the pointer
-                    point_pos_buffer[i] <= point_pos;
-                    point_x[i] <= cache_x[(finish_counter)*N-1 -:N];
-                    point_y[i] <= cache_y[(finish_counter)*N-1 -:N];
-                    point_z[i] <= cache_z[(finish_counter)*N-1 -:N];
+                    point_pos_buffer[i] = point_pos  ;
+                    point_x[i] <= cache_x[(finish_counter+1)*N-1 -:N];
+                    point_y[i] <= cache_y[(finish_counter+1)*N-1 -:N];
+                    point_z[i] <= cache_z[(finish_counter+1)*N-1 -:N];
+                    finish_counter = finish_counter+1;   // update core finish counter to know wich point of the cache needs to be loaded
                     reset_core[i] <= 1;  //put core in a reset state 
                 end
                 else
-                begin
-                    if (reset_core[i] == 1)  
-                        reset_core[i] <= 0;
-                        end
-                end
-            if (fifo_write_size < 2)   // fifo_buffer has enough points to store
+                    begin
+                        if (reset_core[i] == 1)  
+                            reset_core[i] <= 0;
+                    end
+            end
+            if (fifo_write_size >= 1 )   // fifo_buffer has enough points to store
             begin
                 write_fifo = 1;
-                output_to_fifo = fifo_buffer[0];
-                output_to_fifo = (output_to_fifo<<N)+fifo_buffer[1];
-                fifo_write_size = fifo_write_size-2; // update fifo buffer lenght
+                output_to_fifo = fifo_buffer[fifo_write_size-1];
+                fifo_write_size = fifo_write_size-1; // update fifo buffer lenght
             end
             else write_fifo = 0;  //disable fifo write
+            
             if (point_pos>=point_cloud_size)  // check if point cloud validation was finished
             begin
                 write_fifo = 0; 

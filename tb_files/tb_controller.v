@@ -27,7 +27,7 @@ parameter N = 16;
 parameter M = 16;
 parameter point_cloud_size = 17500;
 parameter Clock_period = 10; 
-parameter core_number = 2;
+parameter core_number = 16;
 reg reset;
 
 reg [N-1:0] x_array [point_cloud_size-1:0];
@@ -64,7 +64,7 @@ wire fifo_empty;
 
 
 integer i,j,l,k,cycle_counter;
-integer f_x,f_y,f_z;
+integer f_x,f_y,f_z,f_point;
 
 
 
@@ -72,7 +72,7 @@ reg[N-1:0] feeder_pos;
 
 initial
 begin
-    reset = 0;
+    reset = 1;
     read_fifo = 0;
     clock = 1;
     cycle_counter =0;
@@ -85,6 +85,7 @@ begin
     f_x = $fopen("output_x.txt","w");
     f_y = $fopen("output_y.txt","w");
     f_z = $fopen("output_z.txt","w");
+    f_point = $fopen("point_pos.txt","w");
 
     cache_x =  x_array[0];
     cache_y =  y_array[0];
@@ -110,21 +111,21 @@ begin
     feeder_pos = 0;
     #Clock_period;
    
-    reset = 1; 
+    reset = 0; 
 end
 
 
 
 
-always @(posedge clock) begin
-    if (reset ==1 && Controller_done ==0) begin
-        cache_x =  x_array[point_pos];
-        cache_y =  y_array[point_pos];
-        cache_z =  z_array[point_pos];
+always @(negedge clock) begin
+    if (reset ==0 && Controller_done ==0) begin
+        cache_x =  x_array[point_pos+1];
+        cache_y =  y_array[point_pos+1];
+        cache_z =  z_array[point_pos+1];
     for (i = 1 ;i < core_number ; i = i +1 ) begin
-        cache_x = (cache_x<<N)+ x_array[point_pos+i];
-        cache_y = (cache_y<<N)+ y_array[point_pos+i];
-        cache_z = (cache_z<<N)+ z_array[point_pos+i];
+        cache_x = cache_x+ (x_array[point_pos+i+1]<<(N*i));
+        cache_y = cache_y+ (y_array[point_pos+i+1]<<(N*i));
+        cache_z = cache_z+ (z_array[point_pos+i+1]<<(N*i));
     end
     end            
 end
@@ -186,8 +187,9 @@ end
  always @(outlier_from_fifo) begin
      if (Controller_done && !fifo_empty) begin
         x_array[outlier_from_fifo]=0;
-        x_array[outlier_from_fifo]=0;
-        x_array[outlier_from_fifo]=0;
+        y_array[outlier_from_fifo]=0;
+        z_array[outlier_from_fifo]=0;
+        $fwrite(f_point,"%d\n",outlier_from_fifo);
      end
 
  end  
