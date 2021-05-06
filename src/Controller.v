@@ -34,7 +34,7 @@ module Controller #(parameter N = 16,
                     input wire [N*2-1:0] point_cloud_size,
                     input wire read_fifo,
                     output wire[N-1:0] outlier_pos_fifo,
-                    output reg[N-1:0] point_pos,
+                    output reg[N*2-1:0] point_pos,
                     output wire empty,
                     output reg done);
     
@@ -43,8 +43,8 @@ module Controller #(parameter N = 16,
     reg [N-1:0] point_y [CORE_NUMBER-1:0];
     reg [N-1:0] point_z [CORE_NUMBER-1:0];
     
-    reg [N-1:0] fifo_buffer[CORE_NUMBER*2-1:0];
-    reg [N-1:0] point_pos_buffer [CORE_NUMBER-1:0];
+    reg [N*2-1:0] fifo_buffer[CORE_NUMBER*2-1:0];
+    reg [N*2-1:0] point_pos_buffer [CORE_NUMBER-1:0];
     
     reg [N-1:0]fifo_write_size;
         
