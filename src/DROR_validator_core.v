@@ -26,9 +26,9 @@ Main goal of this module
 module dror_validator_core #(parameter N = 16,
                         DISTANCE_MODULES = 8,
                         NEIGHBOR_TRESHOLD = 5,
-                        MIN_SEARCH_RADIUS = 10,
-                        MULTI_PARAMETER=0.9,
-                        ANGULAR_RESOLUTION=0.3
+                        MIN_SEARCH_RADIUS = 1,
+                        MULTI_PARAMETER=1,
+                        ANGULAR_RESOLUTION=8   //Manually calculate, suposed to be 0.3 
                         )
 
                        (
@@ -53,28 +53,28 @@ module dror_validator_core #(parameter N = 16,
 
 
     
-    always @(posedge clock)
+    always @(posedge i_clock)
     begin
-        if (reset == 1)begin    
+        if (i_reset == 1)begin    
             cycles  <= 0;
-            inlier  <= 0;
-            outlier <= 0;
+            o_inlier  <= 0;
+            o_outlier <= 0;
         end
         else
         begin
             cycles = cycles +DISTANCE_MODULES;
-            if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a inlier
+            if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a o_inlier
             begin
-                inlier  <= 1;
-                outlier <= 0;
+                o_inlier  <= 1;
+                o_outlier <= 0;
             end
             else    //keep comparing 
             begin
-                inlier <= 0;
-                if (cycles >= point_cloud_size) // reached max comparisons and point is a outlier
-                    outlier <= 1;
+                o_inlier <= 0;
+                if (cycles >= i_point_cloud_size) // reached max comparisons and point is a o_outlier
+                    o_outlier <= 1;
                 else
-                    outlier <= 0;
+                    o_outlier <= 0;
             end
         end
     end
@@ -82,9 +82,9 @@ module dror_validator_core #(parameter N = 16,
     
     
     
-    always @(posedge clock)
+    always @(posedge i_clock)
     begin
-        if (reset)
+        if (i_reset)
             neighbor_counter = 0;
         else
         begin
@@ -97,13 +97,13 @@ module dror_validator_core #(parameter N = 16,
     end
 
 
-    always @(posedge clock)
+    always @(posedge i_clock)
     begin
         if (distance_to_sensor < MIN_SEARCH_RADIUS) begin
-            search_radius <= MIN_SEARCH_RADIUS
+            search_radius <= MIN_SEARCH_RADIUS;
         end
         else begin
-            search_radius <= distance_to_sensor*ANGULAR_RESOLUTION*MULTI_PARAMETER //Calculate search radius
+            search_radius <= (distance_to_sensor/ANGULAR_RESOLUTION)/MULTI_PARAMETER; //Calculate search radius
         end
     end
             
@@ -120,14 +120,14 @@ module dror_validator_core #(parameter N = 16,
         
         distance_calculator
         #(.N(N)) calculate_distance(
-        .clock(clock),
-        .point_x1(point_x),
-        .point_y1(point_y),
-        .point_z1(point_z),
+        .clock(i_clock),
+        .point_x1(i_point_x),
+        .point_y1(i_point_y),
+        .point_z1(i_point_z),
         
-        .point_x2(cp_x[(aux+1)*(N)-1:aux*(N)]),
-        .point_y2(cp_y[(aux+1)*(N)-1:aux*(N)]),
-        .point_z2(cp_z[(aux+1)*(N)-1:aux*(N)]),
+        .point_x2(i_cp_x[(aux+1)*(N)-1:aux*(N)]),
+        .point_y2(i_cp_y[(aux+1)*(N)-1:aux*(N)]),
+        .point_z2(i_cp_z[(aux+1)*(N)-1:aux*(N)]),
         .distance(distances[aux])
         );
     end
@@ -135,12 +135,12 @@ module dror_validator_core #(parameter N = 16,
     
     distance_calculator #(.N(N), .POINT_3D(0)) point_distance
     (
-        .clock(clock),
-        .point_x1(point_x),
-        .point_y1(point_y),        
+        .clock(i_clock),
+        .point_x1(i_point_x),
+        .point_y1(i_point_y),        
         .point_x2(0),
         .point_y2(0),
-        .distance(search_radius)
+        .distance(distance_to_sensor)
     );
     
     

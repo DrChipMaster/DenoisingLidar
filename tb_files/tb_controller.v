@@ -25,8 +25,8 @@ module tb_controller;
 reg clock;
 parameter N = 16;
 parameter M = 16;
-//parameter point_cloud_size = 17500;
-parameter point_cloud_size = 122804;
+parameter point_cloud_size = 17500;
+//parameter point_cloud_size = 122804;
 parameter Clock_period = 10; 
 parameter core_number = 16;
 reg reset;
@@ -80,12 +80,12 @@ begin
 //    $readmemh("/home/andre/ror_filter/Points/SnowStopped_x.txt",x_array);
 //    $readmemh("/home/andre/ror_filter/Points/SnowStopped_y.txt",y_array);
 //    $readmemh("/home/andre/ror_filter/Points/SnowStopped_z.txt",z_array);
-    $readmemh("/home/andre/ror_filter/Points/velodynebixo_x.txt",x_array);
-    $readmemh("/home/andre/ror_filter/Points/velodynebixo_y.txt",y_array);
-    $readmemh("/home/andre/ror_filter/Points/velodynebixo_z.txt",z_array);
-//    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_x.txt",x_array);
-//    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_y.txt",y_array);
-//    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_z.txt",z_array);
+//    $readmemh("/home/andre/ror_filter/Points/velodynebixo_x.txt",x_array);
+//    $readmemh("/home/andre/ror_filter/Points/velodynebixo_y.txt",y_array);
+//    $readmemh("/home/andre/ror_filter/Points/velodynebixo_z.txt",z_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_x.txt",x_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_y.txt",y_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_z.txt",z_array);
     f_x = $fopen("output_x.txt","w");
     f_y = $fopen("output_y.txt","w");
     f_z = $fopen("output_z.txt","w");
@@ -176,6 +176,8 @@ end
                 $fclose(f_x); 
                 $fclose(f_y); 
                 $fclose(f_z); 
+                $fclose(f_point); 
+    
             $stop;
          end
      end

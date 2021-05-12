@@ -87,11 +87,12 @@ module Controller #(parameter N = 16,
                 point_x[i]    <= cache_x[(i+1)*N-1 -:N];
                 point_y[i]    <= cache_y[(i+1)*N-1 -:N];
                 point_z[i]    <= cache_z[(i+1)*N-1 -:N];
+                point_pos_buffer[i] =i;
+
             end
             for (i = 0;i<CORE_NUMBER*2;i = i+1)
             begin
                 fifo_buffer[i] <= 0;     // Clear the fifo buffer
-                point_pos_buffer[i] =i;
             end
             point_pos <=CORE_NUMBER-1;
             //point_pos_buffer[0] = i;
@@ -130,7 +131,7 @@ module Controller #(parameter N = 16,
             begin
                 write_fifo = 1;
                 output_to_fifo = fifo_buffer[fifo_write_size-1];
-                fifo_write_size = fifo_write_size-1; // update fifo buffer lenght
+                fifo_write_size <= fifo_write_size-1; // update fifo buffer lenght
             end
             else write_fifo = 0;  //disable fifo write
             
@@ -183,19 +184,19 @@ module Controller #(parameter N = 16,
             genvar j;
             for (j = 0; j<CORE_NUMBER; j = j+1)
             begin
-                validator_core
+                dror_validator_core
                 #(.N(N),.DISTANCE_MODULES(DISTANCE_MODULES)) core(
-                .clock(clock),
-                .reset(reset_core[j]),
-                .point_x(point_x[j]),
-                .point_y(point_y[j]),
-                .point_z(point_z[j]),
-                .point_cloud_size(point_cloud_size),
-                .cp_x(cp_x),
-                .cp_y(cp_y),
-                .cp_z(cp_z),
-                .inlier(inlier[j]),
-                .outlier(outlier[j])
+                .i_clock(clock),
+                .i_reset(reset_core[j]),
+                .i_point_x(point_x[j]),
+                .i_point_y(point_y[j]),
+                .i_point_z(point_z[j]),
+                .i_point_cloud_size(point_cloud_size),
+                .i_cp_x(cp_x),
+                .i_cp_y(cp_y),
+                .i_cp_z(cp_z),
+                .o_inlier(inlier[j]),
+                .o_outlier(outlier[j])
                 );
             end
             endgenerate
