@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/andre/pcd_to_xyz/main.cpp
+/home/andre/DenoisingLidar/Utils/pcd_to_xyz/main.cpp
 iostream
 -
 pcl/io/pcd_io.h
