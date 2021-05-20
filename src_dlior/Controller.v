@@ -31,6 +31,7 @@ module Controller #(parameter N = 16,
                     input wire [N*CORE_NUMBER-1:0] cache_x,
                     input wire [N*CORE_NUMBER-1:0] cache_y,
                     input wire [N*CORE_NUMBER-1:0] cache_z,
+                    input wire [N*CORE_NUMBER-1:0] cache_i,
                     input wire [N*2-1:0] point_cloud_size,
                     input wire read_fifo,
                     output wire[N-1:0] outlier_pos_fifo,
@@ -42,7 +43,8 @@ module Controller #(parameter N = 16,
     reg [N-1:0] point_x [CORE_NUMBER-1:0];
     reg [N-1:0] point_y [CORE_NUMBER-1:0];
     reg [N-1:0] point_z [CORE_NUMBER-1:0];
-    
+    reg [N-1:0] point_i [CORE_NUMBER-1:0];
+
     reg [N*2-1:0] fifo_buffer[CORE_NUMBER*2-1:0];
     reg [N*2-1:0] point_pos_buffer [CORE_NUMBER-1:0];
     
@@ -64,9 +66,7 @@ module Controller #(parameter N = 16,
     
     wire full;
     
-    reg[N-1:0]  finish_counter;
-    reg[N-1:0] last_pointer;
-    
+    reg[N-1:0]  finish_counter;    
     
     
     integer i,k;
@@ -75,7 +75,6 @@ module Controller #(parameter N = 16,
     begin
         if (reset == 1)
         begin
-            last_pointer       <= 0;
             finish_counter     <= 0;
             done               <= 0;
             output_to_fifo     <= 0;
@@ -87,6 +86,7 @@ module Controller #(parameter N = 16,
                 point_x[i]    <= cache_x[(i+1)*N-1 -:N];
                 point_y[i]    <= cache_y[(i+1)*N-1 -:N];
                 point_z[i]    <= cache_z[(i+1)*N-1 -:N];
+                point_i[i]    <= cache_i[(i+1)*N-1 -:N];
                 point_pos_buffer[i] =i;
 
             end
@@ -118,6 +118,8 @@ module Controller #(parameter N = 16,
                     point_x[i] <= cache_x[(finish_counter+1)*N-1 -:N];
                     point_y[i] <= cache_y[(finish_counter+1)*N-1 -:N];
                     point_z[i] <= cache_z[(finish_counter+1)*N-1 -:N];
+                    point_i[i] <= cache_i[(finish_counter+1)*N-1 -:N];
+
                     finish_counter = finish_counter+1;   // update core finish counter to know wich point of the cache needs to be loaded
                     reset_core[i] <= 1;  //put core in a reset state 
                 end
@@ -184,13 +186,14 @@ module Controller #(parameter N = 16,
             genvar j;
             for (j = 0; j<CORE_NUMBER; j = j+1)
             begin
-                dror_validator_core
+                validator_core
                 #(.N(N),.DISTANCE_MODULES(DISTANCE_MODULES)) core(
                 .i_clock(clock),
                 .i_reset(reset_core[j]),
                 .i_point_x(point_x[j]),
                 .i_point_y(point_y[j]),
                 .i_point_z(point_z[j]),
+                .i_point_i(point_i[j]),
                 .i_point_cloud_size(point_cloud_size),
                 .i_cp_x(cp_x),
                 .i_cp_y(cp_y),

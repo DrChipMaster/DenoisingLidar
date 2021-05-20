@@ -26,12 +26,14 @@ Main goal of this module
 module validator_core #(parameter N = 16,
                         DISTANCE_MODULES = 8,
                         NEIGHBOR_TRESHOLD = 5,
-                        SEARCH_RADIUS = 50)
+                        SEARCH_RADIUS = 50,
+                        INTENSITY_TRESHOLD = 4)
                        (input clock,
                         input reset,
                         input wire [N-1:0] point_x,
                         input wire [N-1:0] point_y,
                         input wire [N-1:0] point_z,
+                        input wire [N-1:0] point_i,
                         input wire [N*2-1:0] point_cloud_size,
                         input wire [N*DISTANCE_MODULES-1:0] cp_x,
                         input wire [N*DISTANCE_MODULES-1:0] cp_y,
@@ -55,18 +57,26 @@ module validator_core #(parameter N = 16,
         else
         begin
             cycles = cycles +DISTANCE_MODULES;
-            if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a inlier
-            begin
+
+            if (point_i > INTENSITY_TRESHOLD) begin
                 inlier  <= 1;
                 outlier <= 0;
-            end
-            else    //keep comparing 
-            begin
-                inlier <= 0;
-                if (cycles >= point_cloud_size) // reached max comparisons and point is a outlier
-                    outlier <= 1;
-                else
+            end    
+            else
+            begin       
+                if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a inlier
+                begin
+                    inlier  <= 1;
                     outlier <= 0;
+                end
+                else    //keep comparing 
+                begin
+                    inlier <= 0;
+                    if (cycles >= point_cloud_size) // reached max comparisons and point is a outlier
+                        outlier <= 1;
+                    else
+                        outlier <= 0;
+                end
             end
         end
     end

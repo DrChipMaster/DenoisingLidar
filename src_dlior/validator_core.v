@@ -23,12 +23,13 @@ Main goal of this module
 
 */
 
-module dror_validator_core #(parameter N = 16,
+module validator_core #(parameter N = 16,
                         DISTANCE_MODULES = 8,
                         NEIGHBOR_TRESHOLD = 22,
                         MIN_SEARCH_RADIUS = 1,
                         MULTI_PARAMETER=1,
-                        ANGULAR_RESOLUTION=8   //Manually calculate, suposed to be 0.3 
+                        ANGULAR_RESOLUTION=8,   //Manually calculate, suposed to be 0.3 
+                        INTENSITY_TRESHOLD = 4
                         )
 
                        (
@@ -37,6 +38,7 @@ module dror_validator_core #(parameter N = 16,
                         input wire [N-1:0] i_point_x,
                         input wire [N-1:0] i_point_y,
                         input wire [N-1:0] i_point_z,
+                        input wire [N-1:0] i_point_i,
                         input wire [N*2-1:0] i_point_cloud_size,
                         input wire [N*DISTANCE_MODULES-1:0] i_cp_x,
                         input wire [N*DISTANCE_MODULES-1:0] i_cp_y,
@@ -49,7 +51,7 @@ module dror_validator_core #(parameter N = 16,
     reg [N-1:0] cycles;
     wire [N-1:0] distance_to_sensor;
     reg [N-1:0]search_radius;
-    integer j,k ;
+    integer j;
 
 
     
@@ -63,20 +65,28 @@ module dror_validator_core #(parameter N = 16,
         else
         begin
             cycles = cycles +DISTANCE_MODULES;
-            if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a o_inlier
-            begin
+            if (i_point_i > INTENSITY_TRESHOLD) begin
                 o_inlier  <= 1;
                 o_outlier <= 0;
-            end
-            else    //keep comparing 
+            end    
+            else
             begin
-                o_inlier <= 0;
-                if (cycles >= i_point_cloud_size) // reached max comparisons and point is a o_outlier
-                    o_outlier <= 1;
-                else
+                if (neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a o_inlier
+                begin
+                    o_inlier  <= 1;
                     o_outlier <= 0;
+                end
+                else    //keep comparing 
+                begin
+                    o_inlier <= 0;
+                    if (cycles >= i_point_cloud_size) // reached max comparisons and point is a o_outlier
+                        o_outlier <= 1;
+                    else
+                        o_outlier <= 0;
+                end
             end
         end
+
     end
     
     
