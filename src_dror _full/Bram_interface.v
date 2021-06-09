@@ -89,7 +89,6 @@ begin
     begin
                 if(update_cache)
             begin
-                state <=1;
                 pause <=1;
                 addr_x <= point_pos/8;
                 addr_y <= point_pos/8;
@@ -124,12 +123,13 @@ begin
          cache_x =  read_out_x;
          cache_y =  read_out_y;
          cache_z =  read_out_z;
-         state <= 2;
          pause <= 0;
 
     end
     else  if(state == 3)
     begin
+        if(!fifo_empty)
+        begin
         we_z <= 16'h00ff;
         we_y <= 16'h00ff;
         we_x <= 16'h00ff;
@@ -139,17 +139,28 @@ begin
         write_in_x <= 0;
         write_in_y <= 0;
         write_in_z <= 0;
+        end
+        else begin
+        we_z <=0;
+        we_y <= 0;
+        we_x <= 0;
+        end
     end
     else if (state ==0) begin
-            en_x =1;
+            en_y =1;
             en_x =0;
-            en_x =0;
-            addr_x <= 0;
+            en_z =0;
+            addr_y <= 0;
             reset=1;
         if (read_out_x[31:0]>0) begin
-            point_cloud_size <= read_out_x[31:0];
-            state <= 2;
+            point_cloud_size <= read_out_y[31:0];
         end
+    end
+    else if(state==4)
+    begin
+            we_z <= 16'h00ff;;
+            addr_z <= 0;
+            write_in_z <= 1; 
     end
 end
 
@@ -158,9 +169,18 @@ end
 always @(posedge clock) begin
     case (state)
         0:begin
-
+            if (read_out_x[31:0]>0) begin
+                state <= 2;
+            end
+        end
+        1:begin
+            state <= 2;
         end
         2:begin
+            if(update_cache)
+            begin
+                state <=1;
+            end else
              if (Controller_done) begin
                 read_fifo <=1;
                 state <= 3;                
@@ -170,15 +190,9 @@ always @(posedge clock) begin
             if(fifo_empty==1)
                 begin
                     state <=4;
-                    we_z <= 0;
-                    we_y <= 0;
-                    we_x <= 0;
                 end
         end
-        4: begin
-            we_z <= 16'h00ff;;
-            addr_z <= 0;
-            write_in_z <= 1;   
+        4: begin  
             state <= 0;  
         end 
          
