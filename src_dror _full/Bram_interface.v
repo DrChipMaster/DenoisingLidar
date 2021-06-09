@@ -152,8 +152,8 @@ begin
             en_z =0;
             addr_y <= 0;
             reset=1;
-        if (read_out_x[31:0]>0) begin
-            point_cloud_size <= read_out_y[31:0];
+        if (read_out_y[31:0]>0) begin
+            point_cloud_size <= read_out_x[31:0];
         end
     end
     else if(state==4)
