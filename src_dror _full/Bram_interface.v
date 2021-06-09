@@ -195,7 +195,7 @@ always @(posedge clock) begin
         4: begin  
             state <= 0;  
         end 
-         
+        default: state <=0;         
     endcase
 end
 
