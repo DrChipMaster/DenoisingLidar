@@ -41,7 +41,10 @@ module Bram_interface #(parameter N = 16,
                     input wire[127:0] read_out_z,
                     output reg en_z,
                     output reg  rst_z,
-                    output reg[15:0] we_z
+                    output reg[15:0] we_z,
+                    output reg[6:0] state,
+                    output reg [31:0] point_cloud_size,
+                    output wire[N*2-1:0] point_pos
                     );
     
 
@@ -51,7 +54,6 @@ reg[N*DISTANCE_MODULES-1:0]cache_feeder_y;
 reg[N*DISTANCE_MODULES-1:0]cache_feeder_z;
 
 
-reg [31:0] point_cloud_size;
 
 reg [N*CORE_NUMBER-1:0] cache_x;
 reg [N*CORE_NUMBER-1:0] cache_y;
@@ -62,7 +64,6 @@ reg read_fifo;
 
 wire[N-1:0] outlier_from_fifo ;
 
-wire[N*2-1:0] point_pos;
 
 wire update_cache;
 
@@ -70,7 +71,7 @@ wire Controller_done;
 
 wire fifo_empty;
 
-reg[6:0] state = 0;
+
 
 reg pause;
 
@@ -117,6 +118,7 @@ begin
          cache_x =  read_out_x;
          cache_y =  read_out_y;
          cache_z =  read_out_z;
+         reset <= 0;
          pause <= 0;
 
     end
@@ -127,9 +129,12 @@ begin
         we_z <= 16'h00ff;
         we_y <= 16'h00ff;
         we_x <= 16'h00ff;
+        if(outlier_from_fifo != 0)
+        begin
         addr_x <= outlier_from_fifo/8;
         addr_y <= outlier_from_fifo/8;
         addr_z <= outlier_from_fifo/8;
+        end
         write_in_x <= 0;
         write_in_y <= 0;
         write_in_z <= 0;
@@ -146,16 +151,24 @@ begin
             en_z <=0;
             addr_y <= 0;
             addr_x <= 0;
+            
             reset <=1;
         if (read_out_y[31:0]>0) begin
             point_cloud_size <= read_out_x[31:0];
         end
+        else begin
+        point_cloud_size<=0;
+        feeder_pos <=0;
+        end
     end
-    else if(state==4)
-    begin
+    else if(state==4)begin
             we_z <= 16'h00ff;;
             addr_z <= 0;
-            write_in_z <= 1; 
+            write_in_z <= 16'h00fff; 
+    end
+    else if(state == 5)begin
+         we_z <= 0;
+         addr_z <= 0;
     end
 end
 
@@ -164,12 +177,13 @@ end
 always @(posedge clock) begin
     case (state)
         0:begin
-            if (read_out_x[31:0]>0) begin
-                state <= 2;
+            if (read_out_y[31:0]>0) begin
+                state <= 1;
             end
         end
         1:begin
-            state <= 2;
+            if(pause ==0)
+                state <= 2;
         end
         2:begin
             if(update_cache)
@@ -188,8 +202,11 @@ always @(posedge clock) begin
                 end
         end
         4: begin  
-            state <= 0;  
+            state <= 4;  
         end 
+        5: begin
+            state <=0;
+        end
         default: state <=0;         
     endcase
 end
