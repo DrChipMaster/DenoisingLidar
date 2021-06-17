@@ -93,6 +93,7 @@ module Controller #(parameter N = 16,
                 point_pos_buffer[i] =i;
 
             end
+            update_cache <=1;
             for (i = 0;i<CORE_NUMBER*2;i = i+1)
             begin
                 fifo_buffer[i] <= 0;     // Clear the fifo buffer
@@ -102,14 +103,9 @@ module Controller #(parameter N = 16,
         end
         else if (done == 0 && pause ==0 )  // Prevent controller from overdoing point validation 
         begin
-
-
-
+           
             finish_counter     = 0;
-            if(cache_updated==1 && update_cache==1)
-            begin
-                update_cache =0;
-            end
+            update_cache <=0;
             for (i = 0;i<CORE_NUMBER;i = i+1)    // Analize every core output
             begin
                 if ((inlier[i] == 1 || outlier[i] == 1) &&  reset_core[i] == 0)   // core finished and needs new point
@@ -121,7 +117,7 @@ module Controller #(parameter N = 16,
                         fifo_write_size              = fifo_write_size +1;
                     end
                     point_pos           = point_pos + 1;   //update core base point and saves the pointer
-                    update_cache = 1;
+                    update_cache <= 1;
                     point_pos_buffer[i] = point_pos  ;
                     point_x[i] <= cache_x[(finish_counter+1)*N-1 -:N];
                     point_y[i] <= cache_y[(finish_counter+1)*N-1 -:N];
@@ -150,6 +146,7 @@ module Controller #(parameter N = 16,
             end
                 
             end
+           
         end
 
 
@@ -203,6 +200,7 @@ module Controller #(parameter N = 16,
                 .i_point_y(point_y[j]),
                 .i_point_z(point_z[j]),
                 .i_point_cloud_size(point_cloud_size),
+                .pause(pause),
                 .i_cp_x(cp_x),
                 .i_cp_y(cp_y),
                 .i_cp_z(cp_z),

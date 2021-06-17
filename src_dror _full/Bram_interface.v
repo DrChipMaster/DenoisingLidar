@@ -44,7 +44,8 @@ module Bram_interface #(parameter N = 16,
                     output reg[15:0] we_z,
                     output reg[6:0] state,
                     output reg [31:0] point_cloud_size,
-                    output wire[N*2-1:0] point_pos
+                    output wire[N*2-1:0] point_pos,
+                    output wire update_cache
                     );
     
 
@@ -62,10 +63,12 @@ reg reset;
 
 reg read_fifo;
 
+reg cache_updated;
+
 wire[N-1:0] outlier_from_fifo ;
 
 
-wire update_cache;
+
 
 wire Controller_done;
 
@@ -82,24 +85,24 @@ always @(posedge clock)
 begin
     if(state ==2)
     begin
-                if(update_cache)
+            if(update_cache && cache_updated==0)
             begin
                 pause <=1;
-                addr_x <= point_pos/8;
-                addr_y <= point_pos/8;
-                addr_z <= point_pos/8;
+                addr_x <= (point_pos+1)*2-1;
+                addr_y <=(point_pos+1)*2-1;
+                addr_z <= (point_pos+1)*2-1;
                 en_x <=1;
                 en_y <=1;
                 en_z <=1;
             end
             else
             begin
-         if ((feeder_pos*DISTANCE_MODULES) > point_cloud_size && Controller_done ==0)
+         if ((feeder_pos) > point_cloud_size && Controller_done ==0)
                 begin
                     feeder_pos <= 0;
                 end
                 else
-                    feeder_pos <= feeder_pos + 1;
+                    feeder_pos <= feeder_pos + 16;
                 addr_x <= feeder_pos;
                 addr_y <= feeder_pos;
                 addr_z <= feeder_pos;
@@ -110,30 +113,36 @@ begin
          cache_feeder_y <=  read_out_y;
          cache_feeder_z <=  read_out_z;
          state <= 2;
+          pause <= 0;
+          cache_updated<=0;
+
     end
     end
     
     else if(state ==1)
     begin
-         cache_x =  read_out_x;
-         cache_y =  read_out_y;
-         cache_z =  read_out_z;
+         cache_x <=  read_out_x;
+         cache_y <=  read_out_y;
+         cache_z <=  read_out_z;
+         cache_updated <=1;
          reset <= 0;
-         pause <= 0;
+            we_z <=0;
+            we_y <= 0;
+            we_x <= 0;
 
     end
     else  if(state == 3)
     begin
         if(!fifo_empty)
         begin
-        we_z <= 16'h00ff;
-        we_y <= 16'h00ff;
-        we_x <= 16'h00ff;
+        we_z <= 16'hffff;
+        we_y <= 16'hffff;
+        we_x <= 16'hffff;
         if(outlier_from_fifo != 0)
         begin
-        addr_x <= outlier_from_fifo/8;
-        addr_y <= outlier_from_fifo/8;
-        addr_z <= outlier_from_fifo/8;
+        addr_x <= outlier_from_fifo*2-1;
+        addr_y <= outlier_from_fifo*2-1;
+        addr_z <= outlier_from_fifo*2-1;
         end
         write_in_x <= 0;
         write_in_y <= 0;
@@ -148,13 +157,15 @@ begin
     else if (state ==0) begin
             en_y <=1;
             en_x <=1;
-            en_z <=0;
+            en_z <=1;
             addr_y <= 0;
             addr_x <= 0;
-            
+            addr_z <= 0;
             reset <=1;
         if (read_out_y[31:0]>0) begin
             point_cloud_size <= read_out_x[31:0];
+            write_in_y[31:0] <=0;
+            we_y <= 16'hffff;
         end
         else begin
         point_cloud_size<=0;
@@ -162,13 +173,17 @@ begin
         end
     end
     else if(state==4)begin
-            we_z <= 16'h00ff;;
+            we_z <= 16'hffff;
             addr_z <= 0;
             write_in_z <= 16'h00fff; 
     end
     else if(state == 5)begin
          we_z <= 0;
          addr_z <= 0;
+    end
+    else if(state == 6)begin
+         pause <=0;
+         cache_updated <=1;
     end
 end
 
@@ -182,8 +197,14 @@ always @(posedge clock) begin
             end
         end
         1:begin
-            if(pause ==0)
-                state <= 2;
+        if(Controller_done==1)
+        begin
+                read_fifo <=1;
+                state <= 3;
+        end
+        else
+         state <= 6;
+                
         end
         2:begin
             if(update_cache)
@@ -202,10 +223,13 @@ always @(posedge clock) begin
                 end
         end
         4: begin  
-            state <= 4;  
+            state <= 5;  
         end 
         5: begin
             state <=0;
+            end
+        6: begin
+            state <= 2;
         end
         default: state <=0;         
     endcase
@@ -222,11 +246,16 @@ end
         .cache_z(cache_z),
         .point_cloud_size(point_cloud_size),
         .read_fifo(read_fifo),
+        .cache_updated(cache_update),
+        .pause(pause),
         .outlier_pos_fifo(outlier_from_fifo),
         .point_pos(point_pos),
         .empty(fifo_empty),
+        .update_cache(update_cache),
         .done(Controller_done)
     );
             
             
 endmodule
+
+
