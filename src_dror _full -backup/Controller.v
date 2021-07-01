@@ -91,7 +91,7 @@ module Controller #(parameter N = 16,
                 point_x[i]    <= cache_x[(i+1)*N-1 -:N];
                 point_y[i]    <= cache_y[(i+1)*N-1 -:N];
                 point_z[i]    <= cache_z[(i+1)*N-1 -:N];
-                point_pos_buffer[i] =i+1;
+                point_pos_buffer[i] =i+CORE_NUMBER;
 
             end
             update_cache <=0;
@@ -99,7 +99,7 @@ module Controller #(parameter N = 16,
             begin
                 fifo_buffer[i] <= 0;     // Clear the fifo buffer
             end
-            point_pos <= CORE_NUMBER;
+            point_pos <=CORE_NUMBER-1;
             //point_pos_buffer[0] = i;
         end
         else if (done == 0  )  // Prevent controller from overdoing point validation 

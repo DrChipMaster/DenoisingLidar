@@ -20,34 +20,33 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Bram_interface #(parameter N = 16,
+module Bram_interface_copy #(parameter N = 16,
                     DISTANCE_MODULES = 8,
                     CORE_NUMBER = 8)
                    (input wire clock,
                     output reg[31:0] addr_x,//Connectio to bram containing x
-                    output reg[127:0] write_in_x,
-                    input wire[127:0] read_out_x,
+                    output reg[31:0] write_in_x,
+                    input wire[31:0] read_out_x,
                     output reg en_x,
                     output reg  rst_x,
-                    output reg[15:0] we_x,
+                    output reg[3:0] we_x,
                     output reg[31:0] addr_y,//Connectio to bram containing y
-                    output reg[127:0] write_in_y,
-                    input wire[127:0] read_out_y,
+                    output reg[31:0] write_in_y,
+                    input wire[31:0] read_out_y,
                     output reg en_y,
                     output reg  rst_y,
-                    output reg[15:0] we_y,
+                    output reg[3:0] we_y,
                     output reg[31:0] addr_z,//Connectio to bram containing x
-                    output reg[127:0] write_in_z,
-                    input wire[127:0] read_out_z,
+                    output reg[31:0] write_in_z,
+                    input wire[31:0] read_out_z,
                     output reg en_z,
                     output reg  rst_z,
-                    output reg[15:0] we_z,
+                    output reg[3:0] we_z,
                     output reg[6:0] state,
                     output reg [31:0] point_cloud_size,
                     output wire[N*2-1:0] point_pos,
                     output wire update_cache,
-                    output wire[N-1:0] outlier_from_fifo,
-                    output reg [N*CORE_NUMBER-1:0] cache_x
+                    output wire[N-1:0] outlier_from_fifo
                     );
     
 
@@ -58,7 +57,7 @@ reg[N*DISTANCE_MODULES-1:0]cache_feeder_z;
 
 
 
-//reg [N*CORE_NUMBER-1:0] cache_x;
+reg [N*CORE_NUMBER-1:0] cache_x;
 reg [N*CORE_NUMBER-1:0] cache_y;
 reg [N*CORE_NUMBER-1:0] cache_z;
 reg reset;
@@ -83,68 +82,74 @@ reg pause;
 reg[N-1:0] feeder_pos;
 
 reg cache_ready;
-integer i,k;
-reg[4:0] test;
+integer i,j;
+
+reg [N-1:0] core_cache_status;
+reg [N-1:0] node_cache_status;
 
 always @(posedge clock)
 begin
     if(state ==2)
     begin
-            if(update_cache )
+            if(update_cache && cache_updated==0)
             begin
                 pause <=1;
-                addr_x <= (point_pos)*2-1;
-                addr_y <=(point_pos)*2-1;
-                addr_z <= (point_pos)*2-1;
+                addr_x <= (point_pos)*2;
+                addr_y <=(point_pos)*2;
+                addr_z <= (point_pos)*2;
+                core_cache_status <=2;
                 en_x <=1;
                 en_y <=1;
                 en_z <=1;
             end
             else
             begin
-         if ((feeder_pos) > point_cloud_size )
-                begin
+
+        if(node_cache_status>=DISTANCE_MODULES)
+        begin
+            node_cache_status <=0;
+            pause <=0;
+
+        end
+        else
+        begin
+            if ((feeder_pos) > point_cloud_size && Controller_done ==0)
+            begin
                     feeder_pos <= 0;
-                end
-                else
-                    feeder_pos <= feeder_pos + 15;
-        addr_x <= feeder_pos;
-        addr_y <= feeder_pos;
-        addr_z <= feeder_pos;
-        en_x <=1;
-        en_y <=1;
-        en_z <=1;
-         cache_feeder_x <=  read_out_x;
-         cache_feeder_y <=  read_out_y;
-         cache_feeder_z <=  read_out_z;
-          pause <= 0;
-          cache_updated<=0;
-          reset<=0;
+            end
+            else
+                feeder_pos <= feeder_pos + 16;
+                addr_x <= feeder_pos;
+                addr_y <= feeder_pos;
+                addr_z <= feeder_pos;
+                en_x <=1;
+                en_y <=1;
+                en_z <=1;
+         cache_feeder_x <= cache_feeder_x + (read_out_x<<32*node_cache_status);
+         cache_feeder_y <=  cache_feeder_y + (read_out_y<<32*node_cache_status);
+         cache_feeder_z <=  cache_feeder_y + (read_out_z<<32*node_cache_status);
+          pause <= 1;
+          node_cache_status <= node_cache_status +2;
+          cache_updated<=0;  
+        end
+
+
     end
     end
     
     else if(state ==1)
     begin
         
-        cache_x =0;
-        cache_y =0;
-        cache_z =0;
-        test = point_pos&(CORE_NUMBER-1);
-        
-        for ( i=0;i<CORE_NUMBER-test; i = i +1 ) begin
-            cache_x = cache_x +(read_out_x[(i+test+1)*N-1 -:N]<<(i*N));
-            cache_y = cache_y +(read_out_y[(i+test+1)*N-1 -:N]<<(i*N));
-            cache_z = cache_z +(read_out_z[(i+test+1)*N-1 -:N]<<(i*N));
-        end
-        addr_x <= point_pos*2+15;
-        addr_y <= point_pos*2+15;
-        addr_z <= point_pos*2+15;
+        cache_x <= read_out_x;
+        cache_y <= read_out_y;
+        cache_z <= read_out_z;
+        core_cache_status <= 2;
+        addr_y <= (point_pos+2)*2;
+        addr_x <= (point_pos+2)*2;
+        addr_z <= (point_pos+2)*2;
         we_z <=0;
         we_y <= 0;
         we_x <= 0;
-        pause <=0;
-        reset<=0;
-        cache_updated <=1;
 
     end
     else  if(state == 3)
@@ -156,9 +161,9 @@ begin
         we_x <= 16'hffff;
         if(outlier_from_fifo != 0)
         begin
-        addr_x <= outlier_from_fifo*2-1;
-        addr_y <= outlier_from_fifo*2-1;
-        addr_z <= outlier_from_fifo*2-1;
+        addr_x <= outlier_from_fifo*2;
+        addr_y <= outlier_from_fifo*2;
+        addr_z <= outlier_from_fifo*2;
         end
         write_in_x <= 0;
         write_in_y <= 0;
@@ -203,20 +208,23 @@ begin
          addr_z <= 0;
     end
     else if(state == 6)begin
-        
-     for (k =0  ;k<CORE_NUMBER; k =k +1 ) begin
-        if(k<point_pos&&(CORE_NUMBER-1))
+        if(core_cache_status<CORE_NUMBER)
         begin
-            cache_x = cache_x +(read_out_x[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
-            cache_y = cache_y +(read_out_y[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
-            cache_z = cache_z +(read_out_z[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
-            end
+            core_cache_status <= core_cache_status+2;
+            node_cache_status <=2;
+            cache_x = cache_x + (read_out_x<<32*core_cache_status);
+            cache_y = cache_y + (read_out_z<<32*core_cache_status);
+            cache_z = cache_z + (read_out_y<<32*core_cache_status);
+            addr_y <= (point_pos+core_cache_status)*2;
+            addr_x <= (point_pos+core_cache_status)*2;
+            addr_z <= (point_pos+core_cache_status)*2;
+            pause <=1;
+            cache_updated <=1;
         end
-        addr_y <= feeder_pos;
-        addr_x <= feeder_pos;
-        addr_z <= feeder_pos;
-        pause <=0;
-
+        else
+        begin
+            pause <=0;
+        end
     end
 end
 
@@ -236,7 +244,7 @@ always @(posedge clock) begin
                 state <= 3;
         end
         else
-        if (point_pos&&CORE_NUMBER==0) begin
+        if (point_pos%CORE_NUMBER==0) begin
             state <= 2;
         end
         else
@@ -248,13 +256,10 @@ always @(posedge clock) begin
             begin
                 state <=1;
             end else
-            begin
              if (Controller_done) begin
                 read_fifo <=1;
                 state <= 3;                
             end
-            else state<=2;
-           end
         end
         3:begin
             if(fifo_empty==1)
@@ -270,14 +275,14 @@ always @(posedge clock) begin
             state <=0;
             end
         6: begin
+            if(core_cache_status>=CORE_NUMBER)
             state <= 2;
-            
         end
         default: state <=0;         
     endcase
 end
 
- Controller#(.N(N),.CORE_NUMBER(CORE_NUMBER),.DISTANCE_MODULES(DISTANCE_MODULES)) m_controller(
+ Controller#(.CORE_NUMBER(CORE_NUMBER),.DISTANCE_MODULES(DISTANCE_MODULES)) m_controller(
         .clock(clock),
         .reset(reset),
         .cache_feeder_x(cache_feeder_x),

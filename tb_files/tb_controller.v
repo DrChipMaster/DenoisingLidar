@@ -24,11 +24,11 @@ module tb_controller;
 
 reg clock;
 parameter N = 16;
-parameter M = 16;
+parameter M = 4;
 parameter point_cloud_size = 17096;
 //parameter point_cloud_size = 122804;
 parameter Clock_period = 10; 
-parameter core_number = 16;
+parameter core_number = 4;
 reg reset;
 
 reg [N-1:0] x_array [point_cloud_size-1:0];
@@ -80,9 +80,13 @@ begin
 //    $readmemh("/home/andre/ror_filter/Points/SnowStopped_x.txt",x_array);
 //    $readmemh("/home/andre/ror_filter/Points/SnowStopped_y.txt",y_array);
 //    $readmemh("/home/andre/ror_filter/Points/SnowStopped_z.txt",z_array);
-    $readmemh("/home/andre/DenoisingLidar/Points/teste_int_x.txt",x_array);
-    $readmemh("/home/andre/DenoisingLidar/Points/teste_int_y.txt",y_array);
-    $readmemh("/home/andre/DenoisingLidar/Points/teste_int_z.txt",z_array);
+//    $readmemh("/home/andre/DenoisingLidar/Points/teste_int_x.txt",x_array);
+//    $readmemh("/home/andre/DenoisingLidar/Points/teste_int_y.txt",y_array);
+//    $readmemh("/home/andre/DenoisingLidar/Points/teste_int_z.txt",z_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_x.txt",x_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_z.txt",z_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_y.txt",y_array);
+    
 //    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_x.txt",x_array);
 //    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_y.txt",y_array);
 //    $readmemh("C:\\Users\\andre\\Desktop\\Points\\SnowStopped_z.txt",z_array);
