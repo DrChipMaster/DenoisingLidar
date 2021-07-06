@@ -22,7 +22,7 @@
 
 module Bram_interface #(parameter N = 16,
                     DISTANCE_MODULES = 2,
-                    CORE_NUMBER = 32,
+                    CORE_NUMBER = 4,
                     BUS_SIZE =32
                     )
                    (input wire clock,
@@ -31,25 +31,22 @@ module Bram_interface #(parameter N = 16,
                     input wire[BUS_SIZE-1:0] read_out_x,
                     output reg en_x,
                     output reg  rst_x,
-                    output reg[15:0] we_x,
+                    output reg[3:0] we_x,
                     output reg[31:0] addr_y,//Connectio to bram containing y
                     output reg[BUS_SIZE-1:0] write_in_y,
                     input wire[BUS_SIZE-1:0] read_out_y,
                     output reg en_y,
                     output reg  rst_y,
-                    output reg[15:0] we_y,
+                    output reg[3:0] we_y,
                     output reg[31:0] addr_z,//Connectio to bram containing x
                     output reg[BUS_SIZE-1:0] write_in_z,
                     input wire[BUS_SIZE-1:0] read_out_z,
                     output reg en_z,
                     output reg  rst_z,
-                    output reg[15:0] we_z,
+                    output reg[3:0] we_z,
                     output reg[6:0] state,
-                    output reg [31:0] point_cloud_size,
                     output wire[N*2-1:0] point_pos,
-                    output wire update_cache,
-                    output wire[N-1:0] outlier_from_fifo,
-                    output reg [N*CORE_NUMBER-1:0] cache_x
+                    output wire[N-1:0] outlier_from_fifo
                     );
     
 
@@ -60,19 +57,20 @@ reg[N*DISTANCE_MODULES-1:0]cache_feeder_z;
 
 
 
-//reg [N*CORE_NUMBER-1:0] cache_x;
+reg [N*CORE_NUMBER-1:0] cache_x;
 reg [N*CORE_NUMBER-1:0] cache_y;
 reg [N*CORE_NUMBER-1:0] cache_z;
 reg reset;
 
 reg read_fifo;
-
+wire update_cache;
 reg cache_updated;
 
 
 reg [N-1:0] core_cache_status;
 reg [N-1:0] node_cache_status;
 
+reg [31:0] point_cloud_size;
 
 
 wire Controller_done;
@@ -85,6 +83,9 @@ reg pause;
 
 reg[N-1:0] feeder_pos;
 
+reg clear_cache;
+
+
 reg cache_ready;
 integer i,k;
 
@@ -95,9 +96,9 @@ begin
             if(update_cache )
             begin
                 pause <=1;
-                addr_x <= (point_pos+1)*2;
-                addr_y <=(point_pos+1)*2;
-                addr_z <= (point_pos+1)*2;
+                addr_x <= (point_pos+1);
+                addr_y <=(point_pos+1);
+                addr_z <= (point_pos+1);
                 en_x <=1;
                 en_y <=1;
                 en_z <=1;
@@ -117,7 +118,10 @@ begin
                     feeder_pos <= 0;
                 end
                 else
-                    feeder_pos <= feeder_pos + BUS_SIZE/N;
+                begin
+                    feeder_pos <= feeder_pos + 1;
+                end
+                    //feeder_pos <= feeder_pos + BUS_SIZE/N;
 
 
         if(clear_cache ==1)
@@ -232,18 +236,36 @@ begin
     end
     else if(state == 6)begin
         
-     for (k =0  ;k<CORE_NUMBER; k =k +1 ) begin
-        if(k<point_pos&&(CORE_NUMBER-1))
+    //  for (k =0  ;k<CORE_NUMBER; k =k +1 ) begin
+    //     if(k<point_pos&&(CORE_NUMBER-1))
+    //     begin
+    //         cache_x = cache_x +(read_out_x[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
+    //         cache_y = cache_y +(read_out_y[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
+    //         cache_z = cache_z +(read_out_z[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
+    //         end
+    //     end
+    if(core_cache_status<=CORE_NUMBER)
         begin
-            cache_x = cache_x +(read_out_x[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
-            cache_y = cache_y +(read_out_y[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
-            cache_z = cache_z +(read_out_z[(k+1)*N-1 -:N]<<((k+point_pos&&(CORE_NUMBER-1))*N));
-            end
+            node_cache_status <=2;
+            //test <= ((((x_array[addr_x+1]<<16)+x_array[addr_x])<<(16*(core_cache_status))));
+            cache_x <= cache_x + ((read_out_x<<(16*(core_cache_status))));
+            cache_y <= cache_y + ((read_out_y<<(16*(core_cache_status))));
+            cache_z <= cache_z + ((read_out_z<<(16*(core_cache_status))));
+            core_cache_status = core_cache_status+2;
+            addr_y <= (point_pos+core_cache_status);
+            addr_x <= (point_pos+core_cache_status);
+            addr_z <= (point_pos+core_cache_status);
+            pause <=1;
+            cache_updated <=1;
         end
-        addr_y <= feeder_pos;
-        addr_x <= feeder_pos;
-        addr_z <= feeder_pos;
-        pause <=0;
+        else
+        begin
+            pause <=1;
+            cache_feeder_x<=0;
+            cache_feeder_y<=0;
+            cache_feeder_z<=0;
+            cache_updated <=0;
+        end
 
     end
 end
@@ -264,15 +286,14 @@ always @(posedge clock) begin
                 state <= 3;
         end
         else
-        if (point_pos&&CORE_NUMBER==0) begin
-            state <= 2;
-        end
-        else
+        // if (point_pos&&CORE_NUMBER==0) begin
+        //     state <= 2;
+        // end
+        // else
          state <= 6;
-                
         end
         2:begin
-            if(update_cache)
+            if(update_cache && cache_updated ==0)
             begin
                 state <=1;
             end else
@@ -298,12 +319,17 @@ always @(posedge clock) begin
             state <=0;
             end
         6: begin
-            state <= 2;
+            if(core_cache_status>CORE_NUMBER)
+            begin
+                state <= 2;
+                //reset <= 0;
+            end
             
         end
         default: state <=0;         
     endcase
 end
+
 
  Controller#(.N(N),.CORE_NUMBER(CORE_NUMBER),.DISTANCE_MODULES(DISTANCE_MODULES)) m_controller(
         .clock(clock),
