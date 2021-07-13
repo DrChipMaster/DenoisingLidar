@@ -23,12 +23,14 @@
 module tb_interface;
 
 reg clock;
-parameter DISTANCE_MODULES = 4;
+parameter DISTANCE_MODULES = 2;
 parameter CORE_NUMBER = 4;
 parameter point_cloud_size = 17096;
 //parameter point_cloud_size = 122804;
 parameter Clock_period = 10; 
 parameter N = 16;
+parameter BUS_SIZE =32;
+parameter BRAM_SHIFT=2;
 
 reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
 reg[N*DISTANCE_MODULES-1:0]cache_feeder_y;
@@ -47,9 +49,9 @@ reg cache_updated;
 
 
 
-reg [N-1:0] x_array [point_cloud_size-1:0];
-reg [N-1:0] y_array [point_cloud_size-1:0];
-reg [N-1:0] z_array [point_cloud_size-1:0];
+reg [N*2-1:0] x_array [point_cloud_size-1:0];
+reg [N*2-1:0] y_array [point_cloud_size-1:0];
+reg [N*2-1:0] z_array [point_cloud_size-1:0];
 
 
 
@@ -82,11 +84,23 @@ reg[N*CORE_NUMBER-1:0] test;
 reg clear_cache;
 wire [N*2-1:0] point_pos;
 
+reg [N-1:0] point_pointer;
+reg [N-1:0] point_pointer_bram;
+
+
 wire[N-1:0] outlier_from_fifo;
 
 wire update_cache;
 
 reg cache_update;
+
+reg[N-1:0] point_updated;
+
+reg[BUS_SIZE-1:0] read_out_x;
+reg[BUS_SIZE-1:0] read_out_y;
+reg[BUS_SIZE-1:0] read_out_z;
+reg in_midle_cache;
+
 
 initial
 begin
@@ -100,9 +114,9 @@ begin
     //$readmemh("/home/andre/DenoisingLidar/Points/teste_int_x.txt",x_array);
     //$readmemh("/home/andre/DenoisingLidar/Points/teste_int_y.txt",y_array);
     //$readmemh("/home/andre/DenoisingLidar/Points/teste_int_z.txt",z_array);
-    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_x.txt",x_array);
-    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_z.txt",z_array);
-    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_y.txt",y_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_x_32.txt",x_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_z_32.txt",z_array);
+    $readmemh("C:\\Users\\andre\\Desktop\\Points\\teste_int_y_32.txt",y_array);
     f_x = $fopen("output_x.txt","w");
     f_y = $fopen("output_y.txt","w");
     f_z = $fopen("output_z.txt","w");
@@ -111,27 +125,68 @@ end
 
 
 
+always @(posedge clock) begin
+        point_updated = point_pos +1;
+    if (point_updated[0]==1) begin
+        point_pointer = ((point_updated-1)/2) ;
+        point_pointer_bram = (((point_updated-1)/2)<<BRAM_SHIFT)+(2<<BRAM_SHIFT) ;
+
+    end
+    else
+    begin
+        point_pointer = ((point_updated)/2);
+        point_pointer_bram = (((point_updated)/2)<<BRAM_SHIFT)+(2<<BRAM_SHIFT);
+
+    end
+end
+
+always @(posedge clock) begin
+    read_out_x <= x_array[addr_x];
+    read_out_y <= y_array[addr_y];
+    read_out_z <= z_array[addr_z];
+end
 
 
- 
+
+
+always @(posedge clock)
+begin
+
+if(state ==2)
+begin
+
+  if ((feeder_pos) > (point_cloud_size/(BUS_SIZE/N)) && Controller_done ==0)
+        begin
+                feeder_pos = 0;
+        end
+        else
+            if(clear_cache==0 & node_cache_status<DISTANCE_MODULES/(BUS_SIZE/N))
+                feeder_pos = feeder_pos + 1;   
+                
+  end              
+end
+
+            
 always @(posedge clock)
 begin
     if(state ==2)
     begin
             if(update_cache && cache_updated==0)
             begin
-                pause <=1;
-                addr_x <= (point_pos+1);
-                addr_y <= (point_pos+1);
-                addr_z <= (point_pos+1);
-                core_cache_status <=2;
+                pause =1;
+                addr_x <= point_pointer;
+                addr_y <= point_pointer;
+                addr_z <= point_pointer;
+                core_cache_status <=1;
   
 
             end
             else
             begin
-
-        if(node_cache_status>=DISTANCE_MODULES)
+                addr_x <= feeder_pos;
+                addr_y <= feeder_pos;
+                addr_z <= feeder_pos;
+        if(node_cache_status>=DISTANCE_MODULES/(BUS_SIZE/N))
         begin
             node_cache_status <=0;
             pause <=0;
@@ -141,15 +196,7 @@ begin
 //            cache_feeder_z<=0;
         end
         else
-        begin
-            if ((feeder_pos) > point_cloud_size && Controller_done ==0)
-            begin
-                    feeder_pos <= 0;
-            end
-            else
-                feeder_pos <= feeder_pos + 2;
-                
-                
+        begin           
         if(clear_cache ==1)
         begin
             cache_feeder_x<=0;
@@ -158,18 +205,14 @@ begin
             clear_cache<=0;  
             pause <=1;
         end
-        else begin        
-        addr_x <= feeder_pos;
-        addr_y <= feeder_pos;
-        addr_z <= feeder_pos;
+        else begin 
+  
         //test <= (((x_array[addr_x+1]<<16+x_array[addr_x])<<(16*(node_cache_status))));
-        test <= (x_array[feeder_pos+1]<<16)+x_array[feeder_pos];
-
-         cache_feeder_x <= cache_feeder_x + (((x_array[addr_x+1]<<16)+x_array[addr_x])<<(16*(node_cache_status)));
-         cache_feeder_y <=  cache_feeder_y + (((y_array[addr_y+1]<<16)+x_array[addr_y])<<(16*(node_cache_status)));
-         cache_feeder_z <=  cache_feeder_z + (((z_array[addr_z+1]<<16)+x_array[addr_z])<<(16*(node_cache_status)));
+         cache_feeder_x <= cache_feeder_x +  (read_out_x<<(BUS_SIZE*(node_cache_status)));
+         cache_feeder_y <=  cache_feeder_y + (read_out_y<<(BUS_SIZE*(node_cache_status)));
+         cache_feeder_z <=  cache_feeder_z + (read_out_z<<(BUS_SIZE*(node_cache_status)));
           pause <= 1;
-          node_cache_status <= node_cache_status +2;
+          node_cache_status <= node_cache_status +1;
           cache_updated<=0;  
         end
         end
@@ -180,14 +223,47 @@ begin
     
     else if(state ==1)
     begin
-        cache_x <= ((x_array[addr_x+1]<<16)+x_array[addr_x]);
-        cache_y <= ((y_array[addr_y+1]<<16)+y_array[addr_y]);
-        cache_z <= ((z_array[addr_z+1]<<16)+z_array[addr_z]);
-        core_cache_status <= 2;
-        addr_y <= point_pos+2+1;
-        addr_x <= point_pos+2+1;
-        addr_z <= point_pos+2+1;
+//        cache_x <= read_out_x;
+//        cache_y <= read_out_y;
+//        cache_z <= read_out_z;
+        
+        addr_y <= point_pointer+1;
+        addr_x <= point_pointer+1;
+        addr_z <= point_pointer+1;
+       
+    end
+    else if(state==7)
+    begin
+     test =(BUS_SIZE/N)-(point_updated&((BUS_SIZE/N)-1));
+        cache_x=0;
+        cache_y=0;
+        cache_z=0;
+         for ( i=0;i<(BUS_SIZE/N); i = i +1 ) begin
+        if(i<(BUS_SIZE/N)-(point_updated&((BUS_SIZE/N)-1)))
+        begin
+            cache_x = cache_x +(read_out_x[(i+(point_updated&((BUS_SIZE/N)-1))+1)*N-1 -:N]<<(i*N));
+            cache_y = cache_y +(read_out_y[(i+(point_updated&((BUS_SIZE/N)-1))+1)*N-1 -:N]<<(i*N));
+            cache_z = cache_z +(read_out_z[(i+(point_updated&((BUS_SIZE/N)-1))+1)*N-1 -:N]<<(i*N));
+        end
+        end
+        if(point_updated[0]==1)
+        begin
+            in_midle_cache <=1;
+            core_cache_status <= 0; 
+            addr_y <= point_pointer+2;
+            addr_x <= point_pointer+2;
+            addr_z <= point_pointer+2;
 
+        end
+        else
+        begin
+         in_midle_cache <=0;  
+         core_cache_status <= 1; 
+         addr_y <= point_pointer+2;
+         addr_x <= point_pointer+2;
+         addr_z <= point_pointer+2;
+         end  
+        
     end
     else  if(state == 3)
     begin
@@ -195,17 +271,27 @@ begin
         begin
         if(outlier_from_fifo != 0)
         begin
-            x_array[outlier_from_fifo]=0;
-            y_array[outlier_from_fifo]=0;
-            z_array[outlier_from_fifo]=0;
-            $fwrite(f_point,"%d\n",outlier_from_fifo);
+        $fwrite(f_point,"%d\n",outlier_from_fifo);
+        if(outlier_from_fifo[0]==0)
+            begin
+            x_array[outlier_from_fifo/2]=0;
+            y_array[outlier_from_fifo/2]=0;
+            z_array[outlier_from_fifo/2]=0;
+            end
+          else
+            begin
+            x_array[(outlier_from_fifo-1)/2]=0;
+            y_array[(outlier_from_fifo-1)/2]=0;
+            z_array[(outlier_from_fifo-1)/2]=0;
+            
+            end
         end
         end
     end
     else if (state ==0) begin  
-            addr_x <= (point_pos+1);
-            addr_y <=(point_pos+1);
-            addr_z <= (point_pos+1);
+            addr_x <= point_pointer;
+            addr_y <=point_pointer;
+            addr_z <= point_pointer;
             feeder_pos <=0;
             pause <=1;
         feeder_pos <=0;
@@ -221,18 +307,47 @@ begin
          addr_z <= 0;
     end
     else if(state == 6)begin
-        if(core_cache_status<=CORE_NUMBER)
+        if(core_cache_status<=CORE_NUMBER/(BUS_SIZE/N))
         begin
-
-            node_cache_status <=2;
+//           if(in_midle_cache==1)
+//           begin
+//                in_midle_cache <=0;                      
+//              for (k =0  ;k<(BUS_SIZE/N); k =k +1 ) begin
+//                 if(k<(point_updated&((BUS_SIZE/N)-1)))
+//                 begin
+//                     cache_x = cache_x +(read_out_x[(k+1)*N-1 -:N]<<((k+(point_updated&((BUS_SIZE/N)-1)))*N));
+//                     cache_y = cache_y +(read_out_y[(k+1)*N-1 -:N]<<((k+(point_updated&((BUS_SIZE/N)-1)))*N));
+//                     cache_z = cache_z +(read_out_z[(k+1)*N-1 -:N]<<((k+(point_updated&((BUS_SIZE/N)-1)))*N));
+//                     end
+//                 end
+//           end
+//           else
+//           begin  
+            node_cache_status <=0;
+            
+        if(in_midle_cache==1)
+           begin
+           in_midle_cache<=0;
+           end
+             for (k =0  ;k<(BUS_SIZE/N); k =k +1 ) begin
+                 if(((point_updated&((BUS_SIZE/N)-1))+k+(core_cache_status*(BUS_SIZE/N)))<(CORE_NUMBER))
+                 begin
+                     cache_x = cache_x +(read_out_x[(k+1)*N-1 -:N]<<((((k+(point_updated&((BUS_SIZE/N)-1)))*N))+(BUS_SIZE*(core_cache_status))));
+                     cache_y = cache_y +(read_out_y[(k+1)*N-1 -:N]<<((((k+(point_updated&((BUS_SIZE/N)-1)))*N))+(BUS_SIZE*(core_cache_status))));
+                     cache_z = cache_z +(read_out_z[(k+1)*N-1 -:N]<<((((k+(point_updated&((BUS_SIZE/N)-1)))*N))+(BUS_SIZE*(core_cache_status))));
+                     end
+                 end
+            
             //test <= ((((x_array[addr_x+1]<<16)+x_array[addr_x])<<(16*(core_cache_status))));
-            cache_x <= cache_x + ((((x_array[addr_x+1]<<16)+x_array[addr_x])<<(16*(core_cache_status))));
-            cache_y <= cache_y + ((((y_array[addr_y+1]<<16)+y_array[addr_y])<<(16*(core_cache_status))));
-            cache_z <= cache_z + ((((z_array[addr_z+1]<<16)+z_array[addr_z])<<(16*(core_cache_status))));
-            core_cache_status = core_cache_status+2;
-            addr_y <= (point_pos+core_cache_status);
-            addr_x <= (point_pos+core_cache_status);
-            addr_z <= (point_pos+core_cache_status);
+//            cache_x <= cache_x + ((read_out_x<<(BUS_SIZE*(core_cache_status))));
+//            cache_y <= cache_y + ((read_out_y<<(BUS_SIZE*(core_cache_status))));
+//            cache_z <= cache_z + ((read_out_z<<(BUS_SIZE*(core_cache_status))));
+            core_cache_status <= core_cache_status+1;
+
+//            end
+            addr_y <= (point_pointer+(core_cache_status+2));
+            addr_x <= (point_pointer+(core_cache_status+2));
+            addr_z <= (point_pointer+(core_cache_status+2));
             pause <=1;
             cache_updated <=1;
         end
@@ -243,6 +358,11 @@ begin
             cache_feeder_y<=0;
             cache_feeder_z<=0;
             cache_updated <=0;
+             addr_x <= feeder_pos;
+             addr_y <= feeder_pos;
+             addr_z <= feeder_pos;
+             clear_cache <=1;
+
         end
     end
 end
@@ -267,8 +387,7 @@ always @(posedge clock) begin
 //            state <= 2;
 //        end
 //        else
-         state <= 6;
-                
+         state <= 7; 
         end
         2:begin
             if(update_cache && cache_updated ==0)
@@ -294,11 +413,14 @@ always @(posedge clock) begin
             state <=0;
             end
         6: begin
-            if(core_cache_status>CORE_NUMBER)
+            if(core_cache_status>CORE_NUMBER/(BUS_SIZE/N))
             begin
                 state <= 2;
                 reset <= 0;
             end
+        end
+        7: begin
+            state<=6;
         end
         default: state <=0;         
     endcase

@@ -24,11 +24,11 @@ module tb_controller;
 
 reg clock;
 parameter N = 16;
-parameter M = 4;
+parameter M = 2;
 parameter point_cloud_size = 17096;
 //parameter point_cloud_size = 122804;
 parameter Clock_period = 10; 
-parameter core_number = 4;
+parameter core_number = 64;
 reg reset;
 
 reg [N-1:0] x_array [point_cloud_size-1:0];

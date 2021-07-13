@@ -24,7 +24,7 @@
 
 module Bram_interface #(parameter N = 16,
                     DISTANCE_MODULES = 2,
-                    CORE_NUMBER = 16,
+                    CORE_NUMBER = 4,
                     BUS_SIZE =32,
                     BRAM_SHIFT=2
                     )
@@ -46,7 +46,12 @@ module Bram_interface #(parameter N = 16,
                     input wire[BUS_SIZE-1:0] read_out_z,
                     output reg en_z,
                     output reg  rst_z,
-                    output reg[3:0] we_z                    
+                    output reg[3:0] we_z,
+                    output reg[6:0] state,
+                    output wire[N*2-1:0] point_pos,
+                    output wire[N-1:0] outlier_from_fifo,
+                    output reg[N*CORE_NUMBER-1:0] cache_x,
+                    output reg[N-1:0] point_updated
                     );
     
 
@@ -62,16 +67,10 @@ reg [N*CORE_NUMBER-1:0] cache_y;
 reg [N*CORE_NUMBER-1:0] cache_z;
 reg reset;
 
- reg[N-1:0] point_updated;
- 
 reg read_fifo;
 wire update_cache;
 reg cache_updated;
- reg[6:0] state;
-wire[N*2-1:0] point_pos;
-wire[N-1:0] outlier_from_fifo;
-reg[N*CORE_NUMBER-1:0] cache_x;
-reg [N-1:0] point_pointer;
+
 
 reg [N-1:0] core_cache_status;
 reg [N-1:0] node_cache_status;
@@ -84,6 +83,7 @@ wire Controller_done;
 wire fifo_empty;
 
 
+reg [N-1:0] point_pointer;
 
 reg pause;
 
@@ -99,12 +99,12 @@ integer i,k;
 
 reg[N-1:0] test;
 
-reg wait_1c;
+
 
 always @(posedge clock) begin
         point_updated = point_pos +1;
     if (point_updated[0]==1) begin
-        point_pointer = (((point_updated-1)/2)<<BRAM_SHIFT)+(2<<BRAM_SHIFT) ;
+        point_pointer = ((((point_updated-1)/2)<<BRAM_SHIFT))+(2<<BRAM_SHIFT) ;
     end
     else
     begin
@@ -143,7 +143,6 @@ begin
             if(update_cache )
             begin
                 pause <=1;
-                wait_1c<=1;
                 
                 //addr_x <= ((point_pos+1)<<BRAM_SHIFT);
                 //addr_y <= ((point_pos+1)<<BRAM_SHIFT);
@@ -214,19 +213,9 @@ begin
 /*         addr_x <= (point_pos+BUS_SIZE/N +1)<<BRAM_SHIFT;
         addr_y <= (point_pos+BUS_SIZE/N +1)<<BRAM_SHIFT;
         addr_z <= (point_pos+BUS_SIZE/N +1)<<BRAM_SHIFT; */
-        if(wait_1c==1)
-        begin
-        addr_x <= point_pointer;
-        addr_y <= point_pointer;
-        addr_z <= point_pointer;
-        wait_1c <=0;
-        end
-        else
-        begin
         addr_y <= point_pointer+(1<<BRAM_SHIFT);
         addr_x <= point_pointer+(1<<BRAM_SHIFT);
         addr_z <= point_pointer+(1<<BRAM_SHIFT);
-        end
         
         //cache_updated <=1;
 
@@ -275,15 +264,15 @@ begin
         begin
             if(outlier_from_fifo[0]==0)
             begin
-                    addr_x <= ((outlier_from_fifo/2)<<BRAM_SHIFT)+(2<<BRAM_SHIFT);
-                    addr_y <= ((outlier_from_fifo/2)<<BRAM_SHIFT)+(2<<BRAM_SHIFT);
-                    addr_z <= ((outlier_from_fifo/2)<<BRAM_SHIFT)+(2<<BRAM_SHIFT);
+                    addr_x <= ((outlier_from_fifo/2)<<BRAM_SHIFT)+(1<<BRAM_SHIFT);
+                    addr_y <= ((outlier_from_fifo/2)<<BRAM_SHIFT)+(1<<BRAM_SHIFT);
+                    addr_z <= ((outlier_from_fifo/2)<<BRAM_SHIFT)+(1<<BRAM_SHIFT);
             end
             else
             begin
-                addr_x <= ((((outlier_from_fifo-1)/2))<<BRAM_SHIFT)+(2<<BRAM_SHIFT);
-                addr_y <= ((((outlier_from_fifo-1)/2))<<BRAM_SHIFT)+(2<<BRAM_SHIFT);
-                addr_z <= ((((outlier_from_fifo-1)/2))<<BRAM_SHIFT)+(2<<BRAM_SHIFT);
+                addr_x <= (((outlier_from_fifo/2)-1)<<BRAM_SHIFT)+(1<<BRAM_SHIFT);
+                addr_y <= (((outlier_from_fifo/2)-1)<<BRAM_SHIFT)+(1<<BRAM_SHIFT);
+                addr_z <= (((outlier_from_fifo/2)-1)<<BRAM_SHIFT)+(1<<BRAM_SHIFT);
             end
         end
         write_in_x <= 0;
@@ -304,7 +293,6 @@ begin
             addr_x <= 0;
             addr_z <= 0;
             reset <=1;
-            wait_1c<=1;
         if (read_out_y[31:0]>0) begin
             point_cloud_size <= read_out_x[31:0];
             write_in_y[31:0] <=0;
@@ -413,7 +401,6 @@ always @(posedge clock) begin
         //     state <= 2;
         // end
         // else
-        if(wait_1c==0)
          state <= 7;
         end
         2:begin

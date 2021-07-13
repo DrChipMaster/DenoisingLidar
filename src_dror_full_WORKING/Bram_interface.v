@@ -24,7 +24,7 @@
 
 module Bram_interface #(parameter N = 16,
                     DISTANCE_MODULES = 2,
-                    CORE_NUMBER = 16,
+                    CORE_NUMBER = 4,
                     BUS_SIZE =32,
                     BRAM_SHIFT=2
                     )
@@ -46,7 +46,12 @@ module Bram_interface #(parameter N = 16,
                     input wire[BUS_SIZE-1:0] read_out_z,
                     output reg en_z,
                     output reg  rst_z,
-                    output reg[3:0] we_z                    
+                    output reg[3:0] we_z,
+                    output reg[6:0] state,
+                    output wire[N*2-1:0] point_pos,
+                    output wire[N-1:0] outlier_from_fifo,
+                    output reg[N*CORE_NUMBER-1:0] cache_x,
+                    output reg [N-1:0] point_pointer                    
                     );
     
 
@@ -67,11 +72,7 @@ reg reset;
 reg read_fifo;
 wire update_cache;
 reg cache_updated;
- reg[6:0] state;
-wire[N*2-1:0] point_pos;
-wire[N-1:0] outlier_from_fifo;
-reg[N*CORE_NUMBER-1:0] cache_x;
-reg [N-1:0] point_pointer;
+
 
 reg [N-1:0] core_cache_status;
 reg [N-1:0] node_cache_status;
