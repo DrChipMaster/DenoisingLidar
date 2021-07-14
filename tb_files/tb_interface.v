@@ -95,7 +95,7 @@ wire update_cache;
 reg cache_update;
 
 reg[N-1:0] point_updated;
-
+reg[N-1:0] test_point;
 reg[BUS_SIZE-1:0] read_out_x;
 reg[BUS_SIZE-1:0] read_out_y;
 reg[BUS_SIZE-1:0] read_out_z;
@@ -127,6 +127,7 @@ end
 
 always @(posedge clock) begin
         point_updated = point_pos +1;
+        test_point = (point_updated - (point_updated&((BUS_SIZE/N)-1)))/(BUS_SIZE/N);
     if (point_updated[0]==1) begin
         point_pointer = ((point_updated-1)/2) ;
         point_pointer_bram = (((point_updated-1)/2)<<BRAM_SHIFT)+(2<<BRAM_SHIFT) ;

@@ -24,7 +24,7 @@
 
 module Bram_interface #(parameter N = 16,
                     DISTANCE_MODULES = 2,
-                    CORE_NUMBER = 16,
+                    CORE_NUMBER = 32,
                     BUS_SIZE =32,
                     BRAM_SHIFT=2
                     )
