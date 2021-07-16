@@ -29,6 +29,7 @@ main (int argc, char** argv)
   long long int a_32points_x=0;
   long long int a_32points_y=0;
   long long int a_32points_z=0;
+  long long int a_32points_i=0;
   ofstream file(name);
   ofstream file_x(name_x);
   ofstream file_y(name_y);
@@ -48,6 +49,8 @@ main (int argc, char** argv)
                 a_32points_x = (int16_t)(point.x*100);
                 a_32points_y = (int16_t)(point.y*100);
                 a_32points_z = (int16_t)(point.z*100);
+                a_32points_i = (int16_t)(point.intensity);
+
                 i++;
 
             }
@@ -55,6 +58,7 @@ main (int argc, char** argv)
                 a_32points_x = a_32points_x +((int16_t)(point.x*100)<<(16*i));
                 a_32points_y = a_32points_y +((int16_t)(point.y*100)<<(16*i));
                 a_32points_z = a_32points_z +((int16_t)(point.z*100)<<(16*i));
+                a_32points_i = a_32points_i +((int16_t)(point.intensity)<<(16*i));
                 i=0;
 
 
@@ -73,7 +77,7 @@ main (int argc, char** argv)
     std::stringstream aux_z;
       aux_z << std::hex << (int32_t) (a_32points_z); 
     std::stringstream aux_i;
-      aux_i << std::hex << (int16_t) (point.intensity);  
+      aux_i << std::hex << (int32_t) (a_32points_i);  
     file_x <<aux_x.str() << "\n";
     file_y <<aux_y.str() << "\n";
     file_z << aux_z.str() << "\n";

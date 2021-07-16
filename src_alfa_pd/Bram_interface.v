@@ -52,7 +52,7 @@ module Bram_interface #(parameter N = 16,
                     input wire[BUS_SIZE-1:0] read_out_i,
                     output reg en_i,
                     output reg  rst_i,
-                    output reg[3:0] we_i                     
+                    output reg[3:0] we_i                  
                     );
     
 
@@ -67,7 +67,7 @@ reg[N*DISTANCE_MODULES-1:0]cache_feeder_z;
 reg[N*CORE_NUMBER-1:0] cache_x;
 reg[N*CORE_NUMBER-1:0] cache_y;
 reg[N*CORE_NUMBER-1:0] cache_z;
-reg[N*CORE_NUMBER-1:0] cache_i,
+reg[N*CORE_NUMBER-1:0] cache_i;
 
 
 reg[N-1:0] feeder_pos;
@@ -77,9 +77,10 @@ reg [N-1:0] core_cache_status;
 reg [N-1:0] node_cache_status;
 
 reg [31:0] point_cloud_size;
-reg[7:0] filter_selector;
 
-reg[6:0] state;
+
+ reg[6:0] state;
+ reg[7:0] filter_selector;   
 
 reg read_fifo;
 reg reset;
@@ -275,8 +276,8 @@ begin
     begin
         if(!fifo_empty)
         begin
-        we_z <= 16'hffff;
-        we_y <= 16'hffff;
+        //we_z <= 16'hffff;
+        //we_y <= 16'hffff;
         we_x <= 16'hffff;
         //we_i <= 16'hffff;
         if(outlier_from_fifo != 0)
@@ -317,7 +318,7 @@ begin
             wait_1c<=1;
         if (read_out_y[31:0]>0) begin
             point_cloud_size <= read_out_x[31:0];
-            filter_selector <= read_out_i[31:0];
+            filter_selector <= read_out_i[7:0];
             write_in_y[31:0] <=0;
             we_y <= 16'h000f;
 //            addr_x <= point_pointer;
@@ -346,6 +347,7 @@ begin
     else if(state == 5)begin
          we_z <= 0;
          addr_z <= 0;
+         addr_i <= 0;
     end
     else if(state == 6)begin
 
@@ -401,7 +403,7 @@ begin
             addr_x <= feeder_pos<<BRAM_SHIFT;
             addr_y <= feeder_pos<<BRAM_SHIFT;
             addr_z <= feeder_pos<<BRAM_SHIFT;
-            addr_i <= feeder_pos<<BRAM_SHIFT;
+//            addr_i <= feeder_pos<<BRAM_SHIFT;
             clear_cache <=1;
 
         end
@@ -485,6 +487,7 @@ end
         .cache_x(cache_x),
         .cache_y(cache_y),
         .cache_z(cache_z),
+        .cache_i(cache_i),
         .point_cloud_size(point_cloud_size),
         .read_fifo(read_fifo),
         .filter_selector(filter_selector),

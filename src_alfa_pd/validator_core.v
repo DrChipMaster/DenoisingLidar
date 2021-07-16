@@ -45,7 +45,7 @@ module validator_core #(parameter N = 16,
                         input wire [N*DISTANCE_MODULES-1:0] i_cp_x,
                         input wire [N*DISTANCE_MODULES-1:0] i_cp_y,
                         input wire [N*DISTANCE_MODULES-1:0] i_cp_z,
-                        input wire [8:0] filter_selector,
+                        input wire [7:0] filter_selector,
                         input wire pause,
                         output reg o_inlier,
                         output reg o_outlier);
@@ -69,19 +69,19 @@ module validator_core #(parameter N = 16,
         else if(pause==0)
         begin
             cycles = cycles +DISTANCE_MODULES;
-            if(filter_selector >=1 && (i_point_i > INTENSITY_TRESHOLD) begin                      //0->DROR 1->LIOR 2->DLIOR
+            if((filter_selector >=1) && (i_point_i > INTENSITY_TRESHOLD)) begin                      //0->DROR 1->LIOR 2->DLIOR
                 o_inlier  <= 1;
                 o_outlier <= 0;
             end
             else
             begin
-                if(filter_selector ==1 && neighbor_counter >= NEIGHBOR_TRESHOLD_R)
+                if(filter_selector ==1 && neighbor_counter > NEIGHBOR_TRESHOLD_R)
                 begin
                     o_inlier  <= 1;
                     o_outlier <= 0;
                 end
                 else
-                if (filter_selector!=1 && neighbor_counter >= NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a o_inlier
+                if (filter_selector!=1 && neighbor_counter > NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a o_inlier
                 begin
                     o_inlier  <= 1;
                     o_outlier <= 0;
@@ -89,7 +89,7 @@ module validator_core #(parameter N = 16,
                 else    //keep comparing 
                 begin
                     o_inlier <= 0;
-                    if (cycles >= i_point_cloud_size) // reached max comparisons and point is a o_outlier
+                    if (cycles >= (i_point_cloud_size-5)) // reached max comparisons and point is a o_outlier
                         o_outlier <= 1;
                     else
                         o_outlier <= 0;
@@ -118,7 +118,7 @@ module validator_core #(parameter N = 16,
 
     always @(posedge i_clock)
     begin
-        if(filter_selector !=1 )
+        if(filter_selector != 1 )
         begin   
             if (distance_to_sensor < MIN_SEARCH_RADIUS) begin
                 search_radius <= MIN_SEARCH_RADIUS;
