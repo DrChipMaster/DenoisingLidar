@@ -1,0 +1,9 @@
+//arch = zynqmp; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]/home/andre/DenoisingLidar/image/fsbl-2019.2+gitAUTOINC+e8db5fb118-r0-zcu104-zynqmp-20210513153750.elf
+	[pmufw_image]/home/andre/DenoisingLidar/image/pmu-zcu104-zynqmp.elf
+	[destination_device = pl]/home/andre/vivado_projects/project_led_test/project_led_test.runs/impl_1/design_1_wrapper.bit
+	[destination_cpu = a53-0]/home/andre/DenoisingLidar/image/arm-trusted-firmware--2.0-xilinx-v2019.2+gitAUTOINC+713dace94b-r0-20210513153750.elf
+	[exception_level = el-2]/home/andre/DenoisingLidar/image/u-boot-zcu104-zynqmp.elf
+}

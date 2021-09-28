@@ -1,0 +1,9 @@
+//arch = zynqmp; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader, destination_cpu = a53-0]/home/andre/Desktop/boot_gen/fsbl-2019.2+gitAUTOINC+e8db5fb118-r0-zcu104-zynqmp-20210128152229.elf
+	[pmufw_image]/home/andre/Desktop/boot_gen/pmu-firmware-2019.2+gitAUTOINC+e8db5fb118-r0-zcu104-zynqmp-20210128152229.elf
+	[destination_device = pl]/home/andre/vivado_projects/project_bram_64_1/project_bram_64_1.runs/impl_1/design_1_wrapper.bit
+	[destination_cpu = a53-0, exception_level = el-3, trustzone]/home/andre/Desktop/boot_gen/arm-trusted-firmware--2.0-xilinx-v2019.2+gitAUTOINC+713dace94b-r0-20210128152229.elf
+	[destination_cpu = a53-0, exception_level = el-2]/home/andre/Desktop/boot_gen/u-boot-zcu104-zynqmp-v2019.01-xilinx-v2019.2+gitAUTOINC+dc61275b1d-r0.elf
+}

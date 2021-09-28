@@ -1,0 +1,13 @@
+######################################################################################
+# This is a generated CSV file representing the addressing in design design_1
+#
+# Format:
+# Master Segment Name, Address Space, Slave Segment, Offset, Range, Excluded (optional), Included (optional), Unassigned (optional)
+######################################################################################
+
+# 
+# Assignments in Address Space /zynq_ultra_ps_e_0/Data
+#
+SEG_axi_bram_ctrl_0_Mem0,/zynq_ultra_ps_e_0/Data,/axi_bram_ctrl_0/S_AXI/Mem0,0xA0000000,128K
+SEG_axi_bram_ctrl_1_Mem0,/zynq_ultra_ps_e_0/Data,/axi_bram_ctrl_1/S_AXI/Mem0,0xA0020000,128K
+SEG_axi_bram_ctrl_2_Mem0,/zynq_ultra_ps_e_0/Data,/axi_bram_ctrl_2/S_AXI/Mem0,0xA0040000,128K
