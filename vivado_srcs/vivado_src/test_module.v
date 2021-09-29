@@ -21,6 +21,7 @@
 
 
 module test_module(
+    //AXI MODULE
     output reg[31:0] o_write_address,
     output reg[63:0] o_write_payload,
     output reg[31:0] o_readAdress,
@@ -30,7 +31,6 @@ module test_module(
     output wire o_led3,
     output wire o_led4,
     output reg o_initreadtxn,
-    output reg o_axi_reset,
     output reg pulse_init,
     output reg[15:0] cycle_counter,
     input wire[63:0] i_AMU_P0,
@@ -51,6 +51,16 @@ module test_module(
     input wire rst,
     input wire i_write_TxnDone,
     input wire i_read_TxnDone,
+    ///END AXI MODULE
+    // BRAM CONNECTION
+    output reg[31:0] addr_bram,
+    output reg[31:0] write_in_bram,
+    input wire[31:0] read_out_bram,
+    output reg en_bram,
+    output wire rst_bram,
+    output reg[3:0] we_bram,
+    // END BRAM CONNECTION
+    
     input wire clk
     );
     
@@ -58,37 +68,83 @@ module test_module(
     assign o_led2 = i_AMU_P4[0];
     assign o_led3 = i_AMU_P8[0];
     assign o_led4 = i_AMU_P12[0];
+    assign rst_bram = rst;
     reg init_transaction;
+    reg[3:0] state;
     always @(posedge clk)
     begin
         if(rst ==1)
         begin
-        if (init_transaction==0)
-                begin
-                    o_initreadtxn <=1;
-                    init_transaction<=1;
-                    pulse_init <= 1;
+            case (state)
+                0:begin
+                    addr_bram <=0;
+                    if (read_out_bram >= 32'hfff) begin
+                        state <= 1;
+                        we_bram<= 3'h7;
+                        write_in_bram <= 0;
+                    end
+                    else
+                    begin
+                        we_bram <=0;
+                    end
                 end
-            o_axi_reset <=0;
-            o_readAdress <= 32'h000000A0;
-            o_write_address <= 32'h000000A0;
-            if(cycle_counter>50000)
-            begin
-                pulse_init <=1;
-                cycle_counter <=0;
-            end
-            else 
-            begin                
-                cycle_counter <= cycle_counter +1;
-                if(pulse_init)
-                begin
-                    pulse_init <=0;
+                1:begin
+                    we_bram <=0;
+                    addr_bram <= 2<<2;
+                    o_readAdress <= 32'h50000000;
+                    o_write_address <= 32'h50000000;
                     o_initreadtxn <=1;
-                end
-                else
-                begin
+                    state <= 2;
+                end 
+                2:begin
                     o_initreadtxn <=0;
+                    if(i_read_TxnDone)
+                    begin
+                        state <= 3;
+                        we_bram<= 3'h7;
+                        write_in_bram <= i_AMU_P0;
+                    end
                 end
+                3:begin
+                    addr_bram <= 1<<2;
+                    write_in_bram <= 32'hffff;
+                    state <=4;
+                end
+                4:begin
+                    addr_bram <= 0;
+                    write_in_bram <=0;
+                    we_bram <=0;
+                    state <=0;
+                end
+                default: state <=0; 
+            endcase
+          
+//        if (init_transaction==0)
+//                begin
+//                    o_initreadtxn <=1;
+//                    init_transaction<=1;
+//                    pulse_init <= 1;
+//                end
+//            //o_axi_reset <=0;
+//            o_readAdress <= 32'h50000000;
+//            o_write_address <= 32'h50000000;
+//            if(cycle_counter>50000)
+//            begin
+//                pulse_init <=1;
+//                cycle_counter <=0;
+//            end
+//            else 
+//            begin                
+//                cycle_counter <= cycle_counter +1;
+//                if(pulse_init)
+//                begin
+//                    pulse_init <=0;
+//                    o_initreadtxn <=1;
+//                end
+//                else
+//                begin
+//                    o_initreadtxn <=0;
+//                end
             
             
 //            else
@@ -105,15 +161,15 @@ module test_module(
 //                begin
 //                    cycle_counter <= cycle_counter +1;
 //                end
-            end
+            //end
         end
         else
         begin
             cycle_counter <=0;
-            o_axi_reset <=1;
             o_initreadtxn <=0;
             init_transaction <=0;
             pulse_init <=0;
+            state <=0;
         end
     end
     
