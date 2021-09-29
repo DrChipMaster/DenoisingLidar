@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module test_module(
+module test_module#(BRAM_SHIFT=2)(
     //AXI MODULE
     output reg[31:0] o_write_address,
     output reg[63:0] o_write_payload,
@@ -70,7 +70,8 @@ module test_module(
     assign o_led4 = i_AMU_P12[0];
     assign rst_bram = rst;
     reg init_transaction;
-    reg[3:0] state;
+    reg[4:0] state;
+    reg[31:0] base_addr;
     always @(posedge clk)
     begin
         if(rst ==1)
@@ -88,29 +89,39 @@ module test_module(
                         we_bram <=0;
                     end
                 end
-                1:begin
+                1: begin
                     we_bram <=0;
-                    addr_bram <= 2<<2;
-                    o_readAdress <= 32'h50000000;
-                    o_write_address <= 32'h50000000;
-                    o_initreadtxn <=1;
-                    state <= 2;
-                end 
+                    addr_bram <= 1<<BRAM_SHIFT;
+                    state <=2;
+                end
                 2:begin
+                    addr_bram <= 2<<BRAM_SHIFT;
+                    base_addr <= read_out_bram;
+                    state <=3;
+                end
+                3:begin
+                    we_bram <=0;
+                    addr_bram <= 2<<BRAM_SHIFT;
+                    o_readAdress <=base_addr;
+                    o_write_address <= base_addr;
+                    o_initreadtxn <=1;
+                    state <= 4;
+                end 
+                4:begin
                     o_initreadtxn <=0;
                     if(i_read_TxnDone)
                     begin
-                        state <= 3;
+                        state <= 5;
                         we_bram<= 3'h7;
                         write_in_bram <= i_AMU_P0;
                     end
                 end
-                3:begin
-                    addr_bram <= 1<<2;
+                5:begin
+                    addr_bram <= 3<<BRAM_SHIFT;
                     write_in_bram <= 32'hffff;
-                    state <=4;
+                    state <=6;
                 end
-                4:begin
+                6:begin
                     addr_bram <= 0;
                     write_in_bram <=0;
                     we_bram <=0;
