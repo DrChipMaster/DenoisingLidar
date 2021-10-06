@@ -75,7 +75,7 @@ module Controller #(parameter N = 16,
 
     reg write_fifo;
     reg fifo_reset;
-
+    reg blocked;
     integer i,k;
     
 
@@ -89,6 +89,7 @@ module Controller #(parameter N = 16,
             write_fifo         <= 0;
             fifo_write_size    <= 0;
             fifo_reset <=0;
+            blocked <=0;
             for (i = 0;i<CORE_NUMBER;i = i+1)   // Give points to all cores
             begin
                 reset_core[i] <= 1;
@@ -110,7 +111,7 @@ module Controller #(parameter N = 16,
         else if (done == 0  )  // Prevent controller from overdoing point validation 
         begin
            pre_update_cache = 0;
-           if(pause==0)
+           if(pause==0 && blocked ==0)
            begin
             finish_counter     = 0;
             for (i = 0;i<CORE_NUMBER;i = i+1)    // Analize every core output
@@ -140,6 +141,10 @@ module Controller #(parameter N = 16,
                             reset_core[i] <= 0;
                     end
             end
+            blocked <= pre_update_cache;
+            end
+            else begin
+                blocked <=0;
             end
             update_cache <= pre_update_cache;
                 

@@ -287,7 +287,6 @@ module AXI_lite_Slave #(
                     // Respective byte enables are asserted as per write strobes 
                     // Slave register 3
                     slv_reg3[(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-                    o_data_received <= 1;
                   end  
               default : begin
                           slv_reg0 <= slv_reg0;
@@ -297,10 +296,10 @@ module AXI_lite_Slave #(
                         end
             endcase
           end
-          else
-            begin
-                svl_reg1 <= i_finish; 
-            end
+//          else
+//            begin
+//                svl_reg1 <= i_finish; 
+//            end
       end
     end    
     
