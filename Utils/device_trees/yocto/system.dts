@@ -1762,20 +1762,28 @@
 
 	memory {
 		device_type = "memory";
-		reg = <0x0 0x0 0x0 0x40000000>;
+        linux,usable-memory =<0x0 0x0 0x0 0x0F000000>, <0x0 0x0F060000 0x0 0x30FA0000>;
 	};
-
 	reserved-memory {
-		#address-cells = <0x2>;
-		#size-cells = <0x2>;
-		my_reserve: my_reserve@50000000 {
-            reg = <0 0x50000000 0 0x20000>;
-            no-map;
-        };
-	};
-    my_device {
-        compatible = "my_device";
-        memory-region = <&my_reserve>;
-    
-	};
+    #address-cells = <1>;
+    #size-cells = <1>;
+    ranges;
+    ddr_memp0: amp_memp@0f000000 {
+     reg = <0x0f000000 0x010000>;
+    };
+    ddr_appcpu1: amp_appcpu1@0f010000 {
+     reg = <0x0f010000 0x050000>;
+    };    
+  };
+ 
+  memp0: ae_memp@0f000000 {
+    compatible = "ae,ddr_memp_1.0.a";
+    reg = <0x0f000000 0x010000>;   
+    memory-region = <&ddr_memp0>; 
+    rd_irq= <2>;
+    wr_irq= <1>;
+    mem_addr=<0x0F000000>;
+    mem_size=<0x010000>;
+  };
+
 };

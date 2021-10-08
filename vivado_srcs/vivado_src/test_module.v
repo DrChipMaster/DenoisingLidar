@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module test_module#(BRAM_SHIFT=2)(
+module test_module#(BRAM_SHIFT=3)(
     //AXI MODULE
     output reg[31:0] o_write_address,
     output reg[63:0] o_write_payload,
@@ -54,11 +54,11 @@ module test_module#(BRAM_SHIFT=2)(
     ///END AXI MODULE
     // BRAM CONNECTION
     output reg[31:0] addr_bram,
-    output reg[31:0] write_in_bram,
-    input wire[31:0] read_out_bram,
+    output reg[63:0] write_in_bram,
+    input wire[63:0] read_out_bram,
     output reg en_bram,
-    output wire rst_bram,
-    output reg[3:0] we_bram,
+    output reg rst_bram,
+    output reg[7:0] we_bram,
     // END BRAM CONNECTION
     
     input wire clk
@@ -68,111 +68,103 @@ module test_module#(BRAM_SHIFT=2)(
     assign o_led2 = i_AMU_P4[0];
     assign o_led3 = i_AMU_P8[0];
     assign o_led4 = i_AMU_P12[0];
-    assign rst_bram = rst;
+    //assign rst_bram = rst;
     reg init_transaction;
-    reg[4:0] state;
+    reg[8:0] state;
     reg[31:0] base_addr;
     always @(posedge clk)
     begin
         if(rst ==1)
         begin
-            case (state)
-                0:begin
-                    addr_bram <=0;
-                    if (read_out_bram >= 32'hfff) begin
-                        state <= 1;
-                        we_bram<= 3'h7;
-                        write_in_bram <= 0;
-                    end
-                    else
-                    begin
-                        we_bram <=0;
-                    end
-                end
-                1: begin
-                    we_bram <=0;
-                    addr_bram <= 1<<BRAM_SHIFT;
-                    state <=2;
-                end
-                2:begin
-                    addr_bram <= 2<<BRAM_SHIFT;
-                    base_addr <= read_out_bram;
-                    state <=3;
-                end
-                3:begin
-                    we_bram <=0;
-                    addr_bram <= 2<<BRAM_SHIFT;
-                    o_readAdress <=base_addr;
-                    o_write_address <= base_addr;
-                    o_initreadtxn <=1;
-                    state <= 4;
-                end 
-                4:begin
-                    o_initreadtxn <=0;
-                    if(i_read_TxnDone)
-                    begin
-                        state <= 5;
-                        we_bram<= 3'h7;
-                        write_in_bram <= i_AMU_P0;
-                    end
-                end
-                5:begin
-                    addr_bram <= 3<<BRAM_SHIFT;
-                    write_in_bram <= 32'hffff;
-                    state <=6;
-                end
-                6:begin
-                    addr_bram <= 0;
-                    write_in_bram <=0;
-                    we_bram <=0;
-                    state <=0;
-                end
-                default: state <=0; 
-            endcase
-          
-//        if (init_transaction==0)
-//                begin
-//                    o_initreadtxn <=1;
-//                    init_transaction<=1;
-//                    pulse_init <= 1;
+//            rst_bram <= 0;
+//            en_bram <=1;
+//            case (state)
+//                0:begin
+//                    addr_bram <=0;
+//                    if (read_out_bram >= 32'hfff) begin
+//                        state <= 1;
+//                        we_bram<= 7'hff;
+//                        write_in_bram <= 0;
+//                    end
+//                    else
+//                    begin
+//                        we_bram <=0;
+//                    end
 //                end
-//            //o_axi_reset <=0;
-//            o_readAdress <= 32'h50000000;
-//            o_write_address <= 32'h50000000;
-//            if(cycle_counter>50000)
-//            begin
-//                pulse_init <=1;
-//                cycle_counter <=0;
-//            end
-//            else 
-//            begin                
-//                cycle_counter <= cycle_counter +1;
-//                if(pulse_init)
-//                begin
-//                    pulse_init <=0;
-//                    o_initreadtxn <=1;
+//                1:begin
+//                    state<=2;
 //                end
-//                else
-//                begin
+//                2: begin
+//                    we_bram <=0;
+//                    addr_bram <= 1<<BRAM_SHIFT;
+//                    state <=3;
+//                end
+//                3:begin
+//                    addr_bram <= 1<<BRAM_SHIFT;
+//                    base_addr <= read_out_bram;
+//                    state <=4;
+//                end
+//                4:begin
+//                    we_bram <=0;
+//                    addr_bram <= 3<<BRAM_SHIFT;
+//                    o_readAdress <=read_out_bram;
+//                    o_write_address <= read_out_bram;
+//                    o_initreadtxn <=1;
+//                    state <= 5;
+//                end 
+//                5:begin
 //                    o_initreadtxn <=0;
+//                    if(i_read_TxnDone)
+//                    begin
+//                        state <= 6;
+//                        we_bram<= 7'hff;
+//                        write_in_bram <= i_AMU_P0;
+//                    end
 //                end
-            
-            
-//            else
-//            begin
-//                o_initreadtxn <=0;
-//                init_transaction<=0;
-//            end
-//                if (i_read_TxnDone)
-//                begin
-//                    cycle_counter <= 0;
-//                    pulse_init <=1;
+//                6:begin
+//                    addr_bram <= 4<<BRAM_SHIFT;
+//                    write_in_bram <= 32'hffff;
+//                    state <=7;
 //                end
-//                else
-//                begin
-//                    cycle_counter <= cycle_counter +1;
+//                7:begin
+//                    addr_bram <= 0;
+//                    write_in_bram <=0;
+//                    we_bram <=0;
+//                    state <=8;
 //                end
-            //end
+//                8:begin
+//                    state <=0;
+//                end
+//                default: state <=0; 
+//            endcase
+          
+        if (init_transaction==0)
+            begin
+                o_initreadtxn <=1;
+                init_transaction<=1;
+                pulse_init <= 1;
+            end
+            //o_axi_reset <=0;
+            o_readAdress <= 32'h0F000000;
+            o_write_address <= 32'h0F000000;
+            if(cycle_counter>50000)
+            begin
+                pulse_init <=1;
+                cycle_counter <=0;
+            end
+            else 
+            begin                
+                cycle_counter <= cycle_counter +1;
+                if(pulse_init)
+                begin
+                    pulse_init <=0;
+                    o_initreadtxn <=1;
+                end
+                else
+                begin
+                    o_initreadtxn <=0;
+                end
+            end
         end
         else
         begin
@@ -181,6 +173,8 @@ module test_module#(BRAM_SHIFT=2)(
             init_transaction <=0;
             pulse_init <=0;
             state <=0;
+            en_bram <=0;
+            rst_bram <= 1;
         end
     end
     

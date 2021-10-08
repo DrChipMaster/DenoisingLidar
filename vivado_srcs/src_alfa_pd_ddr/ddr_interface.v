@@ -6,7 +6,7 @@ module ddr_interface #(parameter N = 16,
                     CACHE_MULTIPLIER=1,
                     CACHE_FEEDER_MULTIPLIER=1,
                     AXI_MODULE_OUTPUTS = 15,
-                    DDR_BASE_ADDRESS =32'h000f0                    
+                    DDR_BASE_ADDRESS =32'h0F000000                    
                     )(
                     //DDR_MODULE CONNECTION
                     output reg[31:0] o_write_address,
@@ -39,7 +39,8 @@ module ddr_interface #(parameter N = 16,
                      input wire[3:0] i_filtertype,
                      output reg[15:0] o_finish,
                     //AXI lite Module
-                    input wire clock
+                    input wire clock,
+                    output reg[6:0] state
                     );
 
 
@@ -68,7 +69,7 @@ reg[N-1:0] point_pointer;
 reg [N-1:0] core_cache_status;
 reg [N-1:0] node_cache_status;
 
-reg[6:0] state;
+
 reg[6:0] next_state;
 
 
