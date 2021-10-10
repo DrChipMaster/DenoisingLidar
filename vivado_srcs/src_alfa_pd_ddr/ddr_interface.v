@@ -532,7 +532,7 @@ always @(posedge clock) begin
               if (fifo_empty == 1) begin
                   state <= 7;
                   next_state <=0;
-                  o_finish <=noise_points;
+                  o_finish <=noise_points+1;
               end
               else begin
                   noise_points <= noise_points +1;
