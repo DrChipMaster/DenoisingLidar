@@ -257,7 +257,7 @@ always @(posedge clock) begin    //axi interact block
         end
 
     end
-    else if (state == 3) begin
+    else if (state == 3 || parallel_fetch_feeder_cache==1) begin
         if (state3_start == 0) begin
             o_readAdress <= feeder_pos+DDR_BASE_ADDRESS+cycle_offset;
             o_initreadtxn <=1;
@@ -298,10 +298,10 @@ always @(posedge clock) begin    //State 2 block (update cluster cache)
     if (state == 2) begin
         for (i = 0 ;i<CORE_NUMBER ; i = i +1 ) begin
             if (i == 0) begin
-                cache_x = l1_cache_x[0];
-                cache_y = l1_cache_y[0];
-                cache_z = l1_cache_z[0];
-                cache_i = l1_cache_i[0];
+                cache_x = l1_cache_x[l1_cache_window_index];
+                cache_y = l1_cache_y[l1_cache_window_index];
+                cache_z = l1_cache_z[l1_cache_window_index];
+                cache_i = l1_cache_i[l1_cache_window_index];
             end
             else begin
                 cache_x = cache_x + (l1_cache_x[i+l1_cache_window_index]<<(i*N));
@@ -326,7 +326,7 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
         updating_l1_feeder_cache <=1;
         if (state3_start==0)begin   //gives the first start
             state3_start <=1;
-            feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;
+            //feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;
             feeder_l1_cache_status <= 1;
         end
         else if (i_read_TxnDone && update_cycle+1 < CACHE_FEEDER_MULTIPLIER-1) begin // keeps starting untill cache is full
@@ -354,9 +354,9 @@ always @(posedge clock) begin //state 4 block (Update feeder cache)
     if (state == 4 || parallel_update_feeder_cache == 1) begin
         for (i = 0 ;i<DISTANCE_MODULES ; i = i +1 ) begin
             if (i == 0) begin
-                cache_feeder_x = l1_fcache_x[0];
-                cache_feeder_y = l1_fcache_y[0];
-                cache_feeder_z = l1_fcache_z[0];
+                cache_feeder_x = l1_fcache_x[l1_feeder_cache_window_index];
+                cache_feeder_y = l1_fcache_y[l1_feeder_cache_window_index];
+                cache_feeder_z = l1_fcache_z[l1_feeder_cache_window_index];
             end
             else begin
                 cache_feeder_x = cache_feeder_x + (l1_fcache_x[i+l1_feeder_cache_window_index]<<(i*N));
