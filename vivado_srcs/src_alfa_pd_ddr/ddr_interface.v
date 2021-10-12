@@ -47,8 +47,8 @@ module ddr_interface #(parameter N = 16,
                     output reg[N-1:0] feeder_pos,
                     output wire[N-1:0] point_pointer,
                     output wire update_cache,
-                    output wire Controller_done
-                    
+                    output wire Controller_done,
+                    output reg pause                    
                     );
 
 
@@ -84,7 +84,6 @@ reg[6:0] next_state;
 reg read_fifo;
 reg reset;
 reg cache_updated;
-reg pause;
 
 reg updating_l1cache;
 reg updating_l1_feeder_cache;
