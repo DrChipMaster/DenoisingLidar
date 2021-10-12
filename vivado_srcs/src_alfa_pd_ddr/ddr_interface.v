@@ -568,7 +568,7 @@ end
         .cache_y(cache_y),
         .cache_z(cache_z),
         .cache_i(cache_i),
-        .point_cloud_size(i_point_cloud_size),
+        .point_cloud_size(i_pointcloud_size),
         .read_fifo(read_fifo),
         .filter_selector(i_filtertype),
         .cache_updated(cache_update),
