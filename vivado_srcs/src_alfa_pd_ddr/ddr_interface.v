@@ -40,7 +40,15 @@ module ddr_interface #(parameter N = 16,
                      output reg[15:0] o_finish,
                     //AXI lite Module
                     input wire clock,
-                    output reg[6:0] state
+                    //debug outputs
+                    output reg[6:0] state,
+                    output reg[N*CORE_NUMBER-1:0] cache_x,
+                    output reg[N*DISTANCE_MODULES-1:0]cache_feeder_x,
+                    output reg[N-1:0] feeder_pos,
+                    output wire[N-1:0] point_pointer,
+                    output wire update_cache,
+                    output wire Controller_done
+                    
                     );
 
 
@@ -50,7 +58,7 @@ reg[N*CORE_NUMBER-1:0] l1_cache_z[15*CACHE_MULTIPLIER-1:0];
 reg[N*CORE_NUMBER-1:0] l1_cache_i[15*CACHE_MULTIPLIER-1:0];
 
 
-reg[N*CORE_NUMBER-1:0] cache_x;
+//reg[N*CORE_NUMBER-1:0] cache_x;
 reg[N*CORE_NUMBER-1:0] cache_y;
 reg[N*CORE_NUMBER-1:0] cache_z;
 reg[N*CORE_NUMBER-1:0] cache_i;
@@ -63,9 +71,9 @@ reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
 reg[N*DISTANCE_MODULES-1:0]cache_feeder_y;
 reg[N*DISTANCE_MODULES-1:0]cache_feeder_z;
 
-reg[N-1:0] feeder_pos;
+//reg[N-1:0] feeder_pos;
 reg[N-1:0] point_updated;
-reg[N-1:0] point_pointer;
+//reg[N*2-1:0] point_pointer;
 reg [N-1:0] core_cache_status;
 reg [N-1:0] node_cache_status;
 
@@ -89,8 +97,8 @@ reg[8:0] l1_feeder_cache_window_index;
 
 wire[N*2-1:0] point_pos;
 wire[N-1:0] outlier_from_fifo;
-wire update_cache;
-wire Controller_done;
+//wire update_cache;
+//wire Controller_done;
 wire fifo_empty;
 reg[CACHE_MULTIPLIER-1:0] update_cycle;
 
@@ -459,6 +467,11 @@ always @(posedge clock) begin
                   starting <=1;
                   noise_points<=0;
                   o_finish <=0;
+                  reset <=0;
+              end
+              else
+              begin
+               reset <=1;
               end
           end 
           1:begin //Fetch l1 cache
@@ -550,6 +563,7 @@ always @(posedge clock) begin
         starting <= 0;
         stored_update_cache <=0;
         o_finish <=0;
+        reset<=1;
     end
 end
 
@@ -574,7 +588,7 @@ end
         .cache_updated(cache_update),
         .pause(pause),
         .outlier_pos_fifo(outlier_from_fifo),
-        .point_pos(point_pos),
+        .point_pos(point_pointer),
         .empty(fifo_empty),
         .update_cache(update_cache),
         .done(Controller_done)
