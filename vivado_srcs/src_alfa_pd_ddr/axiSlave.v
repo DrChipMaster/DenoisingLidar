@@ -296,10 +296,10 @@ module AXI_lite_Slave #(
                         end
             endcase
           end
-//          else
-//            begin
-//                svl_reg1 <= i_finish; 
-//            end
+          else
+            begin
+                slv_reg1 <= i_finish; 
+            end
       end
     end    
     

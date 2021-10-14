@@ -49,7 +49,9 @@ module ddr_interface #(parameter N = 16,
                     output wire update_cache,
                     output wire Controller_done,
                     output reg pause,
-                    output reg[1:0] feeder_l1_cache_status                    
+                    output reg[1:0] feeder_l1_cache_status,
+                    output reg read_fifo,
+                    output wire fifo_empty                
                     );
 
 
@@ -82,7 +84,7 @@ reg [N-1:0] node_cache_status;
 reg[6:0] next_state;
 
 
-reg read_fifo;
+//reg read_fifo;
 reg reset;
 reg cache_updated;
 
@@ -99,7 +101,7 @@ wire[N*2-1:0] point_pos;
 wire[N-1:0] outlier_from_fifo;
 //wire update_cache;
 //wire Controller_done;
-wire fifo_empty;
+//wire fifo_empty;
 reg[CACHE_MULTIPLIER-1:0] update_cycle;
 
 wire[CACHE_MULTIPLIER-1:0] cycle_offset;
@@ -241,7 +243,7 @@ always @(posedge clock) begin    //update l1 feeder cache
     end
 end
 
-wire [N-1:0] read_offset;
+wire [N*2-1:0] read_offset;
 assign read_offset = cycle_offset + DDR_BASE_ADDRESS;
 always @(posedge clock) begin    //axi interact block
     if(o_initreadtxn)begin
@@ -339,8 +341,16 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
         else if (i_read_TxnDone && update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1) begin  //module finish, cleaning
             state3_start <=0;
             feeder_l1_cache_status <=2;
-            feeder_pos <= feeder_pos + (update_cycle+1)*AXI_MODULE_OUTPUTS;  //Update feeder_pos
+            if (feeder_pos + AXI_MODULE_OUTPUTS> i_pointcloud_size ) begin
+                feeder_pos<=0;
+            end
+            else begin
+                feeder_pos <= feeder_pos + (update_cycle+1)*AXI_MODULE_OUTPUTS;  //Update feeder_pos
+            end
         end
+    end
+    else if(state ==0) begin
+        feeder_pos<=0;
     end
     else if (rst==0) begin
         state3_start <=0;
@@ -437,7 +447,7 @@ always @(posedge clock) begin
             end
             else if (read_fifo <=1) begin
                 state6_start<=1;
-                read_fifo <=0;
+                read_fifo <=1;
             end
             else if (state6_start==1)begin   //gives the first start
                 o_write_address <=DDR_BASE_ADDRESS+outlier_from_fifo;
@@ -449,6 +459,12 @@ always @(posedge clock) begin
             else if (i_write_TxnDone) begin
                 whait_axi <=0;
             end
+            else if (fifo_empty) begin
+                read_fifo <=0;
+            end
+        end
+        else begin
+             read_fifo <=0;
         end
     end
     else if (rst==0) begin
@@ -521,8 +537,11 @@ always @(posedge clock) begin
                 
                   
           end
-          5: begin //signal handling  
-              if(update_cache)begin
+          5: begin //signal handling
+              if (Controller_done) begin
+                  state <=6;
+              end
+              else if(update_cache)begin
                   pause <=1;
                   if (feeder_l1_cache_status >=2) begin
                       state<=2;
@@ -536,9 +555,6 @@ always @(posedge clock) begin
                       state <=2;
                       stored_update_cache <=0;
                   end
-              end
-              else if (Controller_done) begin
-                  state <=6;
               end
               else if (parallel_update_feeder_cache) begin
                   pause <=0;
