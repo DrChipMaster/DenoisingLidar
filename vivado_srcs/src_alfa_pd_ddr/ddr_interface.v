@@ -2,7 +2,7 @@
 
 module ddr_interface #(parameter N = 16,
                     DISTANCE_MODULES = 1,
-                    CORE_NUMBER = 4,
+                    CORE_NUMBER = 2,
                     CACHE_MULTIPLIER=1,
                     CACHE_FEEDER_MULTIPLIER=1,
                     AXI_MODULE_OUTPUTS = 15,
@@ -67,7 +67,7 @@ reg[N*DISTANCE_MODULES-1:0] l1_fcache_x[15*CACHE_FEEDER_MULTIPLIER-1:0];
 reg[N*DISTANCE_MODULES-1:0] l1_fcache_y[15*CACHE_FEEDER_MULTIPLIER-1:0];
 reg[N*DISTANCE_MODULES-1:0] l1_fcache_z[15*CACHE_FEEDER_MULTIPLIER-1:0];
 
-reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
+//reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
 reg[N*DISTANCE_MODULES-1:0]cache_feeder_y;
 reg[N*DISTANCE_MODULES-1:0]cache_feeder_z;
 
@@ -334,6 +334,8 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
         else if (i_read_TxnDone && update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1) begin  //module finish, cleaning
             state3_start <=0;
             feeder_l1_cache_status <=2;
+            feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;
+
         end
     end
     else if (rst==0) begin
@@ -467,6 +469,7 @@ always @(posedge clock) begin
                   noise_points<=0;
                   o_finish <=0;
                   reset <=0;
+                  pause <=1;
               end
               else
               begin
@@ -563,6 +566,7 @@ always @(posedge clock) begin
         stored_update_cache <=0;
         o_finish <=0;
         reset<=1;
+        pause <=1;
     end
 end
 
