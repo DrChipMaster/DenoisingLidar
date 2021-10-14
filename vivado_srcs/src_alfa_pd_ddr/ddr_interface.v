@@ -48,7 +48,8 @@ module ddr_interface #(parameter N = 16,
                     output wire[N-1:0] point_pointer,
                     output wire update_cache,
                     output wire Controller_done,
-                    output reg pause                    
+                    output reg pause,
+                    output reg[1:0] feeder_l1_cache_status                    
                     );
 
 
@@ -240,31 +241,35 @@ always @(posedge clock) begin    //update l1 feeder cache
     end
 end
 
-
+wire [N-1:0] read_offset;
+assign read_offset = cycle_offset + DDR_BASE_ADDRESS;
 always @(posedge clock) begin    //axi interact block
     if(o_initreadtxn)begin
             o_initreadtxn <=0;
     end
     else if (state==1) begin
         if (state1_start == 0) begin
-            o_readAdress <= point_pointer +1 + cycle_offset;
+            o_readAdress <= point_pointer +1 + read_offset;
             o_initreadtxn <=1;
         end
         else if (i_read_TxnDone && update_cycle < CACHE_MULTIPLIER-1) begin
             o_initreadtxn <=1;
-            o_readAdress <= point_pointer +2 + cycle_offset+AXI_MODULE_OUTPUTS;
+            o_readAdress <= point_pointer +1 + read_offset;
         end
 
     end
     else if (state == 3 || parallel_fetch_feeder_cache==1) begin
         if (state3_start == 0) begin
-            o_readAdress <= feeder_pos+DDR_BASE_ADDRESS+cycle_offset;
+            o_readAdress <= feeder_pos+read_offset;
             o_initreadtxn <=1;
         end
         else if (i_read_TxnDone && update_cycle < CACHE_FEEDER_MULTIPLIER-1) begin
             o_initreadtxn <=1;
-            o_readAdress <= feeder_pos+DDR_BASE_ADDRESS+cycle_offset;
+            o_readAdress <= feeder_pos+read_offset;
         end
+    end
+    else if (rst == 1) begin
+        o_readAdress <= DDR_BASE_ADDRESS;
     end
 end
 
@@ -328,14 +333,13 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
             //feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;
             feeder_l1_cache_status <= 1;
         end
-        else if (i_read_TxnDone && update_cycle+1 < CACHE_FEEDER_MULTIPLIER-1) begin // keeps starting untill cache is full
+        /*else if (i_read_TxnDone && update_cycle+1 < CACHE_FEEDER_MULTIPLIER-1) begin // keeps starting untill cache is full
             feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;
-        end 
+        end */
         else if (i_read_TxnDone && update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1) begin  //module finish, cleaning
             state3_start <=0;
             feeder_l1_cache_status <=2;
-            feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;
-
+            feeder_pos <= feeder_pos + (update_cycle+1)*AXI_MODULE_OUTPUTS;  //Update feeder_pos
         end
     end
     else if (rst==0) begin
