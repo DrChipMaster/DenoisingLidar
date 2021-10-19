@@ -57,7 +57,14 @@ module ddr_interface #(parameter N = 16,
                     output wire[CORE_NUMBER-1:0] outlier,
                     output reg parallel_fetch_feeder_cache,
                     output reg parallel_update_feeder_cache,
-                    output wire [15*CACHE_FEEDER_MULTIPLIER-1:0] debug_l1_fcache_x_0                 
+                    output wire [15*CACHE_FEEDER_MULTIPLIER-1:0] debug_l1_fcache_x_0,
+                    output wire [15*CACHE_MULTIPLIER-1:0] debug_l1_cache_x_0,
+                    output wire [15*CACHE_MULTIPLIER-1:0] debug_l1_cache_y_0,
+                    output wire [15*CACHE_MULTIPLIER-1:0] debug_l1_cache_z_0,
+                    output wire [15*CACHE_MULTIPLIER-1:0] debug_l1_cache_i_0,
+                    output reg updating_l1cache,
+                    output reg updating_l1_feeder_cache,
+                    output reg [1:0]init_read_owner
                     );
 
 
@@ -67,6 +74,12 @@ reg[N*CORE_NUMBER-1:0] l1_cache_z[15*CACHE_MULTIPLIER-1:0];
 reg[N*CORE_NUMBER-1:0] l1_cache_i[15*CACHE_MULTIPLIER-1:0];
 
 assign debug_l1_fcache_x_0 = l1_fcache_x[0];
+assign debug_l1_cache_x_0 = l1_cache_x[0];
+assign debug_l1_cache_y_0 = l1_cache_y[0];
+assign debug_l1_cache_z_0 = l1_cache_z[0];
+assign debug_l1_cache_i_0 = l1_cache_i[0];
+
+
 //reg[N*CORE_NUMBER-1:0] cache_x;
 reg[N*CORE_NUMBER-1:0] cache_y;
 reg[N*CORE_NUMBER-1:0] cache_z;
@@ -94,8 +107,8 @@ reg[6:0] next_state;
 reg reset;
 reg cache_updated;
 
-reg updating_l1cache;
-reg updating_l1_feeder_cache;
+//reg updating_l1cache;
+//reg updating_l1_feeder_cache;
 reg[1:0] feeder_l1_cache_status;  //0 -> outdated; 1-> updating; 2->updated; 
 reg[1:0] cluster_l1_cache_status;  //0 -> outdated; 1-> updating; 2->updated; 
 
@@ -117,7 +130,7 @@ assign cycle_offset = update_cycle * AXI_MODULE_OUTPUTS;
 reg[15:0] noise_points;
 
 always @(posedge clock) begin
-    if(i_read_TxnDone && updating_l1cache)
+    if(i_read_TxnDone && (init_read_owner==1))
     begin
         //Updating x l1 cache
         l1_cache_x[0+cycle_offset] <= i_AMU_P0[15:0];
@@ -197,7 +210,7 @@ always @(posedge clock) begin
 end
 
 always @(posedge clock) begin    //update l1 feeder cache
-    if (i_read_TxnDone && updating_l1_feeder_cache)
+    if (i_read_TxnDone && (init_read_owner==2))
     begin
         l1_fcache_x[0+cycle_offset] <= i_AMU_P0[15:0];
         l1_fcache_x[1+cycle_offset] <= i_AMU_P1[15:0];
@@ -251,32 +264,62 @@ end
 
 wire [N*2-1:0] read_offset;
 assign read_offset = cycle_offset + DDR_BASE_ADDRESS;
+//reg [1:0]init_read_owner;
+reg[1:0] delay_owner;
 always @(posedge clock) begin    //axi interact block
     if(o_initreadtxn)begin
             o_initreadtxn <=0;
     end
     else if (state==1) begin
-        if (state1_start == 1) begin
+        if (state1_start == 0) begin
             o_readAdress <= ((point_pointer +1)<<3) +DDR_BASE_ADDRESS;
             o_initreadtxn <=1;
+            delay_owner<=1;    //main cache owns axi
+        end
+        else if (delay_owner>0) begin
+            delay_owner <=0;
+            init_read_owner<=delay_owner;
         end
         else if (i_read_TxnDone && (update_cycle < CACHE_MULTIPLIER-1)&&(state1_start==1)) begin
             o_initreadtxn <=1;
             o_readAdress <= ((point_pointer +1+cycle_offset)<<3) +DDR_BASE_ADDRESS;
+            delay_owner<=1;    //main cache owns axi
+        end
+        else if (i_read_TxnDone) begin
+            delay_owner <=3; //transaction ended, no one owns axi
         end
     end
-    else if ((((state == 3) || (parallel_fetch_feeder_cache==1))&&(stored_update_cache==0)) && (state!=1) ) begin
+    else if ((state == 3) || (parallel_fetch_feeder_cache==1)) begin
         if (state3_start == 0) begin
             o_readAdress <= (((feeder_pos)<<3)+DDR_BASE_ADDRESS);
             o_initreadtxn <=1;
+            delay_owner<=2;    //main cache owns axi
+        end
+        else if (delay_owner>0) begin
+            delay_owner <=0;
+            init_read_owner<=delay_owner;
+            if(delay_owner==3) begin
+                init_read_owner<=0;
+            end
         end
         else if (i_read_TxnDone && (update_cycle < CACHE_FEEDER_MULTIPLIER-1)&& (start_new_trans==0)&& (stored_update_cache==0)) begin
             o_initreadtxn <=1;
+            delay_owner<=2;    //main cache owns axi
             o_readAdress <= (((feeder_pos+cycle_offset)<<3)+DDR_BASE_ADDRESS);
         end
+        else if (i_read_TxnDone) begin
+            delay_owner <=3; //transaction ended, no one owns axi
+        end
+
     end
     else if (rst == 1) begin
         o_readAdress <= DDR_BASE_ADDRESS;
+        init_read_owner <=0;
+        delay_owner <=0;
+    end
+    else begin
+        init_read_owner <=0;
+        delay_owner <=0;
     end
 end
 
@@ -305,9 +348,12 @@ always @(posedge clock) begin   //fetch l1 cache (fetch l1 cluster cache )
         updating_l1cache <=0;
         sleep_1cycle_state1 <=1;
     end
+    else if ((state ==3) || (parallel_fetch_feeder_cache == 1)) begin
+        updating_l1cache <=0;
+    end
     else begin
         state1_start <=0;
-        updating_l1cache <=0;
+        //updating_l1cache <=0;
         sleep_1cycle_state1 <=1;
     end
     
@@ -345,7 +391,7 @@ end
 reg state3_start;
 reg start_new_trans;
 always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
-    if (state == 3 || parallel_fetch_feeder_cache == 1) begin
+    if ((state == 3) || (parallel_fetch_feeder_cache == 1)) begin
         updating_l1_feeder_cache <=1;
         if (state3_start==0)begin   //gives the first start
             state3_start <=1;
@@ -382,9 +428,9 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
         updating_l1_feeder_cache <=0;
         start_new_trans<=1;
     end
-    else begin
+    else if (state==1) begin
         updating_l1_feeder_cache <=0;
-    end
+    end 
 end
 
 
@@ -424,6 +470,7 @@ end
 
 
 reg start_state5;
+reg delay_state5;
 always @(posedge clock) begin //state 5 block (Signal handling)   //mark for debug
     if (rst == 1) begin
         if (state==5) begin
@@ -432,13 +479,19 @@ always @(posedge clock) begin //state 5 block (Signal handling)   //mark for deb
                 parallel_fetch_feeder_cache <=0;
                 parallel_update_feeder_cache <=0;
                 start_state5 <=0;
+                delay_state5<=0;
             end
             else if ((l1_feeder_cache_window_index+DISTANCE_MODULES) >=(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER)) begin
                 parallel_update_feeder_cache <= 0;
                 parallel_fetch_feeder_cache <= 1;
             end
-            else if (i_read_TxnDone && (update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1)) begin
+            else if (delay_state5) begin
+                delay_state5<=0;
                 parallel_update_feeder_cache <=1;
+            end
+            else if (i_read_TxnDone && (update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1)) begin
+                //parallel_update_feeder_cache <=1;
+                delay_state5 <=1;
                 parallel_fetch_feeder_cache <= 1;
             end
             else if (start_state5 == 0) begin
@@ -455,12 +508,14 @@ always @(posedge clock) begin //state 5 block (Signal handling)   //mark for deb
         else begin
                 parallel_fetch_feeder_cache <=0;
                 parallel_update_feeder_cache <=0;
+                delay_state5<=0;
         end
     end
     else begin
         parallel_fetch_feeder_cache <=0;
         parallel_update_feeder_cache <=0;
         start_state5 <=0;
+        delay_state5 <=0;
     end
 end
 
@@ -534,7 +589,8 @@ always @(posedge clock) begin
           end 
           1:begin //Fetch l1 cache
               if (i_read_TxnDone && (update_cycle+1 >= CACHE_MULTIPLIER-1) && (sleep_1cycle_state1==0)) begin   //Se recebeu uma trançasao, e nao precisa de fazer mais nenhuma transaçao
-                  state<=2;
+                  next_state<=2;
+                  state<=7;
               end
               block_1cycle<=0;
           end
