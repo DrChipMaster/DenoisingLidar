@@ -97,7 +97,7 @@ begin
     i_start = 1;
     i_pointcloud_size=point_cloud_size;
     i_write_TxnDone <=0;
-    i_filtertype = 0;
+    i_filtertype = 2;
     #10;
     rst =1;
 end
@@ -160,14 +160,18 @@ always @(posedge clock) begin
         i_write_TxnDone <=0;
     end
     else if (awnser_clocks>0)begin
-        if(cycle_counter>20)begin
+        if(awnser_clocks>20)begin
             i_write_TxnDone <=1;
             awnser_clocks<=0;
         end
-        else if (cycle_counter==15) begin
+        else if (awnser_clocks==15) begin
             x_array[o_write_address]=0;
             y_array[o_write_address]=0;
             z_array[o_write_address]=0;
+            awnser_clocks <=awnser_clocks+1;
+        end
+        else begin
+            awnser_clocks <=awnser_clocks+1;
         end
     end
 end

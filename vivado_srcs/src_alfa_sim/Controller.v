@@ -78,7 +78,7 @@ module Controller #(parameter N = 16,
     reg fifo_reset;
     reg blocked;
     integer i,k;
-    
+    reg [N-1:0] noise_points;
 reg starting;
     always @(posedge clock)
     begin
@@ -91,6 +91,7 @@ reg starting;
             fifo_write_size    <= 0;
             fifo_reset <=0;
             blocked <=0;
+            noise_points <=0;
             for (i = 0;i<CORE_NUMBER;i = i+1)   // Give points to all cores
             begin
                 reset_core[i] <= 1;
@@ -157,15 +158,16 @@ reg starting;
                 
             if (fifo_write_size >= 1 )   // fifo_buffer has enough points to store
             begin
-                write_fifo = 1;
-                output_to_fifo = fifo_buffer[fifo_write_size-1];
-                fifo_write_size <= fifo_write_size-1; // update fifo buffer lenght
+                write_fifo <= 1;
+                noise_points <= noise_points+1;
+                output_to_fifo <= fifo_buffer[fifo_write_size-1];
+                fifo_write_size = fifo_write_size-1; // update fifo buffer lenght
             end
-            else write_fifo = 0;  //disable fifo write
+            else write_fifo <= 0;  //disable fifo write
             
             if (point_pos>=point_cloud_size)  // check if point cloud validation was finished
             begin
-                write_fifo = 0; 
+                write_fifo <= 0; 
                 done       <= 1;  // flag that controller has finished
             end
                 

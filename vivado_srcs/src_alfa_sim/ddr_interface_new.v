@@ -689,6 +689,9 @@ always @(posedge clock) begin
         o_write_address<=0;
         o_write_payload <=0;
     end
+    else if(state==0) begin
+        noise_points<=0;
+    end
     
 end
 
