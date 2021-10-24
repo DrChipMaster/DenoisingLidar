@@ -168,6 +168,7 @@ always @(posedge clock) begin
             x_array[o_write_address]=0;
             y_array[o_write_address]=0;
             z_array[o_write_address]=0;
+            $fwrite(f_point,"%d\n",o_write_address);
             awnser_clocks <=awnser_clocks+1;
         end
         else begin

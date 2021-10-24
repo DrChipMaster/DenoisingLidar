@@ -132,8 +132,9 @@ reg starting;
                         fifo_buffer[fifo_write_size] = point_pos_buffer[i];
                         fifo_write_size              = fifo_write_size +1;
                     end
-                    point_pos           = point_pos + 1;   //update core base point and saves the pointer
+
                     point_pos_buffer[i] = point_pos  ;
+                    point_pos           = point_pos + 1;   //update core base point and saves the pointer
                     point_x[i] <= cache_x[(finish_counter+1)*N-1 -:N];
                     point_y[i] <= cache_y[(finish_counter+1)*N-1 -:N];
                     point_z[i] <= cache_z[(finish_counter+1)*N-1 -:N];
