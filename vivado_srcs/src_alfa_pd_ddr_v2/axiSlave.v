@@ -37,7 +37,7 @@ module AXI_lite_Slave #(
         input wire  [15:0] i_finish,
         output wire [31:0] o_pointcloud_size,
         output wire [3:0] o_filtertype,
-        
+        output wire [15:0] o_finish_read,
         // User ports ends
         // Do not modify the ports beyond this line
     
@@ -435,6 +435,7 @@ module AXI_lite_Slave #(
     // Add user logic here
     assign o_pointcloud_size = slv_reg2;
     assign o_filtertype = slv_reg0[5:2];
+    assign o_finish_read = slv_reg1[15:0];
     // User logic ends
 
 endmodule

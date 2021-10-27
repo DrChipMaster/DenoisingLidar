@@ -25,13 +25,13 @@ Main goal of this module
 
 module validator_core #(parameter N = 16,
                         DISTANCE_MODULES = 8,
-                        NEIGHBOR_TRESHOLD = 30,   //default 22
+                        NEIGHBOR_TRESHOLD = 50,//default 22
                         MIN_SEARCH_RADIUS = 1,
                         MULTI_PARAMETER=1,
                         ANGULAR_RESOLUTION=8,   //Manually calculate, suposed to be 0.3 
                         INTENSITY_TRESHOLD = 4,
                         SEARCH_RADIUS_R = 50,
-                        NEIGHBOR_TRESHOLD_R = 5
+                        NEIGHBOR_TRESHOLD_R = 8
                         )
 
                        (

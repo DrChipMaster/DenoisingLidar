@@ -118,7 +118,7 @@ reg starting;
            if(pause==0 && blocked ==0)
            begin
            if (starting) begin
-                //point_pos <= CORE_NUMBER-1;
+//                //point_pos <= CORE_NUMBER-1;
                 starting<=0;
             end
             finish_counter     = 0;
@@ -133,7 +133,7 @@ reg starting;
                         fifo_write_size              = fifo_write_size +1;
                     end
                     point_pos_buffer[i] = point_pos  ;
-                    point_pos           = point_pos + 1;   //update core base point and saves the pointer
+                    point_pos           = point_pos + 1;   //update core base point and saves the pointer                    
                     point_x[i] <= cache_x[(finish_counter+1)*N-1 -:N];
                     point_y[i] <= cache_y[(finish_counter+1)*N-1 -:N];
                     point_z[i] <= cache_z[(finish_counter+1)*N-1 -:N];
@@ -161,7 +161,7 @@ reg starting;
                 write_fifo <= 1;
                 noise_points <= noise_points+1;
                 output_to_fifo <= fifo_buffer[fifo_write_size-1];
-                fifo_write_size = fifo_write_size-1; // update fifo buffer lenght
+                fifo_write_size <= fifo_write_size-1; // update fifo buffer lenght
             end
             else write_fifo <= 0;  //disable fifo write
             

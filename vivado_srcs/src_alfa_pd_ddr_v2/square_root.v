@@ -34,7 +34,7 @@ module square_root #(parameter N = 32)
     
     always @(posedge clock)
     begin
-        sq_root = 0;
+        //sq_root = 0;
         a     = num;
         q     = 0;
         i     = 0;
