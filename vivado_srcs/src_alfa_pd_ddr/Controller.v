@@ -41,7 +41,10 @@ module Controller #(parameter N = 16,
                     output reg[N*2-1:0] point_pos,
                     output wire empty,
                     output reg  update_cache,
-                    output reg done);
+                    output reg done,
+                    output wire [CORE_NUMBER-1:0]inlier,
+                    output  wire [CORE_NUMBER-1:0]outlier 
+                    );
     
     
     reg [N-1:0] point_x [CORE_NUMBER-1:0];
@@ -61,8 +64,8 @@ module Controller #(parameter N = 16,
     wire [N*DISTANCE_MODULES-1:0] cp_y;
     wire [N*DISTANCE_MODULES-1:0] cp_z;
     
-    wire inlier [CORE_NUMBER-1:0];
-    wire outlier [CORE_NUMBER-1:0];
+    //wire inlier [CORE_NUMBER-1:0];
+    //wire outlier [CORE_NUMBER-1:0];
     wire full;
     
     reg [N-1:0] output_to_fifo ;
