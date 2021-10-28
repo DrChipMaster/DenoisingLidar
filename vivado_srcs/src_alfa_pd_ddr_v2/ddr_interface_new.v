@@ -5,7 +5,7 @@ module ddr_interface #(parameter N = 16,
                     CORE_NUMBER = 4,
                     CACHE_MULTIPLIER=1,
                     CACHE_FEEDER_MULTIPLIER=1,
-                    AXI_MODULE_OUTPUTS = 15,
+                    AXI_MODULE_OUTPUTS = 31,
                     DDR_BASE_ADDRESS =32'h0F000000                    
                     )(
                     //DDR_MODULE CONNECTION
@@ -29,6 +29,24 @@ module ddr_interface #(parameter N = 16,
                     input wire[63:0] i_AMU_P12,
                     input wire[63:0] i_AMU_P13,
                     input wire[63:0] i_AMU_P14,
+                    input wire[63:0] i_AMU_P15,
+                    input wire[63:0] i_AMU_P16,
+                    input wire[63:0] i_AMU_P17,
+                    input wire[63:0] i_AMU_P18,
+                    input wire[63:0] i_AMU_P19,
+                    input wire[63:0] i_AMU_P20,
+                    input wire[63:0] i_AMU_P21,
+                    input wire[63:0] i_AMU_P22,
+                    input wire[63:0] i_AMU_P23,
+                    input wire[63:0] i_AMU_P24,
+                    input wire[63:0] i_AMU_P25,
+                    input wire[63:0] i_AMU_P26,
+                    input wire[63:0] i_AMU_P27,
+                    input wire[63:0] i_AMU_P28,
+                    input wire[63:0] i_AMU_P29,
+                    input wire[63:0] i_AMU_P30,
+                    input wire[63:0] i_AMU_P31,
+
                     input wire rst,
                     input wire i_write_TxnDone,
                     input wire i_read_TxnDone,
@@ -190,6 +208,24 @@ always @(posedge clock) begin
         l1_cache_x[12+cycle_offset] <= i_AMU_P12[15:0];
         l1_cache_x[13+cycle_offset] <= i_AMU_P13[15:0];
         l1_cache_x[14+cycle_offset] <= i_AMU_P14[15:0];
+        l1_cache_x[15+cycle_offset] <= i_AMU_P15[15:0];
+        l1_cache_x[16+cycle_offset] <= i_AMU_P16[15:0];
+        l1_cache_x[17+cycle_offset] <= i_AMU_P17[15:0];
+        l1_cache_x[18+cycle_offset] <= i_AMU_P18[15:0];
+        l1_cache_x[19+cycle_offset] <= i_AMU_P19[15:0];
+        l1_cache_x[20+cycle_offset] <= i_AMU_P20[15:0];
+        l1_cache_x[21+cycle_offset] <= i_AMU_P21[15:0];
+        l1_cache_x[22+cycle_offset] <= i_AMU_P22[15:0];
+        l1_cache_x[23+cycle_offset] <= i_AMU_P23[15:0];
+        l1_cache_x[24+cycle_offset] <= i_AMU_P24[15:0];
+        l1_cache_x[25+cycle_offset] <= i_AMU_P25[15:0];
+        l1_cache_x[26+cycle_offset] <= i_AMU_P26[15:0];
+        l1_cache_x[27+cycle_offset] <= i_AMU_P27[15:0];
+        l1_cache_x[28+cycle_offset] <= i_AMU_P28[15:0];
+        l1_cache_x[29+cycle_offset] <= i_AMU_P29[15:0];
+        l1_cache_x[30+cycle_offset] <= i_AMU_P30[15:0];
+        l1_cache_x[31+cycle_offset] <= i_AMU_P31[15:0];
+
         //Updating y l1 cache
         l1_cache_y[0+cycle_offset] <= i_AMU_P0[31:16];
         l1_cache_y[1+cycle_offset] <= i_AMU_P1[31:16];

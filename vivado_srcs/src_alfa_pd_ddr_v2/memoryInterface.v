@@ -24,7 +24,7 @@ module ddr_memoryInterface_AXI #(
     parameter  C_M_TARGET_SLAVE_BASE_ADDR	= 32'h00000000,
     // Burst Length. Supports 1, 2, 4, 8, 16, 32, 64, 128, 256 burst lengths
     parameter integer C_M_AXI_BURST_LEN_WRITE	= 1,
-    parameter integer C_M_AXI_BURST_LEN_READ	= 16,
+    parameter integer C_M_AXI_BURST_LEN_READ	= 32,
     // Thread ID Width
     parameter integer C_M_AXI_ID_WIDTH	= 6,
     // Width of Address Bus
@@ -40,7 +40,8 @@ module ddr_memoryInterface_AXI #(
     // Width of User Read Data Bus
     parameter integer C_M_AXI_RUSER_WIDTH	= 1,
     // Width of User Response Bus
-    parameter integer C_M_AXI_BUSER_WIDTH	= 1
+    parameter integer C_M_AXI_BUSER_WIDTH	= 1,
+    parameter integer MU_SIZE               =31
     )(
     
     input wire [31:0] i_MU_writeAddress,
@@ -62,6 +63,25 @@ module ddr_memoryInterface_AXI #(
     output [63:0] o_AMU_P12,
     output [63:0] o_AMU_P13,
     output [63:0] o_AMU_P14,
+    output [63:0] o_AMU_P15,
+    output [63:0] o_AMU_P16,
+    output [63:0] o_AMU_P17,
+    output [63:0] o_AMU_P18,
+    output [63:0] o_AMU_P19,
+    output [63:0] o_AMU_P20,
+    output [63:0] o_AMU_P21,
+    output [63:0] o_AMU_P22,
+    output [63:0] o_AMU_P23,
+    output [63:0] o_AMU_P24,
+    output [63:0] o_AMU_P25,
+    output [63:0] o_AMU_P26,
+    output [63:0] o_AMU_P27,
+    output [63:0] o_AMU_P28,
+    output [63:0] o_AMU_P29,
+    output [63:0] o_AMU_P30,
+    output [63:0] o_AMU_P31,
+
+
     
     // Initiate AXI transactions
     input wire  i_MI_initWriteTxn,
@@ -211,7 +231,7 @@ module ddr_memoryInterface_AXI #(
 		
 	reg [1:0] mst_exec_state_write;
 	reg [1:0] mst_exec_state_read;
-	reg [63:0] point_reg [0:15];
+	reg [63:0] point_reg [0:MU_SIZE];
 
 	///AXI4 internal temp signals
 	reg [C_M_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -317,6 +337,26 @@ module ddr_memoryInterface_AXI #(
     assign o_AMU_P12 = point_reg[12];
     assign o_AMU_P13 = point_reg[13];
     assign o_AMU_P14 = point_reg[14];
+    assign o_AMU_P15 = point_reg[15];
+    assign o_AMU_P16 = point_reg[16];
+    assign o_AMU_P17 = point_reg[17];
+    assign o_AMU_P18 = point_reg[18];
+    assign o_AMU_P19 = point_reg[19];
+    assign o_AMU_P20 = point_reg[20];
+    assign o_AMU_P21 = point_reg[21];
+    assign o_AMU_P22 = point_reg[22];
+    assign o_AMU_P23 = point_reg[23];
+    assign o_AMU_P24 = point_reg[24];
+    assign o_AMU_P25 = point_reg[25];
+    assign o_AMU_P26 = point_reg[26];
+    assign o_AMU_P27 = point_reg[27];
+    assign o_AMU_P28 = point_reg[28];
+    assign o_AMU_P29 = point_reg[29];
+    assign o_AMU_P30 = point_reg[30];
+    assign o_AMU_P31 = point_reg[31];
+
+
+
 	  
 	 //--------------------
 	//Write Address Channel
@@ -603,7 +643,7 @@ module ddr_memoryInterface_AXI #(
 	  always @(posedge M_AXI_ACLK)                                          
 	  begin                                                                 
 	    if (M_AXI_ARESETN == 0 || i_MI_initReadTxn == 1'b1) begin                                                             
-            for (i=0;i<15;i=i+1) point_reg[i] <= 0;     
+            for (i=0;i<MU_SIZE;i=i+1) point_reg[i] <= 0;     
         end                                                               
             //Only check data when RVALID is active                             
             else if (rnext)                  
