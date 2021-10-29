@@ -163,10 +163,10 @@ always @(posedge clock) begin
         //point_pointer_base <= point_post_buffer;
         //Updating x l1 cache
         for ( index=0 ; index<AXI_MODULE_OUTPUTS ; index = index +1 ) begin
-            l1_cache_x[index+cycle_offset] <= i_AMU_P[15+(64*index):0+((64*index))];
-            l1_cache_y[index+cycle_offset] <= i_AMU_P[31+(64*index):16+((64*index))];
-            l1_cache_z[index+cycle_offset] <= i_AMU_P[47+(64*index):32+((64*index))];
-            l1_cache_i[index+cycle_offset] <= i_AMU_P[63+(64*index):48+((64*index))];
+            l1_cache_x[index+cycle_offset] <= i_AMU_P[15+(64*index) -:N];
+            l1_cache_y[index+cycle_offset] <= i_AMU_P[31+(64*index)-:N];
+            l1_cache_z[index+cycle_offset] <= i_AMU_P[47+(64*index)-:N];
+            l1_cache_i[index+cycle_offset] <= i_AMU_P[63+(64*index)-:N];
         end
     end
     else if (rst==0 || state==0) begin
@@ -201,10 +201,9 @@ always @(posedge clock) begin    //update l1 feeder cache
         if (l1_feeder_cache_window_index==0) begin
             hold_cache<=0;
             for ( index=0 ; index<AXI_MODULE_OUTPUTS ; index = index +1 ) begin
-                l1_fcache_x[index+cycle_offset] <= i_AMU_P[15+(64*index):0+((64*index))];
-                l1_fcache_y[index+cycle_offset] <= i_AMU_P[31+(64*index):16+((64*index))];
-                l1_fcache_z[index+cycle_offset] <= i_AMU_P[47+(64*index):32+((64*index))];
-                l1_fcache_i[index+cycle_offset] <= i_AMU_P[63+(64*index):48+((64*index))];
+                l1_fcache_x[index+cycle_offset] <= i_AMU_P[15+(64*index)-:N];
+                l1_fcache_y[index+cycle_offset] <= i_AMU_P[31+(64*index)-:N];
+                l1_fcache_z[index+cycle_offset] <= i_AMU_P[47+(64*index)-:N];
             end
         end
         else begin

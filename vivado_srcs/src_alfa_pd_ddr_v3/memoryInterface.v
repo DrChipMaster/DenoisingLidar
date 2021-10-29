@@ -288,11 +288,11 @@ module MI_memoryInterface_AXI #(
 	  
 	assign o_MI_error = error_reg;
 
-	genvar i;
 	
 	generate
-		for (i=0;i<C_M_AXI_BURST_LEN_READ;i=i+1) begin
-			assign o_AMU_P[64*i+63:64*i] = point_reg[i];
+		genvar vargen;
+		for (vargen=0;vargen<C_M_AXI_BURST_LEN_READ;vargen=vargen+1) begin
+			assign o_AMU_P[64*vargen+63:64*vargen] = point_reg[vargen];
 		end
 		
 	endgenerate
