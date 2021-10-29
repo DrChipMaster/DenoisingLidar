@@ -47,7 +47,7 @@ module MI_memoryInterface_AXI #(
     input wire [63:0] i_MU_writePayload,
     input wire [31:0] i_MU_readAddress,
     
-    output [63*(C_M_AXI_BURST_LEN_READ-1):0] o_AMU_P,
+    output [(64*C_M_AXI_BURST_LEN_READ)-1:0] o_AMU_P,
 
     // Initiate AXI transactions
     input wire  i_MI_initWriteTxn,
