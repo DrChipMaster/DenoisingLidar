@@ -208,23 +208,7 @@ always @(posedge clock) begin
         l1_cache_x[12+cycle_offset] <= i_AMU_P12[15:0];
         l1_cache_x[13+cycle_offset] <= i_AMU_P13[15:0];
         l1_cache_x[14+cycle_offset] <= i_AMU_P14[15:0];
-        l1_cache_x[15+cycle_offset] <= i_AMU_P15[15:0];
-        l1_cache_x[16+cycle_offset] <= i_AMU_P16[15:0];
-        l1_cache_x[17+cycle_offset] <= i_AMU_P17[15:0];
-        l1_cache_x[18+cycle_offset] <= i_AMU_P18[15:0];
-        l1_cache_x[19+cycle_offset] <= i_AMU_P19[15:0];
-        l1_cache_x[20+cycle_offset] <= i_AMU_P20[15:0];
-        l1_cache_x[21+cycle_offset] <= i_AMU_P21[15:0];
-        l1_cache_x[22+cycle_offset] <= i_AMU_P22[15:0];
-        l1_cache_x[23+cycle_offset] <= i_AMU_P23[15:0];
-        l1_cache_x[24+cycle_offset] <= i_AMU_P24[15:0];
-        l1_cache_x[25+cycle_offset] <= i_AMU_P25[15:0];
-        l1_cache_x[26+cycle_offset] <= i_AMU_P26[15:0];
-        l1_cache_x[27+cycle_offset] <= i_AMU_P27[15:0];
-        l1_cache_x[28+cycle_offset] <= i_AMU_P28[15:0];
-        l1_cache_x[29+cycle_offset] <= i_AMU_P29[15:0];
-        l1_cache_x[30+cycle_offset] <= i_AMU_P30[15:0];
-        l1_cache_x[31+cycle_offset] <= i_AMU_P31[15:0];
+
 
         //Updating y l1 cache
         l1_cache_y[0+cycle_offset] <= i_AMU_P0[31:16];
@@ -242,6 +226,7 @@ always @(posedge clock) begin
         l1_cache_y[12+cycle_offset] <= i_AMU_P12[31:16];
         l1_cache_y[13+cycle_offset] <= i_AMU_P13[31:16];
         l1_cache_y[14+cycle_offset] <= i_AMU_P14[31:16];
+
         //Updating z l1 cache
         l1_cache_z[0+cycle_offset] <= i_AMU_P0[47:32];
         l1_cache_z[1+cycle_offset] <= i_AMU_P1[47:32];
@@ -258,6 +243,7 @@ always @(posedge clock) begin
         l1_cache_z[12+cycle_offset] <= i_AMU_P12[47:32];
         l1_cache_z[13+cycle_offset] <= i_AMU_P13[47:32];
         l1_cache_z[14+cycle_offset] <= i_AMU_P14[47:32];
+
         //updating i l1 cache
         l1_cache_i[0+cycle_offset] <= i_AMU_P0[63:48];
         l1_cache_i[1+cycle_offset] <= i_AMU_P1[63:48];
@@ -274,6 +260,81 @@ always @(posedge clock) begin
         l1_cache_i[12+cycle_offset] <= i_AMU_P12[63:48];
         l1_cache_i[13+cycle_offset] <= i_AMU_P13[63:48];
         l1_cache_i[14+cycle_offset] <= i_AMU_P14[63:48];
+
+        if (AXI_MODULE_OUTPUTS>15) begin
+            l1_cache_x[15+cycle_offset] <= i_AMU_P15[15:0];
+            l1_cache_x[16+cycle_offset] <= i_AMU_P16[15:0];
+            l1_cache_x[17+cycle_offset] <= i_AMU_P17[15:0];
+            l1_cache_x[18+cycle_offset] <= i_AMU_P18[15:0];
+            l1_cache_x[19+cycle_offset] <= i_AMU_P19[15:0];
+            l1_cache_x[20+cycle_offset] <= i_AMU_P20[15:0];
+            l1_cache_x[21+cycle_offset] <= i_AMU_P21[15:0];
+            l1_cache_x[22+cycle_offset] <= i_AMU_P22[15:0];
+            l1_cache_x[23+cycle_offset] <= i_AMU_P23[15:0];
+            l1_cache_x[24+cycle_offset] <= i_AMU_P24[15:0];
+            l1_cache_x[25+cycle_offset] <= i_AMU_P25[15:0];
+            l1_cache_x[26+cycle_offset] <= i_AMU_P26[15:0];
+            l1_cache_x[27+cycle_offset] <= i_AMU_P27[15:0];
+            l1_cache_x[28+cycle_offset] <= i_AMU_P28[15:0];
+            l1_cache_x[29+cycle_offset] <= i_AMU_P29[15:0];
+            l1_cache_x[30+cycle_offset] <= i_AMU_P30[15:0];
+            l1_cache_x[31+cycle_offset] <= i_AMU_P31[15:0];
+
+            l1_cache_y[15+cycle_offset] <= i_AMU_P15[31:16];
+            l1_cache_y[16+cycle_offset] <= i_AMU_P16[31:16];
+            l1_cache_y[17+cycle_offset] <= i_AMU_P17[31:16];
+            l1_cache_y[18+cycle_offset] <= i_AMU_P18[31:16];
+            l1_cache_y[19+cycle_offset] <= i_AMU_P19[31:16];
+            l1_cache_y[20+cycle_offset] <= i_AMU_P20[31:16];
+            l1_cache_y[21+cycle_offset] <= i_AMU_P21[31:16];
+            l1_cache_y[22+cycle_offset] <= i_AMU_P22[31:16];
+            l1_cache_y[23+cycle_offset] <= i_AMU_P23[31:16];
+            l1_cache_y[24+cycle_offset] <= i_AMU_P24[31:16];
+            l1_cache_y[25+cycle_offset] <= i_AMU_P25[31:16];
+            l1_cache_y[26+cycle_offset] <= i_AMU_P26[31:16];
+            l1_cache_y[27+cycle_offset] <= i_AMU_P27[31:16];
+            l1_cache_y[28+cycle_offset] <= i_AMU_P28[31:16];
+            l1_cache_y[29+cycle_offset] <= i_AMU_P29[31:16];
+            l1_cache_y[30+cycle_offset] <= i_AMU_P30[31:16];
+            l1_cache_y[31+cycle_offset] <= i_AMU_P31[31:16];
+
+
+            l1_cache_z[15+cycle_offset] <= i_AMU_P15[47:32];
+            l1_cache_z[16+cycle_offset] <= i_AMU_P16[47:32];
+            l1_cache_z[17+cycle_offset] <= i_AMU_P17[47:32];
+            l1_cache_z[18+cycle_offset] <= i_AMU_P18[47:32];
+            l1_cache_z[19+cycle_offset] <= i_AMU_P19[47:32];
+            l1_cache_z[20+cycle_offset] <= i_AMU_P20[47:32];
+            l1_cache_z[21+cycle_offset] <= i_AMU_P21[47:32];
+            l1_cache_z[22+cycle_offset] <= i_AMU_P22[47:32];
+            l1_cache_z[23+cycle_offset] <= i_AMU_P23[47:32];
+            l1_cache_z[24+cycle_offset] <= i_AMU_P24[47:32];
+            l1_cache_z[25+cycle_offset] <= i_AMU_P25[47:32];
+            l1_cache_z[26+cycle_offset] <= i_AMU_P26[47:32];
+            l1_cache_z[27+cycle_offset] <= i_AMU_P27[47:32];
+            l1_cache_z[28+cycle_offset] <= i_AMU_P28[47:32];
+            l1_cache_z[29+cycle_offset] <= i_AMU_P29[47:32];
+            l1_cache_z[30+cycle_offset] <= i_AMU_P30[47:32];
+            l1_cache_z[31+cycle_offset] <= i_AMU_P31[47:32];
+
+            l1_cache_i[15+cycle_offset] <= i_AMU_P15[63:48];
+            l1_cache_i[16+cycle_offset] <= i_AMU_P16[63:48];
+            l1_cache_i[17+cycle_offset] <= i_AMU_P17[63:48];
+            l1_cache_i[18+cycle_offset] <= i_AMU_P18[63:48];
+            l1_cache_i[19+cycle_offset] <= i_AMU_P19[63:48];
+            l1_cache_i[20+cycle_offset] <= i_AMU_P20[63:48];
+            l1_cache_i[21+cycle_offset] <= i_AMU_P21[63:48];
+            l1_cache_i[22+cycle_offset] <= i_AMU_P22[63:48];
+            l1_cache_i[23+cycle_offset] <= i_AMU_P23[63:48];
+            l1_cache_i[24+cycle_offset] <= i_AMU_P24[63:48];
+            l1_cache_i[25+cycle_offset] <= i_AMU_P25[63:48];
+            l1_cache_i[26+cycle_offset] <= i_AMU_P26[63:48];
+            l1_cache_i[27+cycle_offset] <= i_AMU_P27[63:48];
+            l1_cache_i[28+cycle_offset] <= i_AMU_P28[63:48];
+            l1_cache_i[29+cycle_offset] <= i_AMU_P29[63:48];
+            l1_cache_i[30+cycle_offset] <= i_AMU_P30[63:48];
+            l1_cache_i[31+cycle_offset] <= i_AMU_P31[63:48];
+        end
     end
     else if (rst==0 || state==0) begin
         for (index= 0;index<CACHE_MULTIPLIER*AXI_MODULE_OUTPUTS ;index = index+CACHE_MULTIPLIER) begin
@@ -292,6 +353,8 @@ always @(posedge clock) begin
             l1_cache_x[12+index] <=0;
             l1_cache_x[13+index] <=0;
             l1_cache_x[14+index] <=0;
+
+
             //Updating y l1 cache
             l1_cache_y[0+index] <=  0;
             l1_cache_y[1+index] <=  0;
@@ -308,6 +371,7 @@ always @(posedge clock) begin
             l1_cache_y[12+index] <= 0;
             l1_cache_y[13+index] <= 0;
             l1_cache_y[14+index] <= 0;
+
             //Updating z l1 cache
             l1_cache_z[0+index] <=  0;
             l1_cache_z[1+index] <=  0;
@@ -324,6 +388,7 @@ always @(posedge clock) begin
             l1_cache_z[12+index] <= 0;
             l1_cache_z[13+index] <= 0;
             l1_cache_z[14+index] <= 0;
+
             //updating i l1 cache
             l1_cache_i[0+index] <=  0;
             l1_cache_i[1+index] <=  0;
@@ -340,6 +405,85 @@ always @(posedge clock) begin
             l1_cache_i[12+index] <= 0;
             l1_cache_i[13+index] <= 0;
             l1_cache_i[14+index] <= 0;
+
+
+
+
+
+
+            if (AXI_MODULE_OUTPUTS>15) begin
+                l1_cache_x[15+index] <= 0;
+                l1_cache_x[16+index] <= 0;
+                l1_cache_x[17+index] <= 0;
+                l1_cache_x[18+index] <= 0;
+                l1_cache_x[19+index] <= 0;
+                l1_cache_x[20+index] <= 0;
+                l1_cache_x[21+index] <= 0;
+                l1_cache_x[22+index] <= 0;
+                l1_cache_x[23+index] <= 0;
+                l1_cache_x[24+index] <= 0;
+                l1_cache_x[25+index] <=0;
+                l1_cache_x[26+index] <=0;
+                l1_cache_x[27+index] <=0;
+                l1_cache_x[28+index] <=0;
+                l1_cache_x[29+index] <=0;
+                l1_cache_x[30+index] <=0;
+                l1_cache_x[31+index] <=0;
+
+                l1_cache_y[15+index] <= 0;
+                l1_cache_y[16+index] <= 0;
+                l1_cache_y[17+index] <= 0;
+                l1_cache_y[18+index] <= 0;
+                l1_cache_y[19+index] <= 0;
+                l1_cache_y[20+index] <= 0;
+                l1_cache_y[21+index] <= 0;
+                l1_cache_y[22+index] <= 0;
+                l1_cache_y[23+index] <= 0;
+                l1_cache_y[24+index] <= 0;
+                l1_cache_y[25+index] <=0;
+                l1_cache_y[26+index] <=0;
+                l1_cache_y[27+index] <=0;
+                l1_cache_y[28+index] <=0;
+                l1_cache_y[29+index] <=0;
+                l1_cache_y[30+index] <=0;
+                l1_cache_y[31+index] <=0;
+
+                l1_cache_z[15+index] <= 0;
+                l1_cache_z[16+index] <= 0;
+                l1_cache_z[17+index] <= 0;
+                l1_cache_z[18+index] <= 0;
+                l1_cache_z[19+index] <= 0;
+                l1_cache_z[20+index] <= 0;
+                l1_cache_z[21+index] <= 0;
+                l1_cache_z[22+index] <= 0;
+                l1_cache_z[23+index] <= 0;
+                l1_cache_z[24+index] <= 0;
+                l1_cache_z[25+index] <=0;
+                l1_cache_z[26+index] <=0;
+                l1_cache_z[27+index] <=0;
+                l1_cache_z[28+index] <=0;
+                l1_cache_z[29+index] <=0;
+                l1_cache_z[30+index] <=0;
+                l1_cache_z[31+index] <=0;
+
+                l1_cache_i[15+index] <= 0;
+                l1_cache_i[16+index] <= 0;
+                l1_cache_i[17+index] <= 0;
+                l1_cache_i[18+index] <= 0;
+                l1_cache_i[19+index] <= 0;
+                l1_cache_i[20+index] <= 0;
+                l1_cache_i[21+index] <= 0;
+                l1_cache_i[22+index] <= 0;
+                l1_cache_i[23+index] <= 0;
+                l1_cache_i[24+index] <= 0;
+                l1_cache_i[25+index] <=0;
+                l1_cache_i[26+index] <=0;
+                l1_cache_i[27+index] <=0;
+                l1_cache_i[28+index] <=0;
+                l1_cache_i[29+index] <=0;
+                l1_cache_i[30+index] <=0;
+                l1_cache_i[31+index] <=0;
+            end
         end
     end
 end
@@ -411,6 +555,82 @@ always @(posedge clock) begin    //update l1 feeder cache
             l1_fcache_z[12+cycle_offset] <= i_AMU_P12[47:32];
             l1_fcache_z[13+cycle_offset] <= i_AMU_P13[47:32];
             l1_fcache_z[14+cycle_offset] <= i_AMU_P14[47:32];
+
+
+            if (AXI_MODULE_OUTPUTS>15) begin
+                l1_fcache_x[15+cycle_offset] <= i_AMU_P15[15:0];
+                l1_fcache_x[16+cycle_offset] <= i_AMU_P16[15:0];
+                l1_fcache_x[17+cycle_offset] <= i_AMU_P17[15:0];
+                l1_fcache_x[18+cycle_offset] <= i_AMU_P18[15:0];
+                l1_fcache_x[19+cycle_offset] <= i_AMU_P19[15:0];
+                l1_fcache_x[20+cycle_offset] <= i_AMU_P20[15:0];
+                l1_fcache_x[21+cycle_offset] <= i_AMU_P21[15:0];
+                l1_fcache_x[22+cycle_offset] <= i_AMU_P22[15:0];
+                l1_fcache_x[23+cycle_offset] <= i_AMU_P23[15:0];
+                l1_fcache_x[24+cycle_offset] <= i_AMU_P24[15:0];
+                l1_fcache_x[25+cycle_offset] <= i_AMU_P25[15:0];
+                l1_fcache_x[26+cycle_offset] <= i_AMU_P26[15:0];
+                l1_fcache_x[27+cycle_offset] <= i_AMU_P27[15:0];
+                l1_fcache_x[28+cycle_offset] <= i_AMU_P28[15:0];
+                l1_fcache_x[29+cycle_offset] <= i_AMU_P29[15:0];
+                l1_fcache_x[30+cycle_offset] <= i_AMU_P30[15:0];
+                l1_fcache_x[31+cycle_offset] <= i_AMU_P31[15:0];
+
+                l1_fcache_y[15+cycle_offset] <= i_AMU_P15[31:16];
+                l1_fcache_y[16+cycle_offset] <= i_AMU_P16[31:16];
+                l1_fcache_y[17+cycle_offset] <= i_AMU_P17[31:16];
+                l1_fcache_y[18+cycle_offset] <= i_AMU_P18[31:16];
+                l1_fcache_y[19+cycle_offset] <= i_AMU_P19[31:16];
+                l1_fcache_y[20+cycle_offset] <= i_AMU_P20[31:16];
+                l1_fcache_y[21+cycle_offset] <= i_AMU_P21[31:16];
+                l1_fcache_y[22+cycle_offset] <= i_AMU_P22[31:16];
+                l1_fcache_y[23+cycle_offset] <= i_AMU_P23[31:16];
+                l1_fcache_y[24+cycle_offset] <= i_AMU_P24[31:16];
+                l1_fcache_y[25+cycle_offset] <= i_AMU_P25[31:16];
+                l1_fcache_y[26+cycle_offset] <= i_AMU_P26[31:16];
+                l1_fcache_y[27+cycle_offset] <= i_AMU_P27[31:16];
+                l1_fcache_y[28+cycle_offset] <= i_AMU_P28[31:16];
+                l1_fcache_y[29+cycle_offset] <= i_AMU_P29[31:16];
+                l1_fcache_y[30+cycle_offset] <= i_AMU_P30[31:16];
+                l1_fcache_y[31+cycle_offset] <= i_AMU_P31[31:16];
+
+
+                l1_fcache_z[15+cycle_offset] <= i_AMU_P15[47:32];
+                l1_fcache_z[16+cycle_offset] <= i_AMU_P16[47:32];
+                l1_fcache_z[17+cycle_offset] <= i_AMU_P17[47:32];
+                l1_fcache_z[18+cycle_offset] <= i_AMU_P18[47:32];
+                l1_fcache_z[19+cycle_offset] <= i_AMU_P19[47:32];
+                l1_fcache_z[20+cycle_offset] <= i_AMU_P20[47:32];
+                l1_fcache_z[21+cycle_offset] <= i_AMU_P21[47:32];
+                l1_fcache_z[22+cycle_offset] <= i_AMU_P22[47:32];
+                l1_fcache_z[23+cycle_offset] <= i_AMU_P23[47:32];
+                l1_fcache_z[24+cycle_offset] <= i_AMU_P24[47:32];
+                l1_fcache_z[25+cycle_offset] <= i_AMU_P25[47:32];
+                l1_fcache_z[26+cycle_offset] <= i_AMU_P26[47:32];
+                l1_fcache_z[27+cycle_offset] <= i_AMU_P27[47:32];
+                l1_fcache_z[28+cycle_offset] <= i_AMU_P28[47:32];
+                l1_fcache_z[29+cycle_offset] <= i_AMU_P29[47:32];
+                l1_fcache_z[30+cycle_offset] <= i_AMU_P30[47:32];
+                l1_fcache_z[31+cycle_offset] <= i_AMU_P31[47:32];
+
+                l1_fcache_i[15+cycle_offset] <= i_AMU_P15[63:48];
+                l1_fcache_i[16+cycle_offset] <= i_AMU_P16[63:48];
+                l1_fcache_i[17+cycle_offset] <= i_AMU_P17[63:48];
+                l1_fcache_i[18+cycle_offset] <= i_AMU_P18[63:48];
+                l1_fcache_i[19+cycle_offset] <= i_AMU_P19[63:48];
+                l1_fcache_i[20+cycle_offset] <= i_AMU_P20[63:48];
+                l1_fcache_i[21+cycle_offset] <= i_AMU_P21[63:48];
+                l1_fcache_i[22+cycle_offset] <= i_AMU_P22[63:48];
+                l1_fcache_i[23+cycle_offset] <= i_AMU_P23[63:48];
+                l1_fcache_i[24+cycle_offset] <= i_AMU_P24[63:48];
+                l1_fcache_i[25+cycle_offset] <= i_AMU_P25[63:48];
+                l1_fcache_i[26+cycle_offset] <= i_AMU_P26[63:48];
+                l1_fcache_i[27+cycle_offset] <= i_AMU_P27[63:48];
+                l1_fcache_i[28+cycle_offset] <= i_AMU_P28[63:48];
+                l1_fcache_i[29+cycle_offset] <= i_AMU_P29[63:48];
+                l1_fcache_i[30+cycle_offset] <= i_AMU_P30[63:48];
+                l1_fcache_i[31+cycle_offset] <= i_AMU_P31[63:48];
+            end
         end
         else begin
             hold_cache <=1;
@@ -467,6 +687,79 @@ always @(posedge clock) begin    //update l1 feeder cache
             l1_fcache_z[13+index] <= 0;
             l1_fcache_z[14+index] <= 0;
             //updating i l1 cache
+            if (AXI_MODULE_OUTPUTS>15) begin
+                l1_fcache_x[15+index] <= 0;
+                l1_fcache_x[16+index] <= 0;
+                l1_fcache_x[17+index] <= 0;
+                l1_fcache_x[18+index] <= 0;
+                l1_fcache_x[19+index] <= 0;
+                l1_fcache_x[20+index] <= 0;
+                l1_fcache_x[21+index] <= 0;
+                l1_fcache_x[22+index] <= 0;
+                l1_fcache_x[23+index] <= 0;
+                l1_fcache_x[24+index] <= 0;
+                l1_fcache_x[25+index] <=0;
+                l1_fcache_x[26+index] <=0;
+                l1_fcache_x[27+index] <=0;
+                l1_fcache_x[28+index] <=0;
+                l1_fcache_x[29+index] <=0;
+                l1_fcache_x[30+index] <=0;
+                l1_fcache_x[31+index] <=0;
+
+                l1_fcache_y[15+index] <= 0;
+                l1_fcache_y[16+index] <= 0;
+                l1_fcache_y[17+index] <= 0;
+                l1_fcache_y[18+index] <= 0;
+                l1_fcache_y[19+index] <= 0;
+                l1_fcache_y[20+index] <= 0;
+                l1_fcache_y[21+index] <= 0;
+                l1_fcache_y[22+index] <= 0;
+                l1_fcache_y[23+index] <= 0;
+                l1_fcache_y[24+index] <= 0;
+                l1_fcache_y[25+index] <=0;
+                l1_fcache_y[26+index] <=0;
+                l1_fcache_y[27+index] <=0;
+                l1_fcache_y[28+index] <=0;
+                l1_fcache_y[29+index] <=0;
+                l1_fcache_y[30+index] <=0;
+                l1_fcache_y[31+index] <=0;
+
+                l1_fcache_z[15+index] <= 0;
+                l1_fcache_z[16+index] <= 0;
+                l1_fcache_z[17+index] <= 0;
+                l1_fcache_z[18+index] <= 0;
+                l1_fcache_z[19+index] <= 0;
+                l1_fcache_z[20+index] <= 0;
+                l1_fcache_z[21+index] <= 0;
+                l1_fcache_z[22+index] <= 0;
+                l1_fcache_z[23+index] <= 0;
+                l1_fcache_z[24+index] <= 0;
+                l1_fcache_z[25+index] <=0;
+                l1_fcache_z[26+index] <=0;
+                l1_fcache_z[27+index] <=0;
+                l1_fcache_z[28+index] <=0;
+                l1_fcache_z[29+index] <=0;
+                l1_fcache_z[30+index] <=0;
+                l1_fcache_z[31+index] <=0;
+
+                l1_fcache_i[15+index] <= 0;
+                l1_fcache_i[16+index] <= 0;
+                l1_fcache_i[17+index] <= 0;
+                l1_fcache_i[18+index] <= 0;
+                l1_fcache_i[19+index] <= 0;
+                l1_fcache_i[20+index] <= 0;
+                l1_fcache_i[21+index] <= 0;
+                l1_fcache_i[22+index] <= 0;
+                l1_fcache_i[23+index] <= 0;
+                l1_fcache_i[24+index] <= 0;
+                l1_fcache_i[25+index] <=0;
+                l1_fcache_i[26+index] <=0;
+                l1_fcache_i[27+index] <=0;
+                l1_fcache_i[28+index] <=0;
+                l1_fcache_i[29+index] <=0;
+                l1_fcache_i[30+index] <=0;
+                l1_fcache_i[31+index] <=0;
+            end
         
         end
     end
