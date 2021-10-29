@@ -1,0 +1,16 @@
+List of CLB Tiles
+CLEM_X50Y160
+CLEL_R_X50Y160
+CLEM_X21Y293
+CLEL_R_X21Y293
+CLEM_X13Y256
+CLEL_R_X13Y256
+CLEM_X12Y285
+CLEL_R_X12Y285
+
+List of Congested Nets
+design_1_i/ddr_interface_0/inst/m_controller/O[1]
+design_1_i/ddr_interface_0/inst/m_controller/O[0]
+design_1_i/ddr_interface_0/inst/l1_fcache_z[96][10]_i_12_n_0
+design_1_i/ddr_interface_0/inst/l1_fcache_z[96][10]_i_9_n_0
+
