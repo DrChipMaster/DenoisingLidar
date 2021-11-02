@@ -52,8 +52,8 @@
 
 (* X_CORE_INFO = "MI_memoryInterface_AXI,Vivado 2021.1.1" *)
 (* CHECK_LICENSE_TYPE = "design_1_MI_memoryInterface_A_0_0,MI_memoryInterface_AXI,{}" *)
-(* CORE_GENERATION_INFO = "design_1_MI_memoryInterface_A_0_0,MI_memoryInterface_AXI,{x_ipProduct=Vivado 2021.1.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=MI_memoryInterface_AXI,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M_TARGET_SLAVE_BASE_ADDR=0x00000000,C_M_AXI_BURST_LEN_WRITE=1,C_M_AXI_BURST_LEN_READ=100,C_M_AXI_ID_WIDTH=6,C_M_AXI_ADDR_WIDTH=32,C_M_AXI_DATA_WIDTH=64,C_M_AXI_AWUSER_WIDTH=2,C_M_AXI_ARUSER_WIDTH=2,C_M_AXI_WUSER_WIDTH=1,C_M_AXI_RUSER_WIDTH=1,C_M_AXI_BUSER_W\
-IDTH=1}" *)
+(* CORE_GENERATION_INFO = "design_1_MI_memoryInterface_A_0_0,MI_memoryInterface_AXI,{x_ipProduct=Vivado 2021.1.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=MI_memoryInterface_AXI,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_M_TARGET_SLAVE_BASE_ADDR=0x00000000,C_M_AXI_BURST_LEN_WRITE=1,C_M_AXI_BURST_LEN_READ=32,C_M_AXI_ID_WIDTH=6,C_M_AXI_ADDR_WIDTH=32,C_M_AXI_DATA_WIDTH=64,C_M_AXI_AWUSER_WIDTH=2,C_M_AXI_ARUSER_WIDTH=2,C_M_AXI_WUSER_WIDTH=1,C_M_AXI_RUSER_WIDTH=1,C_M_AXI_BUSER_WI\
+DTH=1}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_MI_memoryInterface_A_0_0 (
@@ -115,7 +115,7 @@ module design_1_MI_memoryInterface_A_0_0 (
 input wire [31 : 0] i_MU_writeAddress;
 input wire [63 : 0] i_MU_writePayload;
 input wire [31 : 0] i_MU_readAddress;
-output wire [6399 : 0] o_AMU_P;
+output wire [2047 : 0] o_AMU_P;
 input wire i_MI_initWriteTxn;
 input wire i_MI_initReadTxn;
 output wire o_MI_writeTxnDone;
@@ -217,7 +217,7 @@ output wire M_AXI_RREADY;
   MI_memoryInterface_AXI #(
     .C_M_TARGET_SLAVE_BASE_ADDR(32'H00000000),
     .C_M_AXI_BURST_LEN_WRITE(1),
-    .C_M_AXI_BURST_LEN_READ(100),
+    .C_M_AXI_BURST_LEN_READ(32),
     .C_M_AXI_ID_WIDTH(6),
     .C_M_AXI_ADDR_WIDTH(32),
     .C_M_AXI_DATA_WIDTH(64),

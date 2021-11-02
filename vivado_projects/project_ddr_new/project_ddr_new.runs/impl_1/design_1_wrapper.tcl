@@ -115,7 +115,6 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
-set_msg_config -id {Common 17-41} -limit 10000000
 set_msg_config -id {HDL-1065} -limit 10000
 
 OPTRACE "impl_1" START { ROLLUP_1 }
@@ -125,6 +124,8 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 4
+  set_param xicom.use_bs_reader 1
+  set_param tcl.collectionResultDisplayLimit 0
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xczu7ev-ffvc1156-2-e
   set_property board_part xilinx.com:zcu104:part0:1.1 [current_project]
@@ -134,9 +135,11 @@ OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
   set_property webtalk.parent_dir /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.cache/wt [current_project]
   set_property parent.project_path /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.xpr [current_project]
+  set_property ip_repo_paths /home/andre/DenoisingLidar/vivado_projects/ip_repo/axi_slave_1.0 [current_project]
+  update_ip_catalog
   set_property ip_output_repo /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
-  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
   add_files -quiet /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/design_1_wrapper.dcp
@@ -312,7 +315,7 @@ set rc [catch {
   create_msg_db write_bitstream.pb
 OPTRACE "read constraints: write_bitstream" START { }
 OPTRACE "read constraints: write_bitstream" END { }
-  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
   catch { write_mem_info -force -no_partial_mmi design_1_wrapper.mmi }
 OPTRACE "write_bitstream setup" END { }
 OPTRACE "write_bitstream" START { }

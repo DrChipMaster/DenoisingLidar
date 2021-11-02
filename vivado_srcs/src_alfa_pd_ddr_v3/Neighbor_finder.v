@@ -54,11 +54,11 @@ module distance_calculator #(parameter N = 16,
             if (vector_z[N-1] == 1'b1) begin
                 vector_z = -vector_z;
             end
-            num_in <= ((vector_x**2)+ (vector_y**2)+(vector_z**2));
+            num_in = ((vector_x**2)+ (vector_y**2)+(vector_z**2));
         end
         else
         begin
-            num_in <= (vector_x**2)+ (vector_y**2);
+            num_in = (vector_x**2)+ (vector_y**2);
         end
     end
     

@@ -2,14 +2,17 @@
 # Vivado v2021.1.1 (64-bit)
 # SW Build 3286242 on Wed Jul 28 13:09:46 MDT 2021
 # IP Build 3279568 on Wed Jul 28 16:48:48 MDT 2021
-# Start of session at: Fri Oct 29 16:36:36 2021
-# Process ID: 15480
+# Start of session at: Mon Nov  1 22:44:57 2021
+# Process ID: 1505439
 # Current directory: /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1
 # Command line: vivado -log design_1_zynq_ultra_ps_e_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_zynq_ultra_ps_e_0_0.tcl
 # Log file: /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1/design_1_zynq_ultra_ps_e_0_0.vds
 # Journal file: /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1/vivado.jou
 #-----------------------------------------------------------
 source design_1_zynq_ultra_ps_e_0_0.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/andre/DenoisingLidar/vivado_projects/ip_repo/axi_slave_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/andre/Vivado/Vivado/2021.1/data/ip'.
 Command: synth_design -top design_1_zynq_ultra_ps_e_0_0 -part xczu7ev-ffvc1156-2-e -mode out_of_context
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xczu7ev'
@@ -17,9 +20,9 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu7ev
 INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 15696
+INFO: [Synth 8-7075] Helper process launched with PID 1505591
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:32 . Memory (MB): peak = 2762.133 ; gain = 48.719 ; free physical = 143 ; free virtual = 12190
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2761.668 ; gain = 48.750 ; free physical = 413 ; free virtual = 15044
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'design_1_zynq_ultra_ps_e_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/synth/design_1_zynq_ultra_ps_e_0_0.v:59]
 INFO: [Synth 8-6157] synthesizing module 'zynq_ultra_ps_e_v3_3_5_zynq_ultra_ps_e' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/hdl/zynq_ultra_ps_e_v3_3_5.v:311]
@@ -96,18 +99,18 @@ WARNING: [Synth 8-7071] port 'emio_enet3_signal_detect' of module 'zynq_ultra_ps
 WARNING: [Synth 8-7023] instance 'inst' of module 'zynq_ultra_ps_e_v3_3_5_zynq_ultra_ps_e' has 1491 connections declared, but only 1487 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/synth/design_1_zynq_ultra_ps_e_0_0.v:482]
 INFO: [Synth 8-6155] done synthesizing module 'design_1_zynq_ultra_ps_e_0_0' (4#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/synth/design_1_zynq_ultra_ps_e_0_0.v:59]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:37 . Memory (MB): peak = 2813.070 ; gain = 99.656 ; free physical = 1403 ; free virtual = 14551
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2814.605 ; gain = 101.688 ; free physical = 274 ; free virtual = 14037
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:43 . Memory (MB): peak = 2830.883 ; gain = 117.469 ; free physical = 142 ; free virtual = 13183
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2832.418 ; gain = 119.500 ; free physical = 218 ; free virtual = 13982
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:43 . Memory (MB): peak = 2830.883 ; gain = 117.469 ; free physical = 142 ; free virtual = 13183
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2832.418 ; gain = 119.500 ; free physical = 218 ; free virtual = 13982
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2841.789 ; gain = 0.000 ; free physical = 129 ; free virtual = 12243
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2839.355 ; gain = 0.000 ; free physical = 1805 ; free virtual = 15573
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -115,19 +118,18 @@ Initializing timing engine
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/design_1_zynq_ultra_ps_e_0_0_ooc.xdc] for cell 'inst'
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/design_1_zynq_ultra_ps_e_0_0_ooc.xdc] for cell 'inst'
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/design_1_zynq_ultra_ps_e_0_0.xdc] for cell 'inst'
-create_clock: Time (s): cpu = 00:00:03 ; elapsed = 00:00:44 . Memory (MB): peak = 2934.570 ; gain = 0.000 ; free physical = 6796 ; free virtual = 13155
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/design_1_zynq_ultra_ps_e_0_0.xdc] for cell 'inst'
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1/dont_touch.xdc]
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2934.570 ; gain = 0.000 ; free physical = 6462 ; free virtual = 12886
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2930.137 ; gain = 0.000 ; free physical = 1574 ; free virtual = 15369
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.06 ; elapsed = 00:00:00.17 . Memory (MB): peak = 2934.570 ; gain = 0.000 ; free physical = 6404 ; free virtual = 12862
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.04 . Memory (MB): peak = 2930.137 ; gain = 0.000 ; free physical = 1570 ; free virtual = 15366
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:02:23 . Memory (MB): peak = 2934.570 ; gain = 221.156 ; free physical = 7009 ; free virtual = 14372
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 2930.137 ; gain = 217.219 ; free physical = 1698 ; free virtual = 15491
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
@@ -135,7 +137,7 @@ Start Loading Part and Timing Information
 Loading part: xczu7ev-ffvc1156-2-e
 INFO: [Synth 8-6742] Reading net delay rules and data
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:02:23 . Memory (MB): peak = 2934.570 ; gain = 221.156 ; free physical = 7004 ; free virtual = 14372
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 2930.137 ; gain = 217.219 ; free physical = 1702 ; free virtual = 15495
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -143,10 +145,10 @@ Start Applying 'set_property' XDC Constraints
 Applied set_property DONT_TOUCH = true for inst/PS8_i. (constraint file  /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/design_1_zynq_ultra_ps_e_0_0.xdc, line 25).
 Applied set_property KEEP_HIERARCHY = SOFT for inst. (constraint file  /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1/dont_touch.xdc, line 9).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:02:23 . Memory (MB): peak = 2934.570 ; gain = 221.156 ; free physical = 6988 ; free virtual = 14365
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 2930.137 ; gain = 217.219 ; free physical = 1702 ; free virtual = 15495
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:02:24 . Memory (MB): peak = 2934.570 ; gain = 221.156 ; free physical = 6937 ; free virtual = 14493
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 2930.137 ; gain = 217.219 ; free physical = 1700 ; free virtual = 15496
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -170,25 +172,25 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:02:25 . Memory (MB): peak = 2934.570 ; gain = 221.156 ; free physical = 6797 ; free virtual = 14581
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 2930.137 ; gain = 217.219 ; free physical = 1707 ; free virtual = 15509
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:02:40 . Memory (MB): peak = 4485.148 ; gain = 1771.734 ; free physical = 3244 ; free virtual = 12177
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 4486.418 ; gain = 1773.500 ; free physical = 183 ; free virtual = 14020
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:02:40 . Memory (MB): peak = 4511.156 ; gain = 1797.742 ; free physical = 3204 ; free virtual = 12144
+Finished Timing Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:26 . Memory (MB): peak = 4511.426 ; gain = 1798.508 ; free physical = 164 ; free virtual = 14001
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:28 ; elapsed = 00:02:41 . Memory (MB): peak = 4527.172 ; gain = 1813.758 ; free physical = 3130 ; free virtual = 12070
+Finished Technology Mapping : Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 4527.441 ; gain = 1814.523 ; free physical = 199 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -307,37 +309,37 @@ INFO: [Synth 8-3295] tying undriven pin trace_data_pipe[6]_inferred:in0[5] to co
 INFO: [Synth 8-3295] tying undriven pin trace_data_pipe[6]_inferred:in0[4] to constant 0
 INFO: [Common 17-14] Message 'Synth 8-3295' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.141 ; gain = 1816.727 ; free physical = 2606 ; free virtual = 11680
+Finished IO Insertion : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 4530.410 ; gain = 1817.492 ; free physical = 197 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.141 ; gain = 1816.727 ; free physical = 2605 ; free virtual = 11679
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 4530.410 ; gain = 1817.492 ; free physical = 197 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.141 ; gain = 1816.727 ; free physical = 2609 ; free virtual = 11685
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 4530.410 ; gain = 1817.492 ; free physical = 197 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.141 ; gain = 1816.727 ; free physical = 2609 ; free virtual = 11683
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 4530.410 ; gain = 1817.492 ; free physical = 196 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.141 ; gain = 1816.727 ; free physical = 2612 ; free virtual = 11685
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:26 ; elapsed = 00:00:29 . Memory (MB): peak = 4530.410 ; gain = 1817.492 ; free physical = 197 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.141 ; gain = 1816.727 ; free physical = 2627 ; free virtual = 11700
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:26 ; elapsed = 00:00:30 . Memory (MB): peak = 4530.410 ; gain = 1817.492 ; free physical = 197 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -358,26 +360,28 @@ Report Cell Usage:
 |3     |PS8     |     1|
 +------+--------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.141 ; gain = 1816.727 ; free physical = 2624 ; free virtual = 11697
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:26 ; elapsed = 00:00:30 . Memory (MB): peak = 4530.410 ; gain = 1817.492 ; free physical = 197 ; free virtual = 14036
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:26 ; elapsed = 00:01:09 . Memory (MB): peak = 4530.141 ; gain = 1713.039 ; free physical = 2621 ; free virtual = 11699
-Synthesis Optimization Complete : Time (s): cpu = 00:00:32 ; elapsed = 00:02:45 . Memory (MB): peak = 4530.148 ; gain = 1816.727 ; free physical = 2621 ; free virtual = 11699
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 4530.410 ; gain = 1719.773 ; free physical = 233 ; free virtual = 14072
+Synthesis Optimization Complete : Time (s): cpu = 00:00:27 ; elapsed = 00:00:30 . Memory (MB): peak = 4530.418 ; gain = 1817.492 ; free physical = 233 ; free virtual = 14072
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 4530.148 ; gain = 0.000 ; free physical = 2640 ; free virtual = 11725
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 4530.418 ; gain = 0.000 ; free physical = 313 ; free virtual = 14160
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4574.766 ; gain = 0.000 ; free physical = 2340 ; free virtual = 11454
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 4575.066 ; gain = 0.000 ; free physical = 217 ; free virtual = 14073
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete, checksum: 8c74e291
+Synth Design complete, checksum: d5ce1b80
 INFO: [Common 17-83] Releasing license: Synthesis
-122 Infos, 66 Warnings, 0 Critical Warnings and 0 Errors encountered.
+125 Infos, 66 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:46 ; elapsed = 00:02:57 . Memory (MB): peak = 4574.766 ; gain = 2145.852 ; free physical = 3493 ; free virtual = 12629
+synth_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:36 . Memory (MB): peak = 4575.066 ; gain = 2103.148 ; free physical = 1408 ; free virtual = 15265
+INFO: [Common 17-600] The following parameters have non-default value.
+tcl.collectionResultDisplayLimit
 INFO: [Common 17-1381] The checkpoint '/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1/design_1_zynq_ultra_ps_e_0_0.dcp' has been generated.
-INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP design_1_zynq_ultra_ps_e_0_0, cache-ID = f99ee3686269d5db
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP design_1_zynq_ultra_ps_e_0_0, cache-ID = d963ccbda197e9ea
 INFO: [Common 17-1381] The checkpoint '/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/design_1_zynq_ultra_ps_e_0_0_synth_1/design_1_zynq_ultra_ps_e_0_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_zynq_ultra_ps_e_0_0_utilization_synth.rpt -pb design_1_zynq_ultra_ps_e_0_0_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Oct 29 16:39:55 2021...
+INFO: [Common 17-206] Exiting Vivado at Mon Nov  1 22:45:49 2021...

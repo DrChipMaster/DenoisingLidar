@@ -60,39 +60,31 @@ module bd_f60c_g_inst_0 (
   m_slot_0_axi_r_cnt,
   m_slot_1_axi_b_cnt,
   m_slot_1_axi_r_cnt,
+  m_slot_2_axi_b_cnt,
+  m_slot_2_axi_r_cnt,
   m_slot_0_axi_aw_cnt,
   m_slot_0_axi_ar_cnt,
   m_slot_1_axi_aw_cnt,
   m_slot_1_axi_ar_cnt,
+  m_slot_2_axi_aw_cnt,
+  m_slot_2_axi_ar_cnt,
   slot_0_axi_awaddr,
   slot_0_axi_awprot,
-  slot_0_axi_awlen,
-  slot_0_axi_awsize,
-  slot_0_axi_awburst,
-  slot_0_axi_awcache,
-  slot_0_axi_awlock,
   slot_0_axi_awvalid,
   slot_0_axi_awready,
   slot_0_axi_wdata,
   slot_0_axi_wstrb,
-  slot_0_axi_wlast,
   slot_0_axi_wvalid,
   slot_0_axi_wready,
   slot_0_axi_bresp,
   slot_0_axi_bvalid,
   slot_0_axi_bready,
   slot_0_axi_araddr,
-  slot_0_axi_arlen,
-  slot_0_axi_arsize,
-  slot_0_axi_arburst,
-  slot_0_axi_arcache,
   slot_0_axi_arprot,
-  slot_0_axi_arlock,
   slot_0_axi_arvalid,
   slot_0_axi_arready,
   slot_0_axi_rdata,
   slot_0_axi_rresp,
-  slot_0_axi_rlast,
   slot_0_axi_rvalid,
   slot_0_axi_rready,
   slot_1_axi_awid,
@@ -130,35 +122,54 @@ module bd_f60c_g_inst_0 (
   slot_1_axi_rlast,
   slot_1_axi_rvalid,
   slot_1_axi_rready,
+  slot_2_axi_awaddr,
+  slot_2_axi_awprot,
+  slot_2_axi_awlen,
+  slot_2_axi_awsize,
+  slot_2_axi_awburst,
+  slot_2_axi_awcache,
+  slot_2_axi_awlock,
+  slot_2_axi_awvalid,
+  slot_2_axi_awready,
+  slot_2_axi_wdata,
+  slot_2_axi_wstrb,
+  slot_2_axi_wlast,
+  slot_2_axi_wvalid,
+  slot_2_axi_wready,
+  slot_2_axi_bresp,
+  slot_2_axi_bvalid,
+  slot_2_axi_bready,
+  slot_2_axi_araddr,
+  slot_2_axi_arlen,
+  slot_2_axi_arsize,
+  slot_2_axi_arburst,
+  slot_2_axi_arcache,
+  slot_2_axi_arprot,
+  slot_2_axi_arlock,
+  slot_2_axi_arvalid,
+  slot_2_axi_arready,
+  slot_2_axi_rdata,
+  slot_2_axi_rresp,
+  slot_2_axi_rlast,
+  slot_2_axi_rvalid,
+  slot_2_axi_rready,
   m_slot_0_axi_awaddr,
   m_slot_0_axi_awprot,
-  m_slot_0_axi_awlen,
-  m_slot_0_axi_awsize,
-  m_slot_0_axi_awburst,
-  m_slot_0_axi_awcache,
-  m_slot_0_axi_awlock,
   m_slot_0_axi_awvalid,
   m_slot_0_axi_awready,
   m_slot_0_axi_wdata,
   m_slot_0_axi_wstrb,
-  m_slot_0_axi_wlast,
   m_slot_0_axi_wvalid,
   m_slot_0_axi_wready,
   m_slot_0_axi_bresp,
   m_slot_0_axi_bvalid,
   m_slot_0_axi_bready,
   m_slot_0_axi_araddr,
-  m_slot_0_axi_arlen,
-  m_slot_0_axi_arsize,
-  m_slot_0_axi_arburst,
-  m_slot_0_axi_arcache,
   m_slot_0_axi_arprot,
-  m_slot_0_axi_arlock,
   m_slot_0_axi_arvalid,
   m_slot_0_axi_arready,
   m_slot_0_axi_rdata,
   m_slot_0_axi_rresp,
-  m_slot_0_axi_rlast,
   m_slot_0_axi_rvalid,
   m_slot_0_axi_rready,
   m_slot_1_axi_awid,
@@ -196,6 +207,37 @@ module bd_f60c_g_inst_0 (
   m_slot_1_axi_rlast,
   m_slot_1_axi_rvalid,
   m_slot_1_axi_rready,
+  m_slot_2_axi_awaddr,
+  m_slot_2_axi_awprot,
+  m_slot_2_axi_awlen,
+  m_slot_2_axi_awsize,
+  m_slot_2_axi_awburst,
+  m_slot_2_axi_awcache,
+  m_slot_2_axi_awlock,
+  m_slot_2_axi_awvalid,
+  m_slot_2_axi_awready,
+  m_slot_2_axi_wdata,
+  m_slot_2_axi_wstrb,
+  m_slot_2_axi_wlast,
+  m_slot_2_axi_wvalid,
+  m_slot_2_axi_wready,
+  m_slot_2_axi_bresp,
+  m_slot_2_axi_bvalid,
+  m_slot_2_axi_bready,
+  m_slot_2_axi_araddr,
+  m_slot_2_axi_arlen,
+  m_slot_2_axi_arsize,
+  m_slot_2_axi_arburst,
+  m_slot_2_axi_arcache,
+  m_slot_2_axi_arprot,
+  m_slot_2_axi_arlock,
+  m_slot_2_axi_arvalid,
+  m_slot_2_axi_arready,
+  m_slot_2_axi_rdata,
+  m_slot_2_axi_rresp,
+  m_slot_2_axi_rlast,
+  m_slot_2_axi_rvalid,
+  m_slot_2_axi_rready,
   slot_1_axi_awuser,
   slot_1_axi_wuser,
   slot_1_axi_buser,
@@ -206,14 +248,18 @@ module bd_f60c_g_inst_0 (
   m_slot_1_axi_buser,
   m_slot_1_axi_aruser,
   m_slot_1_axi_ruser,
-  slot_0_axi_awqos,
-  slot_0_axi_arqos,
   slot_1_axi_awqos,
   slot_1_axi_arqos,
-  m_slot_0_axi_awqos,
-  m_slot_0_axi_arqos,
+  slot_2_axi_awregion,
+  slot_2_axi_awqos,
+  slot_2_axi_arregion,
+  slot_2_axi_arqos,
   m_slot_1_axi_awqos,
-  m_slot_1_axi_arqos
+  m_slot_1_axi_arqos,
+  m_slot_2_axi_awregion,
+  m_slot_2_axi_awqos,
+  m_slot_2_axi_arregion,
+  m_slot_2_axi_arqos
 );
 
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME signal_clock, ASSOCIATED_RESET aresetn, ASSOCIATED_BUSIF m_slot_0_axi:m_slot_1_axi:m_slot_2_axi:m_slot_3_axi:m_slot_4_axi:m_slot_5_axi:m_slot_6_axi:m_slot_7_axi:m_slot_8_axi:m_slot_9_axi:m_slot_10_axi:m_slot_11_axi:m_slot_12_axi:m_slot_13_axi:m_slot_14_axi:m_slot_15_axi:m_slot_0_axis:m_slot_1_axis:m_slot_2_axis:m_slot_3_axis:m_slot_4_axis:m_slot_5_axis:m_slot_6_axis:m_slot_7_axis:m_slot_8_axis:m_slot_9_axis:m_slot_10_axis:m_slot_11_axis:m_slot_12_axis:m_slot_13_axis:m_slot_14_a\
@@ -228,34 +274,26 @@ output wire [1 : 0] m_slot_0_axi_b_cnt;
 output wire [1 : 0] m_slot_0_axi_r_cnt;
 output wire [1 : 0] m_slot_1_axi_b_cnt;
 output wire [1 : 0] m_slot_1_axi_r_cnt;
+output wire [1 : 0] m_slot_2_axi_b_cnt;
+output wire [1 : 0] m_slot_2_axi_r_cnt;
 output wire [1 : 0] m_slot_0_axi_aw_cnt;
 output wire [1 : 0] m_slot_0_axi_ar_cnt;
 output wire [1 : 0] m_slot_1_axi_aw_cnt;
 output wire [1 : 0] m_slot_1_axi_ar_cnt;
+output wire [1 : 0] m_slot_2_axi_aw_cnt;
+output wire [1 : 0] m_slot_2_axi_ar_cnt;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWADDR" *)
-input wire [48 : 0] slot_0_axi_awaddr;
+input wire [4 : 0] slot_0_axi_awaddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWPROT" *)
 input wire [2 : 0] slot_0_axi_awprot;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWLEN" *)
-input wire [7 : 0] slot_0_axi_awlen;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWSIZE" *)
-input wire [2 : 0] slot_0_axi_awsize;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWBURST" *)
-input wire [1 : 0] slot_0_axi_awburst;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWCACHE" *)
-input wire [3 : 0] slot_0_axi_awcache;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWLOCK" *)
-input wire [0 : 0] slot_0_axi_awlock;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWVALID" *)
 input wire slot_0_axi_awvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWREADY" *)
 input wire slot_0_axi_awready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi WDATA" *)
-input wire [127 : 0] slot_0_axi_wdata;
+input wire [31 : 0] slot_0_axi_wdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi WSTRB" *)
-input wire [15 : 0] slot_0_axi_wstrb;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi WLAST" *)
-input wire slot_0_axi_wlast;
+input wire [3 : 0] slot_0_axi_wstrb;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi WVALID" *)
 input wire slot_0_axi_wvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi WREADY" *)
@@ -267,31 +305,21 @@ input wire slot_0_axi_bvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi BREADY" *)
 input wire slot_0_axi_bready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARADDR" *)
-input wire [48 : 0] slot_0_axi_araddr;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARLEN" *)
-input wire [7 : 0] slot_0_axi_arlen;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARSIZE" *)
-input wire [2 : 0] slot_0_axi_arsize;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARBURST" *)
-input wire [1 : 0] slot_0_axi_arburst;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARCACHE" *)
-input wire [3 : 0] slot_0_axi_arcache;
+input wire [4 : 0] slot_0_axi_araddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARPROT" *)
 input wire [2 : 0] slot_0_axi_arprot;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARLOCK" *)
-input wire [0 : 0] slot_0_axi_arlock;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARVALID" *)
 input wire slot_0_axi_arvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARREADY" *)
 input wire slot_0_axi_arready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi RDATA" *)
-input wire [127 : 0] slot_0_axi_rdata;
+input wire [31 : 0] slot_0_axi_rdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi RRESP" *)
 input wire [1 : 0] slot_0_axi_rresp;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi RLAST" *)
-input wire slot_0_axi_rlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi RVALID" *)
 input wire slot_0_axi_rvalid;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME slot_0_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 5, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS 1\
+, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi RREADY" *)
 input wire slot_0_axi_rready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_1_axi AWID" *)
@@ -364,30 +392,80 @@ input wire slot_1_axi_rlast;
 input wire slot_1_axi_rvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_1_axi RREADY" *)
 input wire slot_1_axi_rready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWADDR" *)
+input wire [31 : 0] slot_2_axi_awaddr;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWPROT" *)
+input wire [2 : 0] slot_2_axi_awprot;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWLEN" *)
+input wire [7 : 0] slot_2_axi_awlen;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWSIZE" *)
+input wire [2 : 0] slot_2_axi_awsize;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWBURST" *)
+input wire [1 : 0] slot_2_axi_awburst;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWCACHE" *)
+input wire [3 : 0] slot_2_axi_awcache;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWLOCK" *)
+input wire [0 : 0] slot_2_axi_awlock;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWVALID" *)
+input wire slot_2_axi_awvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWREADY" *)
+input wire slot_2_axi_awready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi WDATA" *)
+input wire [31 : 0] slot_2_axi_wdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi WSTRB" *)
+input wire [3 : 0] slot_2_axi_wstrb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi WLAST" *)
+input wire slot_2_axi_wlast;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi WVALID" *)
+input wire slot_2_axi_wvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi WREADY" *)
+input wire slot_2_axi_wready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi BRESP" *)
+input wire [1 : 0] slot_2_axi_bresp;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi BVALID" *)
+input wire slot_2_axi_bvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi BREADY" *)
+input wire slot_2_axi_bready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARADDR" *)
+input wire [31 : 0] slot_2_axi_araddr;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARLEN" *)
+input wire [7 : 0] slot_2_axi_arlen;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARSIZE" *)
+input wire [2 : 0] slot_2_axi_arsize;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARBURST" *)
+input wire [1 : 0] slot_2_axi_arburst;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARCACHE" *)
+input wire [3 : 0] slot_2_axi_arcache;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARPROT" *)
+input wire [2 : 0] slot_2_axi_arprot;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARLOCK" *)
+input wire [0 : 0] slot_2_axi_arlock;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARVALID" *)
+input wire slot_2_axi_arvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARREADY" *)
+input wire slot_2_axi_arready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi RDATA" *)
+input wire [31 : 0] slot_2_axi_rdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi RRESP" *)
+input wire [1 : 0] slot_2_axi_rresp;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi RLAST" *)
+input wire slot_2_axi_rlast;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi RVALID" *)
+input wire slot_2_axi_rvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi RREADY" *)
+input wire slot_2_axi_rready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWADDR" *)
-output wire [48 : 0] m_slot_0_axi_awaddr;
+output wire [4 : 0] m_slot_0_axi_awaddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWPROT" *)
 output wire [2 : 0] m_slot_0_axi_awprot;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWLEN" *)
-output wire [7 : 0] m_slot_0_axi_awlen;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWSIZE" *)
-output wire [2 : 0] m_slot_0_axi_awsize;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWBURST" *)
-output wire [1 : 0] m_slot_0_axi_awburst;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWCACHE" *)
-output wire [3 : 0] m_slot_0_axi_awcache;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWLOCK" *)
-output wire [0 : 0] m_slot_0_axi_awlock;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWVALID" *)
 output wire m_slot_0_axi_awvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWREADY" *)
 output wire m_slot_0_axi_awready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi WDATA" *)
-output wire [127 : 0] m_slot_0_axi_wdata;
+output wire [31 : 0] m_slot_0_axi_wdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi WSTRB" *)
-output wire [15 : 0] m_slot_0_axi_wstrb;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi WLAST" *)
-output wire m_slot_0_axi_wlast;
+output wire [3 : 0] m_slot_0_axi_wstrb;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi WVALID" *)
 output wire m_slot_0_axi_wvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi WREADY" *)
@@ -399,31 +477,21 @@ output wire m_slot_0_axi_bvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi BREADY" *)
 output wire m_slot_0_axi_bready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARADDR" *)
-output wire [48 : 0] m_slot_0_axi_araddr;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARLEN" *)
-output wire [7 : 0] m_slot_0_axi_arlen;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARSIZE" *)
-output wire [2 : 0] m_slot_0_axi_arsize;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARBURST" *)
-output wire [1 : 0] m_slot_0_axi_arburst;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARCACHE" *)
-output wire [3 : 0] m_slot_0_axi_arcache;
+output wire [4 : 0] m_slot_0_axi_araddr;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARPROT" *)
 output wire [2 : 0] m_slot_0_axi_arprot;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARLOCK" *)
-output wire [0 : 0] m_slot_0_axi_arlock;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARVALID" *)
 output wire m_slot_0_axi_arvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARREADY" *)
 output wire m_slot_0_axi_arready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi RDATA" *)
-output wire [127 : 0] m_slot_0_axi_rdata;
+output wire [31 : 0] m_slot_0_axi_rdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi RRESP" *)
 output wire [1 : 0] m_slot_0_axi_rresp;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi RLAST" *)
-output wire m_slot_0_axi_rlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi RVALID" *)
 output wire m_slot_0_axi_rvalid;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_slot_0_axi, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 5, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS\
+ 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi RREADY" *)
 output wire m_slot_0_axi_rready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_1_axi AWID" *)
@@ -496,6 +564,68 @@ output wire m_slot_1_axi_rlast;
 output wire m_slot_1_axi_rvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_1_axi RREADY" *)
 output wire m_slot_1_axi_rready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWADDR" *)
+output wire [31 : 0] m_slot_2_axi_awaddr;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWPROT" *)
+output wire [2 : 0] m_slot_2_axi_awprot;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWLEN" *)
+output wire [7 : 0] m_slot_2_axi_awlen;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWSIZE" *)
+output wire [2 : 0] m_slot_2_axi_awsize;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWBURST" *)
+output wire [1 : 0] m_slot_2_axi_awburst;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWCACHE" *)
+output wire [3 : 0] m_slot_2_axi_awcache;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWLOCK" *)
+output wire [0 : 0] m_slot_2_axi_awlock;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWVALID" *)
+output wire m_slot_2_axi_awvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWREADY" *)
+output wire m_slot_2_axi_awready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi WDATA" *)
+output wire [31 : 0] m_slot_2_axi_wdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi WSTRB" *)
+output wire [3 : 0] m_slot_2_axi_wstrb;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi WLAST" *)
+output wire m_slot_2_axi_wlast;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi WVALID" *)
+output wire m_slot_2_axi_wvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi WREADY" *)
+output wire m_slot_2_axi_wready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi BRESP" *)
+output wire [1 : 0] m_slot_2_axi_bresp;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi BVALID" *)
+output wire m_slot_2_axi_bvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi BREADY" *)
+output wire m_slot_2_axi_bready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARADDR" *)
+output wire [31 : 0] m_slot_2_axi_araddr;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARLEN" *)
+output wire [7 : 0] m_slot_2_axi_arlen;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARSIZE" *)
+output wire [2 : 0] m_slot_2_axi_arsize;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARBURST" *)
+output wire [1 : 0] m_slot_2_axi_arburst;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARCACHE" *)
+output wire [3 : 0] m_slot_2_axi_arcache;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARPROT" *)
+output wire [2 : 0] m_slot_2_axi_arprot;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARLOCK" *)
+output wire [0 : 0] m_slot_2_axi_arlock;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARVALID" *)
+output wire m_slot_2_axi_arvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARREADY" *)
+output wire m_slot_2_axi_arready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi RDATA" *)
+output wire [31 : 0] m_slot_2_axi_rdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi RRESP" *)
+output wire [1 : 0] m_slot_2_axi_rresp;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi RLAST" *)
+output wire m_slot_2_axi_rlast;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi RVALID" *)
+output wire m_slot_2_axi_rvalid;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi RREADY" *)
+output wire m_slot_2_axi_rready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_1_axi AWUSER" *)
 input wire [1 : 0] slot_1_axi_awuser;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_1_axi WUSER" *)
@@ -516,30 +646,38 @@ output wire [0 : 0] m_slot_1_axi_buser;
 output wire [1 : 0] m_slot_1_axi_aruser;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_1_axi RUSER" *)
 output wire [0 : 0] m_slot_1_axi_ruser;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi AWQOS" *)
-input wire [3 : 0] slot_0_axi_awqos;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME slot_0_axi, DATA_WIDTH 128, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 49, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS 1\
-, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_0_axi ARQOS" *)
-input wire [3 : 0] slot_0_axi_arqos;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_1_axi AWQOS" *)
 input wire [3 : 0] slot_1_axi_awqos;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME slot_1_axi, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 6, ADDR_WIDTH 32, AWUSER_WIDTH 2, ARUSER_WIDTH 2, WUSER_WIDTH 1, RUSER_WIDTH 1, BUSER_WIDTH 1, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS 1,\
  NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_1_axi ARQOS" *)
 input wire [3 : 0] slot_1_axi_arqos;
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi AWQOS" *)
-output wire [3 : 0] m_slot_0_axi_awqos;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_slot_0_axi, DATA_WIDTH 128, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 49, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS\
- 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_0_axi ARQOS" *)
-output wire [3 : 0] m_slot_0_axi_arqos;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWREGION" *)
+input wire [3 : 0] slot_2_axi_awregion;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi AWQOS" *)
+input wire [3 : 0] slot_2_axi_awqos;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARREGION" *)
+input wire [3 : 0] slot_2_axi_arregion;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME slot_2_axi, DATA_WIDTH 32, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS 1,\
+ NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 slot_2_axi ARQOS" *)
+input wire [3 : 0] slot_2_axi_arqos;
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_1_axi AWQOS" *)
 output wire [3 : 0] m_slot_1_axi_awqos;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_slot_1_axi, DATA_WIDTH 64, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 6, ADDR_WIDTH 32, AWUSER_WIDTH 2, ARUSER_WIDTH 2, WUSER_WIDTH 1, RUSER_WIDTH 1, BUSER_WIDTH 1, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS \
 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_1_axi ARQOS" *)
 output wire [3 : 0] m_slot_1_axi_arqos;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWREGION" *)
+output wire [3 : 0] m_slot_2_axi_awregion;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi AWQOS" *)
+output wire [3 : 0] m_slot_2_axi_awqos;
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARREGION" *)
+output wire [3 : 0] m_slot_2_axi_arregion;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_slot_2_axi, DATA_WIDTH 32, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 1, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 256, PHASE 0.0, CLK_DOMAIN design_1_zynq_ultra_ps_e_0_0_pl_clk0, NUM_READ_THREADS \
+1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 m_slot_2_axi ARQOS" *)
+output wire [3 : 0] m_slot_2_axi_arqos;
 
   bd_f60c_g_inst_0_gigantic_mux #(
     .C_MUX_0_HAS_BRESP(1),
@@ -586,7 +724,7 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .C_MUX_3_HAS_WSTRB(1),
     .C_MUX_3_HAS_TSTRB(1),
     .C_MUX_3_HAS_TKEEP(1),
-    .C_NUM_MONITOR_SLOTS(2),
+    .C_NUM_MONITOR_SLOTS(3),
     .C_SLOT_0_TXN_CNTR_EN(1),
     .C_SLOT_1_TXN_CNTR_EN(1),
     .C_SLOT_2_TXN_CNTR_EN(1),
@@ -607,8 +745,8 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .C_SLOT_0_MAX_WR_BURSTS(1),
     .C_SLOT_1_MAX_RD_BURSTS(1),
     .C_SLOT_1_MAX_WR_BURSTS(1),
-    .C_SLOT_2_MAX_RD_BURSTS(5),
-    .C_SLOT_2_MAX_WR_BURSTS(5),
+    .C_SLOT_2_MAX_RD_BURSTS(1),
+    .C_SLOT_2_MAX_WR_BURSTS(1),
     .C_SLOT_3_MAX_RD_BURSTS(5),
     .C_SLOT_3_MAX_WR_BURSTS(5),
     .C_SLOT_4_MAX_RD_BURSTS(5),
@@ -637,12 +775,12 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .C_SLOT_15_MAX_WR_BURSTS(5),
     .C_SLOT_0_HAS_BRESP(1),
     .C_SLOT_0_HAS_RRESP(1),
-    .C_SLOT_0_HAS_LOCK(1),
+    .C_SLOT_0_HAS_LOCK(0),
     .C_SLOT_0_HAS_PROT(1),
-    .C_SLOT_0_HAS_CACHE(1),
-    .C_SLOT_0_HAS_QOS(1),
+    .C_SLOT_0_HAS_CACHE(0),
+    .C_SLOT_0_HAS_QOS(0),
     .C_SLOT_0_HAS_REGION(0),
-    .C_SLOT_0_HAS_BURST(1),
+    .C_SLOT_0_HAS_BURST(0),
     .C_SLOT_0_HAS_WSTRB(1),
     .C_SLOT_0_HAS_TSTRB(1),
     .C_SLOT_0_HAS_TKEEP(1),
@@ -857,11 +995,11 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .C_SLOT_1_AXI_BUSER_WIDTH(1),
     .C_SLOT_1_AXI_ARUSER_WIDTH(2),
     .C_SLOT_1_AXI_RUSER_WIDTH(1),
-    .C_SLOT_2_AXI_AWUSER_WIDTH(1),
-    .C_SLOT_2_AXI_WUSER_WIDTH(1),
-    .C_SLOT_2_AXI_BUSER_WIDTH(1),
-    .C_SLOT_2_AXI_ARUSER_WIDTH(1),
-    .C_SLOT_2_AXI_RUSER_WIDTH(1),
+    .C_SLOT_2_AXI_AWUSER_WIDTH(0),
+    .C_SLOT_2_AXI_WUSER_WIDTH(0),
+    .C_SLOT_2_AXI_BUSER_WIDTH(0),
+    .C_SLOT_2_AXI_ARUSER_WIDTH(0),
+    .C_SLOT_2_AXI_RUSER_WIDTH(0),
     .C_SLOT_3_AXI_AWUSER_WIDTH(1),
     .C_SLOT_3_AXI_WUSER_WIDTH(1),
     .C_SLOT_3_AXI_BUSER_WIDTH(1),
@@ -1029,7 +1167,7 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .C_SLOT_15_AXI_B_SEL("1"),
     .C_SLOT_0_MON_MODE("FT"),
     .C_SLOT_1_MON_MODE("FT"),
-    .C_SLOT_2_MON_MODE("RT"),
+    .C_SLOT_2_MON_MODE("FT"),
     .C_SLOT_3_MON_MODE("RT"),
     .C_SLOT_4_MON_MODE("RT"),
     .C_SLOT_5_MON_MODE("RT"),
@@ -1756,10 +1894,10 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .C_MUX_PROBE125_WIDTH(1),
     .C_MUX_PROBE126_WIDTH(1),
     .C_MUX_PROBE127_WIDTH(1),
-    .C_SLOT_0_AXI_ADDR_WIDTH(49),
-    .C_SLOT_0_AXI_DATA_WIDTH(128),
+    .C_SLOT_0_AXI_ADDR_WIDTH(5),
+    .C_SLOT_0_AXI_DATA_WIDTH(32),
     .C_SLOT_0_AXI_ID_WIDTH(0),
-    .C_SLOT_0_AXI_PROTOCOL("AXI4"),
+    .C_SLOT_0_AXI_PROTOCOL("AXI4LITE"),
     .C_SLOT_0_AXIS_TDATA_WIDTH(32),
     .C_SLOT_0_AXIS_TID_WIDTH(1),
     .C_SLOT_0_AXIS_TDEST_WIDTH(1),
@@ -1774,7 +1912,7 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .C_SLOT_1_AXIS_TUSER_WIDTH(1),
     .C_SLOT_2_AXI_ADDR_WIDTH(32),
     .C_SLOT_2_AXI_DATA_WIDTH(32),
-    .C_SLOT_2_AXI_ID_WIDTH(1),
+    .C_SLOT_2_AXI_ID_WIDTH(0),
     .C_SLOT_2_AXI_PROTOCOL("AXI4"),
     .C_SLOT_2_AXIS_TDATA_WIDTH(32),
     .C_SLOT_2_AXIS_TID_WIDTH(1),
@@ -2531,8 +2669,8 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .m_slot_0_axi_r_cnt(m_slot_0_axi_r_cnt),
     .m_slot_1_axi_b_cnt(m_slot_1_axi_b_cnt),
     .m_slot_1_axi_r_cnt(m_slot_1_axi_r_cnt),
-    .m_slot_2_axi_b_cnt(),
-    .m_slot_2_axi_r_cnt(),
+    .m_slot_2_axi_b_cnt(m_slot_2_axi_b_cnt),
+    .m_slot_2_axi_r_cnt(m_slot_2_axi_r_cnt),
     .m_slot_3_axi_b_cnt(),
     .m_slot_3_axi_r_cnt(),
     .m_slot_4_axi_b_cnt(),
@@ -2563,8 +2701,8 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .m_slot_0_axi_ar_cnt(m_slot_0_axi_ar_cnt),
     .m_slot_1_axi_aw_cnt(m_slot_1_axi_aw_cnt),
     .m_slot_1_axi_ar_cnt(m_slot_1_axi_ar_cnt),
-    .m_slot_2_axi_aw_cnt(),
-    .m_slot_2_axi_ar_cnt(),
+    .m_slot_2_axi_aw_cnt(m_slot_2_axi_aw_cnt),
+    .m_slot_2_axi_ar_cnt(m_slot_2_axi_ar_cnt),
     .m_slot_3_axi_aw_cnt(),
     .m_slot_3_axi_ar_cnt(),
     .m_slot_4_axi_aw_cnt(),
@@ -2594,16 +2732,16 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .slot_0_axi_awid(1'B0),
     .slot_0_axi_awaddr(slot_0_axi_awaddr),
     .slot_0_axi_awprot(slot_0_axi_awprot),
-    .slot_0_axi_awlen(slot_0_axi_awlen),
-    .slot_0_axi_awsize(slot_0_axi_awsize),
-    .slot_0_axi_awburst(slot_0_axi_awburst),
-    .slot_0_axi_awcache(slot_0_axi_awcache),
-    .slot_0_axi_awlock(slot_0_axi_awlock),
+    .slot_0_axi_awlen(8'B0),
+    .slot_0_axi_awsize(3'B0),
+    .slot_0_axi_awburst(2'B0),
+    .slot_0_axi_awcache(3),
+    .slot_0_axi_awlock(1'B0),
     .slot_0_axi_awvalid(slot_0_axi_awvalid),
     .slot_0_axi_awready(slot_0_axi_awready),
     .slot_0_axi_wdata(slot_0_axi_wdata),
     .slot_0_axi_wstrb(slot_0_axi_wstrb),
-    .slot_0_axi_wlast(slot_0_axi_wlast),
+    .slot_0_axi_wlast(1'B0),
     .slot_0_axi_wvalid(slot_0_axi_wvalid),
     .slot_0_axi_wready(slot_0_axi_wready),
     .slot_0_axi_bid(1'B0),
@@ -2612,18 +2750,18 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .slot_0_axi_bready(slot_0_axi_bready),
     .slot_0_axi_arid(1'B0),
     .slot_0_axi_araddr(slot_0_axi_araddr),
-    .slot_0_axi_arlen(slot_0_axi_arlen),
-    .slot_0_axi_arsize(slot_0_axi_arsize),
-    .slot_0_axi_arburst(slot_0_axi_arburst),
-    .slot_0_axi_arcache(slot_0_axi_arcache),
+    .slot_0_axi_arlen(8'B0),
+    .slot_0_axi_arsize(3'B0),
+    .slot_0_axi_arburst(2'B1),
+    .slot_0_axi_arcache(3),
     .slot_0_axi_arprot(slot_0_axi_arprot),
-    .slot_0_axi_arlock(slot_0_axi_arlock),
+    .slot_0_axi_arlock(1'B0),
     .slot_0_axi_arvalid(slot_0_axi_arvalid),
     .slot_0_axi_arready(slot_0_axi_arready),
     .slot_0_axi_rid(1'B0),
     .slot_0_axi_rdata(slot_0_axi_rdata),
     .slot_0_axi_rresp(slot_0_axi_rresp),
-    .slot_0_axi_rlast(slot_0_axi_rlast),
+    .slot_0_axi_rlast(1'B0),
     .slot_0_axi_rvalid(slot_0_axi_rvalid),
     .slot_0_axi_rready(slot_0_axi_rready),
     .slot_0_axis_tvalid(1'B0),
@@ -2680,40 +2818,40 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .slot_1_axis_tdest(1'B0),
     .slot_1_axis_tuser(1'B0),
     .slot_2_axi_awid(1'B0),
-    .slot_2_axi_awaddr(32'B0),
-    .slot_2_axi_awprot(3'B0),
-    .slot_2_axi_awlen(8'B0),
-    .slot_2_axi_awsize(3'B0),
-    .slot_2_axi_awburst(2'B1),
-    .slot_2_axi_awcache(3),
-    .slot_2_axi_awlock(1'B0),
-    .slot_2_axi_awvalid(1'B0),
-    .slot_2_axi_awready(1'B0),
-    .slot_2_axi_wdata(32'B0),
-    .slot_2_axi_wstrb(4'B0),
-    .slot_2_axi_wlast(1'B0),
-    .slot_2_axi_wvalid(1'B0),
-    .slot_2_axi_wready(1'B0),
+    .slot_2_axi_awaddr(slot_2_axi_awaddr),
+    .slot_2_axi_awprot(slot_2_axi_awprot),
+    .slot_2_axi_awlen(slot_2_axi_awlen),
+    .slot_2_axi_awsize(slot_2_axi_awsize),
+    .slot_2_axi_awburst(slot_2_axi_awburst),
+    .slot_2_axi_awcache(slot_2_axi_awcache),
+    .slot_2_axi_awlock(slot_2_axi_awlock),
+    .slot_2_axi_awvalid(slot_2_axi_awvalid),
+    .slot_2_axi_awready(slot_2_axi_awready),
+    .slot_2_axi_wdata(slot_2_axi_wdata),
+    .slot_2_axi_wstrb(slot_2_axi_wstrb),
+    .slot_2_axi_wlast(slot_2_axi_wlast),
+    .slot_2_axi_wvalid(slot_2_axi_wvalid),
+    .slot_2_axi_wready(slot_2_axi_wready),
     .slot_2_axi_bid(1'B0),
-    .slot_2_axi_bresp(2'B0),
-    .slot_2_axi_bvalid(1'B0),
-    .slot_2_axi_bready(1'B0),
+    .slot_2_axi_bresp(slot_2_axi_bresp),
+    .slot_2_axi_bvalid(slot_2_axi_bvalid),
+    .slot_2_axi_bready(slot_2_axi_bready),
     .slot_2_axi_arid(1'B0),
-    .slot_2_axi_araddr(32'B0),
-    .slot_2_axi_arlen(8'B0),
-    .slot_2_axi_arsize(3'B0),
-    .slot_2_axi_arburst(2'B1),
-    .slot_2_axi_arcache(3),
-    .slot_2_axi_arprot(3'B0),
-    .slot_2_axi_arlock(1'B0),
-    .slot_2_axi_arvalid(1'B0),
-    .slot_2_axi_arready(1'B0),
+    .slot_2_axi_araddr(slot_2_axi_araddr),
+    .slot_2_axi_arlen(slot_2_axi_arlen),
+    .slot_2_axi_arsize(slot_2_axi_arsize),
+    .slot_2_axi_arburst(slot_2_axi_arburst),
+    .slot_2_axi_arcache(slot_2_axi_arcache),
+    .slot_2_axi_arprot(slot_2_axi_arprot),
+    .slot_2_axi_arlock(slot_2_axi_arlock),
+    .slot_2_axi_arvalid(slot_2_axi_arvalid),
+    .slot_2_axi_arready(slot_2_axi_arready),
     .slot_2_axi_rid(1'B0),
-    .slot_2_axi_rdata(32'B0),
-    .slot_2_axi_rresp(2'B0),
-    .slot_2_axi_rlast(1'B0),
-    .slot_2_axi_rvalid(1'B0),
-    .slot_2_axi_rready(1'B0),
+    .slot_2_axi_rdata(slot_2_axi_rdata),
+    .slot_2_axi_rresp(slot_2_axi_rresp),
+    .slot_2_axi_rlast(slot_2_axi_rlast),
+    .slot_2_axi_rvalid(slot_2_axi_rvalid),
+    .slot_2_axi_rready(slot_2_axi_rready),
     .slot_2_axis_tvalid(1'B0),
     .slot_2_axis_tready(1'B0),
     .slot_2_axis_tdata(32'B0),
@@ -3298,16 +3436,16 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .m_slot_0_axi_awid(),
     .m_slot_0_axi_awaddr(m_slot_0_axi_awaddr),
     .m_slot_0_axi_awprot(m_slot_0_axi_awprot),
-    .m_slot_0_axi_awlen(m_slot_0_axi_awlen),
-    .m_slot_0_axi_awsize(m_slot_0_axi_awsize),
-    .m_slot_0_axi_awburst(m_slot_0_axi_awburst),
-    .m_slot_0_axi_awcache(m_slot_0_axi_awcache),
-    .m_slot_0_axi_awlock(m_slot_0_axi_awlock),
+    .m_slot_0_axi_awlen(),
+    .m_slot_0_axi_awsize(),
+    .m_slot_0_axi_awburst(),
+    .m_slot_0_axi_awcache(),
+    .m_slot_0_axi_awlock(),
     .m_slot_0_axi_awvalid(m_slot_0_axi_awvalid),
     .m_slot_0_axi_awready(m_slot_0_axi_awready),
     .m_slot_0_axi_wdata(m_slot_0_axi_wdata),
     .m_slot_0_axi_wstrb(m_slot_0_axi_wstrb),
-    .m_slot_0_axi_wlast(m_slot_0_axi_wlast),
+    .m_slot_0_axi_wlast(),
     .m_slot_0_axi_wvalid(m_slot_0_axi_wvalid),
     .m_slot_0_axi_wready(m_slot_0_axi_wready),
     .m_slot_0_axi_bid(),
@@ -3316,18 +3454,18 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .m_slot_0_axi_bready(m_slot_0_axi_bready),
     .m_slot_0_axi_arid(),
     .m_slot_0_axi_araddr(m_slot_0_axi_araddr),
-    .m_slot_0_axi_arlen(m_slot_0_axi_arlen),
-    .m_slot_0_axi_arsize(m_slot_0_axi_arsize),
-    .m_slot_0_axi_arburst(m_slot_0_axi_arburst),
-    .m_slot_0_axi_arcache(m_slot_0_axi_arcache),
+    .m_slot_0_axi_arlen(),
+    .m_slot_0_axi_arsize(),
+    .m_slot_0_axi_arburst(),
+    .m_slot_0_axi_arcache(),
     .m_slot_0_axi_arprot(m_slot_0_axi_arprot),
-    .m_slot_0_axi_arlock(m_slot_0_axi_arlock),
+    .m_slot_0_axi_arlock(),
     .m_slot_0_axi_arvalid(m_slot_0_axi_arvalid),
     .m_slot_0_axi_arready(m_slot_0_axi_arready),
     .m_slot_0_axi_rid(),
     .m_slot_0_axi_rdata(m_slot_0_axi_rdata),
     .m_slot_0_axi_rresp(m_slot_0_axi_rresp),
-    .m_slot_0_axi_rlast(m_slot_0_axi_rlast),
+    .m_slot_0_axi_rlast(),
     .m_slot_0_axi_rvalid(m_slot_0_axi_rvalid),
     .m_slot_0_axi_rready(m_slot_0_axi_rready),
     .m_slot_0_axis_tvalid(),
@@ -3384,40 +3522,40 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .m_slot_1_axis_tdest(),
     .m_slot_1_axis_tuser(),
     .m_slot_2_axi_awid(),
-    .m_slot_2_axi_awaddr(),
-    .m_slot_2_axi_awprot(),
-    .m_slot_2_axi_awlen(),
-    .m_slot_2_axi_awsize(),
-    .m_slot_2_axi_awburst(),
-    .m_slot_2_axi_awcache(),
-    .m_slot_2_axi_awlock(),
-    .m_slot_2_axi_awvalid(),
-    .m_slot_2_axi_awready(),
-    .m_slot_2_axi_wdata(),
-    .m_slot_2_axi_wstrb(),
-    .m_slot_2_axi_wlast(),
-    .m_slot_2_axi_wvalid(),
-    .m_slot_2_axi_wready(),
+    .m_slot_2_axi_awaddr(m_slot_2_axi_awaddr),
+    .m_slot_2_axi_awprot(m_slot_2_axi_awprot),
+    .m_slot_2_axi_awlen(m_slot_2_axi_awlen),
+    .m_slot_2_axi_awsize(m_slot_2_axi_awsize),
+    .m_slot_2_axi_awburst(m_slot_2_axi_awburst),
+    .m_slot_2_axi_awcache(m_slot_2_axi_awcache),
+    .m_slot_2_axi_awlock(m_slot_2_axi_awlock),
+    .m_slot_2_axi_awvalid(m_slot_2_axi_awvalid),
+    .m_slot_2_axi_awready(m_slot_2_axi_awready),
+    .m_slot_2_axi_wdata(m_slot_2_axi_wdata),
+    .m_slot_2_axi_wstrb(m_slot_2_axi_wstrb),
+    .m_slot_2_axi_wlast(m_slot_2_axi_wlast),
+    .m_slot_2_axi_wvalid(m_slot_2_axi_wvalid),
+    .m_slot_2_axi_wready(m_slot_2_axi_wready),
     .m_slot_2_axi_bid(),
-    .m_slot_2_axi_bresp(),
-    .m_slot_2_axi_bvalid(),
-    .m_slot_2_axi_bready(),
+    .m_slot_2_axi_bresp(m_slot_2_axi_bresp),
+    .m_slot_2_axi_bvalid(m_slot_2_axi_bvalid),
+    .m_slot_2_axi_bready(m_slot_2_axi_bready),
     .m_slot_2_axi_arid(),
-    .m_slot_2_axi_araddr(),
-    .m_slot_2_axi_arlen(),
-    .m_slot_2_axi_arsize(),
-    .m_slot_2_axi_arburst(),
-    .m_slot_2_axi_arcache(),
-    .m_slot_2_axi_arprot(),
-    .m_slot_2_axi_arlock(),
-    .m_slot_2_axi_arvalid(),
-    .m_slot_2_axi_arready(),
+    .m_slot_2_axi_araddr(m_slot_2_axi_araddr),
+    .m_slot_2_axi_arlen(m_slot_2_axi_arlen),
+    .m_slot_2_axi_arsize(m_slot_2_axi_arsize),
+    .m_slot_2_axi_arburst(m_slot_2_axi_arburst),
+    .m_slot_2_axi_arcache(m_slot_2_axi_arcache),
+    .m_slot_2_axi_arprot(m_slot_2_axi_arprot),
+    .m_slot_2_axi_arlock(m_slot_2_axi_arlock),
+    .m_slot_2_axi_arvalid(m_slot_2_axi_arvalid),
+    .m_slot_2_axi_arready(m_slot_2_axi_arready),
     .m_slot_2_axi_rid(),
-    .m_slot_2_axi_rdata(),
-    .m_slot_2_axi_rresp(),
-    .m_slot_2_axi_rlast(),
-    .m_slot_2_axi_rvalid(),
-    .m_slot_2_axi_rready(),
+    .m_slot_2_axi_rdata(m_slot_2_axi_rdata),
+    .m_slot_2_axi_rresp(m_slot_2_axi_rresp),
+    .m_slot_2_axi_rlast(m_slot_2_axi_rlast),
+    .m_slot_2_axi_rvalid(m_slot_2_axi_rvalid),
+    .m_slot_2_axi_rready(m_slot_2_axi_rready),
     .m_slot_2_axis_tvalid(),
     .m_slot_2_axis_tready(),
     .m_slot_2_axis_tdata(),
@@ -4358,19 +4496,19 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .mux_3_axi_ruser(),
     .slot_0_axi_awregion(4'B0),
     .slot_0_axi_wid(1'B0),
-    .slot_0_axi_awqos(slot_0_axi_awqos),
+    .slot_0_axi_awqos(4'B0),
     .slot_0_axi_arregion(4'B0),
-    .slot_0_axi_arqos(slot_0_axi_arqos),
+    .slot_0_axi_arqos(4'B0),
     .slot_1_axi_awregion(4'B0),
     .slot_1_axi_wid(6'B0),
     .slot_1_axi_awqos(slot_1_axi_awqos),
     .slot_1_axi_arregion(4'B0),
     .slot_1_axi_arqos(slot_1_axi_arqos),
-    .slot_2_axi_awregion(4'B0),
+    .slot_2_axi_awregion(slot_2_axi_awregion),
     .slot_2_axi_wid(1'B0),
-    .slot_2_axi_awqos(4'B0),
-    .slot_2_axi_arregion(4'B0),
-    .slot_2_axi_arqos(4'B0),
+    .slot_2_axi_awqos(slot_2_axi_awqos),
+    .slot_2_axi_arregion(slot_2_axi_arregion),
+    .slot_2_axi_arqos(slot_2_axi_arqos),
     .slot_3_axi_awregion(4'B0),
     .slot_3_axi_wid(1'B0),
     .slot_3_axi_awqos(4'B0),
@@ -4438,19 +4576,19 @@ output wire [3 : 0] m_slot_1_axi_arqos;
     .slot_15_axi_arqos(4'B0),
     .m_slot_0_axi_awregion(),
     .m_slot_0_axi_wid(),
-    .m_slot_0_axi_awqos(m_slot_0_axi_awqos),
+    .m_slot_0_axi_awqos(),
     .m_slot_0_axi_arregion(),
-    .m_slot_0_axi_arqos(m_slot_0_axi_arqos),
+    .m_slot_0_axi_arqos(),
     .m_slot_1_axi_awregion(),
     .m_slot_1_axi_wid(),
     .m_slot_1_axi_awqos(m_slot_1_axi_awqos),
     .m_slot_1_axi_arregion(),
     .m_slot_1_axi_arqos(m_slot_1_axi_arqos),
-    .m_slot_2_axi_awregion(),
+    .m_slot_2_axi_awregion(m_slot_2_axi_awregion),
     .m_slot_2_axi_wid(),
-    .m_slot_2_axi_awqos(),
-    .m_slot_2_axi_arregion(),
-    .m_slot_2_axi_arqos(),
+    .m_slot_2_axi_awqos(m_slot_2_axi_awqos),
+    .m_slot_2_axi_arregion(m_slot_2_axi_arregion),
+    .m_slot_2_axi_arqos(m_slot_2_axi_arqos),
     .m_slot_3_axi_awregion(),
     .m_slot_3_axi_wid(),
     .m_slot_3_axi_awqos(),

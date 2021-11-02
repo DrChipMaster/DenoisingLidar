@@ -10,20 +10,20 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1 ||
 # IP: bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/design_1_zynq_ultra_ps_e_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_zynq_ultra_ps_e_0_0 || ORIG_REF_NAME==design_1_zynq_ultra_ps_e_0_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_AXI_lite_Slave_0_0_1/design_1_AXI_lite_Slave_0_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_AXI_lite_Slave_0_0 || ORIG_REF_NAME==design_1_AXI_lite_Slave_0_0} -quiet] -quiet
+# IP: bd/design_1/ip/design_1_xbar_0_1/design_1_xbar_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_xbar_0 || ORIG_REF_NAME==design_1_xbar_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_ps8_0_axi_periph_0_1/design_1_ps8_0_axi_periph_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_ps8_0_axi_periph_0 || ORIG_REF_NAME==design_1_ps8_0_axi_periph_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_xbar_0_1/design_1_xbar_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_xbar_0 || ORIG_REF_NAME==design_1_xbar_0} -quiet] -quiet
-
 # IP: bd/design_1/ip/design_1_rst_ps8_0_100M_0_1/design_1_rst_ps8_0_100M_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_rst_ps8_0_100M_0 || ORIG_REF_NAME==design_1_rst_ps8_0_100M_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_axi_interconnect_0_0_1/design_1_axi_interconnect_0_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_0} -quiet] -quiet
+# IP: bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_system_ila_0_0 || ORIG_REF_NAME==design_1_system_ila_0_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_AXI_lite_Slave_0_0_1/design_1_AXI_lite_Slave_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_AXI_lite_Slave_0_0 || ORIG_REF_NAME==design_1_AXI_lite_Slave_0_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_MI_memoryInterface_A_0_0_1/design_1_MI_memoryInterface_A_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_MI_memoryInterface_A_0_0 || ORIG_REF_NAME==design_1_MI_memoryInterface_A_0_0} -quiet] -quiet
@@ -34,8 +34,8 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_dd
 # IP: ip/fifo_generator_0/fifo_generator_0.xci
 #dup# set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==fifo_generator_0 || ORIG_REF_NAME==fifo_generator_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_system_ila_0_0 || ORIG_REF_NAME==design_1_system_ila_0_0} -quiet] -quiet
+# IP: bd/design_1/ip/design_1_axi_interconnect_0_0_1/design_1_axi_interconnect_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_auto_ds_0_1/design_1_auto_ds_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_auto_ds_0 || ORIG_REF_NAME==design_1_auto_ds_0} -quiet] -quiet
@@ -49,8 +49,8 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_au
 # IP: bd/design_1/ip/design_1_auto_pc_1_1/design_1_auto_pc_1.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_auto_pc_1 || ORIG_REF_NAME==design_1_auto_pc_1} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_auto_us_0_1/design_1_auto_us_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_auto_us_0 || ORIG_REF_NAME==design_1_auto_us_0} -quiet] -quiet
+# IP: bd/design_1/ip/design_1_auto_us_df_0/design_1_auto_us_df_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_auto_us_df_0 || ORIG_REF_NAME==design_1_auto_us_df_0} -quiet] -quiet
 
 # XDC: /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/ip/fifo_generator_0/fifo_generator_0.xdc
 set_property KEEP_HIERARCHY SOFT [get_cells [split [join [get_cells -hier -filter {REF_NAME==fifo_generator_0 || ORIG_REF_NAME==fifo_generator_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet

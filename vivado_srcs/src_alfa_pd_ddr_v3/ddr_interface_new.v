@@ -2,10 +2,10 @@
 
 module ddr_interface #(parameter N = 16,
                     DISTANCE_MODULES = 1,
-                    CORE_NUMBER = 4,
+                    CORE_NUMBER = 16,
                     CACHE_MULTIPLIER=1,
                     CACHE_FEEDER_MULTIPLIER=1,
-                    AXI_MODULE_OUTPUTS = 100,
+                    AXI_MODULE_OUTPUTS = 32,
                     DDR_BASE_ADDRESS =32'h0F000000                    
                     )(
                     //DDR_MODULE CONNECTION
@@ -26,15 +26,17 @@ module ddr_interface #(parameter N = 16,
                      input wire[3:0] i_filtertype,
                      input wire[15:0] i_finish_read,
                      output reg[15:0] o_finish,
+                     output reg [31:0] frame_id,
+                     input wire[31:0] new_frame_id,
                      
                     //AXI lite Module
-                    input wire clock
+                    input wire clock,
                     //DEBUG
-//                    output reg[6:0] state,
-//                    output reg[N*CORE_NUMBER-1:0] cache_x,
-//                    output reg[N*DISTANCE_MODULES-1:0]cache_feeder_x,
-//                    output reg[N-1:0] feeder_pos,
-//                    output wire[N-1:0] point_pointer
+                    output reg[6:0] state,
+                    output reg[N*CORE_NUMBER-1:0] cache_x,
+                    output reg[N*DISTANCE_MODULES-1:0]cache_feeder_x,
+                    output reg[N-1:0] feeder_pos,
+                    output wire[N-1:0] point_pointer
                     );
 
 
@@ -52,11 +54,11 @@ reg[N-1:0] l1_fcache_z[AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER-1:0];
 //reg[N*DISTANCE_MODULES-1:0] l2_fcache_y[15*CACHE_FEEDER_MULTIPLIER-1:0];
 //reg[N*DISTANCE_MODULES-1:0] l2_fcache_z[15*CACHE_FEEDER_MULTIPLIER-1:0];
 
- reg[6:0] state;
- reg[N*CORE_NUMBER-1:0] cache_x;
- reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
- reg[N-1:0] feeder_pos;
- wire[N-1:0] point_pointer;
+// reg[6:0] state;
+// reg[N*CORE_NUMBER-1:0] cache_x;
+// reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
+// reg[N-1:0] feeder_pos;
+// wire[N-1:0] point_pointer;
 
 
 reg pause;
@@ -275,7 +277,7 @@ always @(posedge clock) begin    //axi addr and owner block
         init_fetch_cache <=0;
         restart_axi_fcache <=0;
         restart_axi_cache <=0;
-        point_pointer_base <= point_pointer;
+        point_pointer_base <= 0;
 
     end
 end
@@ -346,7 +348,7 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
         end
         else if (state3_finish) begin  //module finish, cleaning
             state3_start <=0;
-            if (feeder_pos + AXI_MODULE_OUTPUTS> i_pointcloud_size ) begin
+            if (feeder_pos + AXI_MODULE_OUTPUTS> i_pointcloud_size-2 ) begin
                 feeder_pos<=0;
             end
             else begin
@@ -355,7 +357,7 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
         end
     end
     else if (init_read_owner == 2 && i_read_TxnDone && only_1read==0) begin
-        if (feeder_pos + AXI_MODULE_OUTPUTS> i_pointcloud_size ) begin
+        if (feeder_pos + AXI_MODULE_OUTPUTS> i_pointcloud_size-2 ) begin
                 feeder_pos<=0;
             end
             else begin
@@ -411,7 +413,7 @@ end
 
 
 
-
+reg delay_update_cache;
 always @(posedge clock) begin //state 5 block (Signal handling)   //mark for debug
     if (rst == 1) begin
         if (state==5) begin
@@ -425,12 +427,17 @@ always @(posedge clock) begin //state 5 block (Signal handling)   //mark for deb
             else if (start_state5 == 0) begin
                 parallel_fetch_feeder_cache <= 1;
                 if ((l1_feeder_cache_window_index) <(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER)) begin
-                        parallel_update_feeder_cache <=1;
+                        //parallel_update_feeder_cache <=1;
+                        delay_update_cache <=1;
                 end
                 else begin
                         parallel_update_feeder_cache <=0;
                 end
                 start_state5 <=1;
+            end
+            else if(delay_update_cache) begin
+                delay_update_cache <=0;
+                parallel_update_feeder_cache <=1;
             end
             else if ((l1_feeder_cache_window_index+DISTANCE_MODULES) >=(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER)) begin
                 parallel_update_feeder_cache <= 0;
@@ -456,6 +463,7 @@ always @(posedge clock) begin //state 5 block (Signal handling)   //mark for deb
         parallel_fetch_feeder_cache <=0;
         parallel_update_feeder_cache <=0;
         start_state5 <=0;
+        delay_update_cache <=0;
     end
 end
 
@@ -521,9 +529,12 @@ always @(posedge clock) begin
       end
       else if( state == 6 && fifo_empty==1)begin
          o_finish <=noise_points+1;
+         frame_id <= new_frame_id;
       end
-      else if(rst==0 || (state == 0 && i_start )) begin
+      else if(rst==0 || (state == 0 && i_start && frame_id != new_frame_id )) begin
         o_finish <=0;
+        if(rst==0)
+            frame_id <=0;
       end
       
 end
@@ -534,7 +545,7 @@ always @(posedge clock) begin
     if (rst == 1) begin
       case (state)
           0:begin //Start
-              if (i_start) begin
+              if (i_start && frame_id != new_frame_id) begin
                   state <= 1;
                   starting <=1;
                   pause <=1;
@@ -607,7 +618,7 @@ always @(posedge clock) begin
                       stored_update_cache <=0;
                   end
               end
-              else if (parallel_update_feeder_cache && ((l1_feeder_cache_window_index+DISTANCE_MODULES) <(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER))) begin
+              else if ((parallel_update_feeder_cache||delay_update_cache) && ((l1_feeder_cache_window_index+DISTANCE_MODULES) <(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER))) begin
                   pause <=0;
               end
               else begin

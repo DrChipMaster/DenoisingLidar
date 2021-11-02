@@ -24,7 +24,7 @@ module MI_memoryInterface_AXI #(
     parameter  C_M_TARGET_SLAVE_BASE_ADDR	= 32'h00000000,
     // Burst Length. Supports 1, 2, 4, 8, 16, 32, 64, 128, 256 burst lengths
     parameter integer C_M_AXI_BURST_LEN_WRITE	= 1,
-    parameter integer C_M_AXI_BURST_LEN_READ	= 100,
+    parameter integer C_M_AXI_BURST_LEN_READ	= 32,
     // Thread ID Width
     parameter integer C_M_AXI_ID_WIDTH	= 6,
     // Width of Address Bus

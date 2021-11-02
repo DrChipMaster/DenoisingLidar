@@ -26,18 +26,14 @@ module Feeder #(parameter N = 16,
                 input wire [N*DISTANCE_MODULES-1:0]cache_x,
                 input wire [N*DISTANCE_MODULES-1:0]cache_y,
                 input wire [N*DISTANCE_MODULES-1:0]cache_z,
-                output reg [N*DISTANCE_MODULES-1:0] cp_x,
-                output reg [N*DISTANCE_MODULES-1:0] cp_y,
-                output reg [N*DISTANCE_MODULES-1:0] cp_z
+                output wire [N*DISTANCE_MODULES-1:0] cp_x,
+                output wire [N*DISTANCE_MODULES-1:0] cp_y,
+                output wire [N*DISTANCE_MODULES-1:0] cp_z
                 );
     integer i,j;
-
-    always @(posedge clock)
-    begin
-        cp_x              = cache_x;
-        cp_y              = cache_y;
-        cp_z              = cache_z;
-    end
+    assign cp_x              = cache_x;
+    assign cp_y              = cache_y;
+    assign cp_z              = cache_z;
 endmodule
     
     

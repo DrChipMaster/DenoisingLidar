@@ -113,7 +113,7 @@ module design_1_MI_memoryInterface_A_0_0 (
 input wire [31 : 0] i_MU_writeAddress;
 input wire [63 : 0] i_MU_writePayload;
 input wire [31 : 0] i_MU_readAddress;
-output wire [6399 : 0] o_AMU_P;
+output wire [2047 : 0] o_AMU_P;
 input wire i_MI_initWriteTxn;
 input wire i_MI_initReadTxn;
 output wire o_MI_writeTxnDone;
@@ -215,7 +215,7 @@ output wire M_AXI_RREADY;
   MI_memoryInterface_AXI #(
     .C_M_TARGET_SLAVE_BASE_ADDR(32'H00000000),
     .C_M_AXI_BURST_LEN_WRITE(1),
-    .C_M_AXI_BURST_LEN_READ(100),
+    .C_M_AXI_BURST_LEN_READ(32),
     .C_M_AXI_ID_WIDTH(6),
     .C_M_AXI_ADDR_WIDTH(32),
     .C_M_AXI_DATA_WIDTH(64),

@@ -70,7 +70,10 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "design_1_AXI_lite_Slave_0_0_synth_1" START { ROLLUP_AUTO }
-set_msg_config -id {Common 17-41} -limit 10000000
+set_param chipscope.maxJobs 4
+set_param xicom.use_bs_reader 1
+set_param tcl.collectionResultDisplayLimit 0
+set_msg_config -id {HDL-1065} -limit 10000
 set_param project.vivado.isBlockSynthRun true
 OPTRACE "Creating in-memory project" START { }
 set_param ips.modRefOverrideMrefDirPath /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/mref
@@ -86,6 +89,7 @@ set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property board_part xilinx.com:zcu104:part0:1.1 [current_project]
+set_property ip_repo_paths /home/andre/DenoisingLidar/vivado_projects/ip_repo/axi_slave_1.0 [current_project]
 update_ip_catalog
 set_property ip_output_repo /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
