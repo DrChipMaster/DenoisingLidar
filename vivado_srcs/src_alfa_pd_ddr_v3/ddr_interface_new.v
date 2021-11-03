@@ -2,7 +2,7 @@
 
 module ddr_interface #(parameter N = 16,
                     DISTANCE_MODULES = 1,
-                    CORE_NUMBER = 16,
+                    CORE_NUMBER = 4,
                     CACHE_MULTIPLIER=1,
                     CACHE_FEEDER_MULTIPLIER=1,
                     AXI_MODULE_OUTPUTS = 32,
@@ -24,19 +24,24 @@ module ddr_interface #(parameter N = 16,
                      input wire i_start,
                      input wire[31:0] i_pointcloud_size,
                      input wire[3:0] i_filtertype,
+                     input wire [7:0] i_neighbor_treshold,
+                     input wire [7:0] i_search_radius,
+                     input wire [3:0] i_filtertype,
+		             input wire [3:0] i_intensity_treshold,
+		             input wire [3:0] i_multi_parameter,
                      input wire[15:0] i_finish_read,
                      output reg[15:0] o_finish,
                      output reg [31:0] frame_id,
                      input wire[31:0] new_frame_id,
                      
                     //AXI lite Module
-                    input wire clock,
+                    input wire clock
                     //DEBUG
-                    output reg[6:0] state,
-                    output reg[N*CORE_NUMBER-1:0] cache_x,
-                    output reg[N*DISTANCE_MODULES-1:0]cache_feeder_x,
-                    output reg[N-1:0] feeder_pos,
-                    output wire[N-1:0] point_pointer
+//                    output reg[6:0] state,
+//                    output reg[N*CORE_NUMBER-1:0] cache_x,
+//                    output reg[N*DISTANCE_MODULES-1:0]cache_feeder_x,
+//                    output reg[N-1:0] feeder_pos,
+//                    output wire[N-1:0] point_pointer
                     );
 
 
@@ -54,11 +59,11 @@ reg[N-1:0] l1_fcache_z[AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER-1:0];
 //reg[N*DISTANCE_MODULES-1:0] l2_fcache_y[15*CACHE_FEEDER_MULTIPLIER-1:0];
 //reg[N*DISTANCE_MODULES-1:0] l2_fcache_z[15*CACHE_FEEDER_MULTIPLIER-1:0];
 
-// reg[6:0] state;
-// reg[N*CORE_NUMBER-1:0] cache_x;
-// reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
-// reg[N-1:0] feeder_pos;
-// wire[N-1:0] point_pointer;
+ reg[6:0] state;
+ reg[N*CORE_NUMBER-1:0] cache_x;
+ reg[N*DISTANCE_MODULES-1:0]cache_feeder_x;
+ reg[N-1:0] feeder_pos;
+ wire[N-1:0] point_pointer;
 
 
 reg pause;
@@ -302,7 +307,7 @@ always @(posedge clock) begin   //fetch l1 cache (fetch l1 cluster cache )
 end
 
 
-wire[N-1:0] points_to_update;
+wire[N*2-1:0] points_to_update;
 assign points_to_update = point_pointer-point_pointer_base;
 integer i;
 always @(posedge clock) begin    //State 2 block (update cluster cache)

@@ -1,10 +1,10 @@
 // Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2021.1.1 (lin64) Build 3286242 Wed Jul 28 13:09:46 MDT 2021
-// Date        : Mon Nov  1 22:45:48 2021
+// Date        : Mon Nov  1 22:45:47 2021
 // Host        : andre running 64-bit Ubuntu 20.04.3 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_zynq_ultra_ps_e_0_0_1/design_1_zynq_ultra_ps_e_0_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top design_1_zynq_ultra_ps_e_0_0 -prefix
+//               design_1_zynq_ultra_ps_e_0_0_ design_1_zynq_ultra_ps_e_0_0_stub.v
 // Design      : design_1_zynq_ultra_ps_e_0_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xczu7ev-ffvc1156-2-e

@@ -19,7 +19,11 @@
         input wire  [15:0] i_finish,
         input wire  [31:0] frame_id,
         output wire [31:0] o_pointcloud_size,
+		output wire [7:0] o_neighbor_treshold,
+        output wire [7:0] o_search_radius,
         output wire [3:0] o_filtertype,
+		output wire [3:0] o_intensity_treshold,
+		output wire [3:0] o_multi_parameter,
         output wire [15:0] o_finish_read,
         output wire [31:0] new_frame_id,
 		// User ports ends
@@ -437,6 +441,11 @@
 	// Add user logic here
     assign o_pointcloud_size = slv_reg2;
     assign o_filtertype = slv_reg0[5:2];
+	assign o_intensity_treshold = slv_reg0[9:6];
+	assign o_multi_parameter = slv_reg0[13:10];
+	assign o_neighbor_treshold = slv_reg0[22:14];
+	assign o_search_radius = slv_reg0[31:23];
+
     assign o_finish_read = slv_reg1[15:0];
     assign new_frame_id = slv_reg4;
 	// User logic ends

@@ -36,6 +36,11 @@ module Controller #(parameter N = 16,
                     input wire read_fifo,
                     input wire cache_updated,
                     input wire pause,
+                    input wire [7:0] i_neighbor_treshold,
+                    input wire [7:0] i_search_radius,
+                    input wire [3:0] i_filtertype,
+		            input wire [3:0] i_intensity_treshold,
+		            input wire [3:0] i_multi_parameter,
                     input wire [3:0] filter_selector,
                     output wire[N-1:0] outlier_pos_fifo,
                     output reg[N*2-1:0] point_pos,
@@ -50,7 +55,7 @@ module Controller #(parameter N = 16,
     reg [N-1:0] point_z [CORE_NUMBER-1:0];
     reg [N-1:0] point_i [CORE_NUMBER-1:0];
 
-    reg [N-1:0] fifo_buffer[CORE_NUMBER*3-1:0];
+    reg [N-1:0] fifo_buffer[CORE_NUMBER-1:0];
     reg [N-1:0] point_pos_buffer [CORE_NUMBER-1:0];
     
     reg [N-1:0]fifo_write_size;
@@ -109,7 +114,7 @@ reg[N-1:0] fifo_size;
 
             end
             update_cache <=1;
-            for (i = 0;i<CORE_NUMBER*3;i = i+1)
+            for (i = 0;i<CORE_NUMBER;i = i+1)
             begin
                 fifo_buffer[i] <= 0;     // Clear the fifo buffer
             end

@@ -123,9 +123,11 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
+  set_param power.enableUnconnectedCarry8PinPower 1
+  set_param power.enableCarry8RouteBelPower 1
+  set_param power.BramSDPPropagationFix 1
   set_param chipscope.maxJobs 4
-  set_param xicom.use_bs_reader 1
-  set_param tcl.collectionResultDisplayLimit 0
+  set_param power.enableLutRouteBelPower 1
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xczu7ev-ffvc1156-2-e
   set_property board_part xilinx.com:zcu104:part0:1.1 [current_project]
@@ -139,7 +141,7 @@ OPTRACE "set parameters" START { }
   update_ip_catalog
   set_property ip_output_repo /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
-  set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
   add_files -quiet /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/design_1_wrapper.dcp
@@ -149,6 +151,7 @@ OPTRACE "add files" START { }
   add_files /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.srcs/sources_1/bd/design_1/design_1.bd
   set_param project.isImplRun false
 OPTRACE "read constraints: implementation" START { }
+  read_xdc /home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.srcs/constrs_1/new/constrains.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }
@@ -315,7 +318,7 @@ set rc [catch {
   create_msg_db write_bitstream.pb
 OPTRACE "read constraints: write_bitstream" START { }
 OPTRACE "read constraints: write_bitstream" END { }
-  set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
   catch { write_mem_info -force -no_partial_mmi design_1_wrapper.mmi }
 OPTRACE "write_bitstream setup" END { }
 OPTRACE "write_bitstream" START { }

@@ -25,13 +25,8 @@ Main goal of this module
 
 module validator_core #(parameter N = 16,
                         DISTANCE_MODULES = 8,
-                        NEIGHBOR_TRESHOLD = 20,   //default 22
                         MIN_SEARCH_RADIUS = 1,
-                        MULTI_PARAMETER=1,
-                        ANGULAR_RESOLUTION=8,   //Manually calculate, suposed to be 0.3 
-                        INTENSITY_TRESHOLD = 5,
-                        SEARCH_RADIUS_R = 50,
-                        NEIGHBOR_TRESHOLD_R = 5
+                        ANGULAR_RESOLUTION=1   //Manually calculate, suposed to be 0.3 
                         )
 
                        (
@@ -47,6 +42,11 @@ module validator_core #(parameter N = 16,
                         input wire [N*DISTANCE_MODULES-1:0] i_cp_y,
                         input wire [N*DISTANCE_MODULES-1:0] i_cp_z,
                         input wire [3:0] filter_selector,
+                        input wire [7:0] i_neighbor_treshold,
+                        input wire [7:0] i_search_radius,
+                        input wire [3:0] i_filtertype,
+		                input wire [3:0] i_intensity_treshold,
+		                input wire [3:0] i_multi_parameter,
                         input wire pause,
                         output reg o_inlier,
                         output reg o_outlier);
@@ -64,10 +64,12 @@ module validator_core #(parameter N = 16,
             neighbor_counter = 0;
         else
         begin
-            for (j = 0; j<DISTANCE_MODULES;j = j+1)  //compare all the results from the distance modules
-            begin
-                if (distances[j]<=search_radius && pause==0)
-                    neighbor_counter = neighbor_counter+1;
+            if(pause==0) begin
+                for (j = 0; j<DISTANCE_MODULES;j = j+1)  //compare all the results from the distance modules
+                begin
+                    if (distances[j]<=search_radius)
+                        neighbor_counter = neighbor_counter+1;
+                end
             end
         end           
     end
@@ -78,15 +80,15 @@ module validator_core #(parameter N = 16,
         if(filter_selector != 1 )
         begin   
             if (distance_to_sensor < MIN_SEARCH_RADIUS) begin
-                search_radius = MIN_SEARCH_RADIUS;
+                search_radius <= MIN_SEARCH_RADIUS;
             end
             else begin
-                search_radius = (distance_to_sensor/ANGULAR_RESOLUTION)/MULTI_PARAMETER; //Calculate search radius
+                search_radius <= (distance_to_sensor/ANGULAR_RESOLUTION)/i_multi_parameter; //Calculate search radius
             end
         end
         else
         begin
-            search_radius = SEARCH_RADIUS_R;
+            search_radius <= i_search_radius;
         end
     end
     
@@ -100,19 +102,19 @@ module validator_core #(parameter N = 16,
         else if(pause==0&& o_inlier ==0 && o_outlier==0)
         begin
             cycles = cycles +DISTANCE_MODULES;
-            if((filter_selector >=1) && (i_point_i > INTENSITY_TRESHOLD)) begin                      //0->DROR 1->LIOR 2->DLIOR
+            if((filter_selector >=1) && (i_point_i > i_intensity_treshold)) begin                      //0->DROR 1->LIOR 2->DLIOR
                 o_inlier  <= 1;
                 o_outlier <= 0;
             end
             else
             begin
-                if(filter_selector ==1 && neighbor_counter > NEIGHBOR_TRESHOLD_R)
+                if(filter_selector ==1 && neighbor_counter > i_neighbor_treshold)
                 begin
                     o_inlier  <= 1;
                     o_outlier <= 0;
                 end
                 else
-                if (filter_selector!=1 && neighbor_counter > NEIGHBOR_TRESHOLD)  // check if niegbhor counter reached the treshold to be classified as a o_inlier
+                if (filter_selector!=1 && neighbor_counter > i_neighbor_treshold)  // check if niegbhor counter reached the treshold to be classified as a o_inlier
                 begin
                     o_inlier  <= 1;
                     o_outlier <= 0;
@@ -120,7 +122,7 @@ module validator_core #(parameter N = 16,
                 else    //keep comparing 
                 begin
                     o_inlier <= 0;
-                    if (cycles >= (i_point_cloud_size)) // reached max comparisons and point is a o_outlier
+                    if (cycles >= (i_point_cloud_size-64)) // reached max comparisons and point is a o_outlier
                         o_outlier <= 1;
                     else
                         o_outlier <= 0;

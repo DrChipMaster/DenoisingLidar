@@ -52,7 +52,7 @@ module square_root #(parameter N = 32)
                 r = left - right;
                 q = {q[N/2-2:0],!r[N/2+1]};
         end
-        sq_root = q;   //final assignment of output.
+        sq_root <= q;   //final assignment of output.
     end
     //end of Function
     

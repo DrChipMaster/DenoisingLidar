@@ -12,7 +12,6 @@ source design_1_wrapper.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/andre/DenoisingLidar/vivado_projects/ip_repo/axi_slave_1.0'.
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/andre/Vivado/Vivado/2021.1/data/ip'.
-add_files: Time (s): cpu = 00:00:09 ; elapsed = 00:00:07 . Memory (MB): peak = 2605.004 ; gain = 176.086 ; free physical = 5826 ; free virtual = 18444
 Command: synth_design -top design_1_wrapper -part xczu7ev-ffvc1156-2-e
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xczu7ev'
@@ -20,98 +19,92 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu7ev
 INFO: [Device 21-403] Loading part xczu7ev-ffvc1156-2-e
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 1899744
+INFO: [Synth 8-7075] Helper process launched with PID 777268
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2845.887 ; gain = 48.719 ; free physical = 4558 ; free virtual = 17336
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2806.023 ; gain = 50.656 ; free physical = 1019 ; free virtual = 17499
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'design_1_wrapper' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/hdl/design_1_wrapper.v:12]
 INFO: [Synth 8-6157] synthesizing module 'design_1' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:13]
-INFO: [Synth 8-6157] synthesizing module 'design_1_AXI_lite_Slave_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_AXI_lite_Slave_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_AXI_lite_Slave_0_0' (1#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_AXI_lite_Slave_0_0_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_MI_memoryInterface_A_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_MI_memoryInterface_A_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_MI_memoryInterface_A_0_0' (2#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_MI_memoryInterface_A_0_0_stub.v:6]
-WARNING: [Synth 8-7071] port 'o_MI_error' of module 'design_1_MI_memoryInterface_A_0_0' is unconnected for instance 'MI_memoryInterface_A_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:235]
-WARNING: [Synth 8-7023] instance 'MI_memoryInterface_A_0' of module 'design_1_MI_memoryInterface_A_0_0' has 53 connections declared, but only 52 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:235]
-INFO: [Synth 8-6157] synthesizing module 'design_1_axi_interconnect_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:746]
-INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_O7FAN0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2490]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_us_df_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_us_df_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_us_df_0' (3#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_us_df_0_stub.v:6]
-WARNING: [Synth 8-7071] port 'm_axi_awregion' of module 'design_1_auto_us_df_0' is unconnected for instance 'auto_us_df' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2789]
-WARNING: [Synth 8-7071] port 'm_axi_arregion' of module 'design_1_auto_us_df_0' is unconnected for instance 'auto_us_df' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2789]
-WARNING: [Synth 8-7023] instance 'auto_us_df' of module 'design_1_auto_us_df_0' has 76 connections declared, but only 74 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2789]
-INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_O7FAN0' (4#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2490]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_axi_interconnect_0_0' (5#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:746]
-INFO: [Synth 8-6157] synthesizing module 'design_1_ddr_interface_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_ddr_interface_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_ddr_interface_0_0' (6#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_ddr_interface_0_0_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_ps8_0_axi_periph_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1132]
-INFO: [Synth 8-6157] synthesizing module 'm00_couplers_imp_QJIMLI' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1934]
-INFO: [Synth 8-6155] done synthesizing module 'm00_couplers_imp_QJIMLI' (7#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1934]
-INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_1A7ZMW4' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2080]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_ds_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_ds_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_ds_0' (8#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_ds_0_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_pc_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_0' (9#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_pc_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_1A7ZMW4' (10#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2080]
-INFO: [Synth 8-6157] synthesizing module 's01_couplers_imp_KGUFR9' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2866]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_ds_1' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_ds_1_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_ds_1' (11#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_ds_1_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_1' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_pc_1_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_1' (12#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_auto_pc_1_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 's01_couplers_imp_KGUFR9' (13#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2866]
-INFO: [Synth 8-6157] synthesizing module 's02_couplers_imp_19AQZVR' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:3276]
-INFO: [Synth 8-6155] done synthesizing module 's02_couplers_imp_19AQZVR' (14#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:3276]
-INFO: [Synth 8-6157] synthesizing module 'design_1_xbar_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_xbar_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_xbar_0' (15#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_xbar_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_ps8_0_axi_periph_0' (16#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1132]
-WARNING: [Synth 8-7071] port 'S02_AXI_arready' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7071] port 'S02_AXI_awready' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7071] port 'S02_AXI_bresp' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7071] port 'S02_AXI_bvalid' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7071] port 'S02_AXI_rdata' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7071] port 'S02_AXI_rresp' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7071] port 'S02_AXI_rvalid' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7071] port 'S02_AXI_wready' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-WARNING: [Synth 8-7023] instance 'ps8_0_axi_periph' of module 'design_1_ps8_0_axi_periph_0' has 122 connections declared, but only 114 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-INFO: [Synth 8-6157] synthesizing module 'design_1_rst_ps8_0_100M_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_rst_ps8_0_100M_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_rst_ps8_0_100M_0' (17#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_rst_ps8_0_100M_0_stub.v:6]
-WARNING: [Synth 8-7071] port 'mb_reset' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:506]
-WARNING: [Synth 8-7071] port 'bus_struct_reset' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:506]
-WARNING: [Synth 8-7071] port 'peripheral_reset' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:506]
-WARNING: [Synth 8-7071] port 'interconnect_aresetn' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:506]
-WARNING: [Synth 8-7023] instance 'rst_ps8_0_100M' of module 'design_1_rst_ps8_0_100M_0' has 10 connections declared, but only 6 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:506]
-WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:513]
-INFO: [Synth 8-6157] synthesizing module 'design_1_system_ila_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_system_ila_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_system_ila_0_0' (18#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_system_ila_0_0_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_zynq_ultra_ps_e_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_zynq_ultra_ps_e_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_zynq_ultra_ps_e_0_0' (19#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-1899603-andre/realtime/design_1_zynq_ultra_ps_e_0_0_stub.v:6]
-WARNING: [Synth 8-7071] port 'maxigp0_awuser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:626]
-WARNING: [Synth 8-7071] port 'maxigp0_aruser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:626]
-WARNING: [Synth 8-7071] port 'maxigp1_awuser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:626]
-WARNING: [Synth 8-7071] port 'maxigp1_aruser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:626]
-WARNING: [Synth 8-7071] port 'saxigp2_bid' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:626]
-WARNING: [Synth 8-7071] port 'saxigp2_rid' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:626]
-WARNING: [Synth 8-7023] instance 'zynq_ultra_ps_e_0' of module 'design_1_zynq_ultra_ps_e_0_0' has 123 connections declared, but only 117 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:626]
-INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'AXI_lite_Slave_0'. This will prevent further optimization [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:206]
-INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'system_ila_0'. This will prevent further optimization [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:513]
-INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'ddr_interface_0'. This will prevent further optimization [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:368]
-INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'MI_memoryInterface_A_0'. This will prevent further optimization [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:235]
-INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'axi_interconnect_0'. This will prevent further optimization [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:288]
-INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'ps8_0_axi_periph'. This will prevent further optimization [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:391]
-INFO: [Synth 8-6155] done synthesizing module 'design_1' (20#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:13]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_wrapper' (21#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/hdl/design_1_wrapper.v:12]
+INFO: [Synth 8-6157] synthesizing module 'design_1_AXI_lite_Slave_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_AXI_lite_Slave_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_AXI_lite_Slave_0_0' (1#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_AXI_lite_Slave_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_MI_memoryInterface_A_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_MI_memoryInterface_A_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_MI_memoryInterface_A_0_0' (2#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_MI_memoryInterface_A_0_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'o_MI_error' of module 'design_1_MI_memoryInterface_A_0_0' is unconnected for instance 'MI_memoryInterface_A_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:227]
+WARNING: [Synth 8-7071] port 'M_AXI_AWUSER' of module 'design_1_MI_memoryInterface_A_0_0' is unconnected for instance 'MI_memoryInterface_A_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:227]
+WARNING: [Synth 8-7071] port 'M_AXI_WUSER' of module 'design_1_MI_memoryInterface_A_0_0' is unconnected for instance 'MI_memoryInterface_A_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:227]
+WARNING: [Synth 8-7071] port 'M_AXI_ARUSER' of module 'design_1_MI_memoryInterface_A_0_0' is unconnected for instance 'MI_memoryInterface_A_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:227]
+WARNING: [Synth 8-7023] instance 'MI_memoryInterface_A_0' of module 'design_1_MI_memoryInterface_A_0_0' has 53 connections declared, but only 49 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:227]
+INFO: [Synth 8-6157] synthesizing module 'design_1_axi_interconnect_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:614]
+INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_O7FAN0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2352]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_us_df_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_us_df_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_us_df_0' (3#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_us_df_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'm_axi_awregion' of module 'design_1_auto_us_df_0' is unconnected for instance 'auto_us_df' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2651]
+WARNING: [Synth 8-7071] port 'm_axi_arregion' of module 'design_1_auto_us_df_0' is unconnected for instance 'auto_us_df' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2651]
+WARNING: [Synth 8-7023] instance 'auto_us_df' of module 'design_1_auto_us_df_0' has 76 connections declared, but only 74 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2651]
+INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_O7FAN0' (4#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2352]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_axi_interconnect_0_0' (5#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:614]
+INFO: [Synth 8-6157] synthesizing module 'design_1_ddr_interface_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_ddr_interface_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_ddr_interface_0_0' (6#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_ddr_interface_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_ps8_0_axi_periph_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:994]
+INFO: [Synth 8-6157] synthesizing module 'm00_couplers_imp_QJIMLI' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1796]
+INFO: [Synth 8-6155] done synthesizing module 'm00_couplers_imp_QJIMLI' (7#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1796]
+INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_1A7ZMW4' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1942]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_ds_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_ds_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_ds_0' (8#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_ds_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_pc_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_0' (9#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_pc_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_1A7ZMW4' (10#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:1942]
+INFO: [Synth 8-6157] synthesizing module 's01_couplers_imp_KGUFR9' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2728]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_ds_1' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_ds_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_ds_1' (11#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_ds_1_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_1' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_pc_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_1' (12#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_auto_pc_1_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 's01_couplers_imp_KGUFR9' (13#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:2728]
+INFO: [Synth 8-6157] synthesizing module 's02_couplers_imp_19AQZVR' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:3138]
+INFO: [Synth 8-6155] done synthesizing module 's02_couplers_imp_19AQZVR' (14#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:3138]
+INFO: [Synth 8-6157] synthesizing module 'design_1_xbar_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_xbar_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_xbar_0' (15#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_xbar_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_ps8_0_axi_periph_0' (16#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:994]
+WARNING: [Synth 8-7071] port 'S02_AXI_arready' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7071] port 'S02_AXI_awready' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7071] port 'S02_AXI_bresp' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7071] port 'S02_AXI_bvalid' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7071] port 'S02_AXI_rdata' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7071] port 'S02_AXI_rresp' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7071] port 'S02_AXI_rvalid' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7071] port 'S02_AXI_wready' of module 'design_1_ps8_0_axi_periph_0' is unconnected for instance 'ps8_0_axi_periph' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+WARNING: [Synth 8-7023] instance 'ps8_0_axi_periph' of module 'design_1_ps8_0_axi_periph_0' has 122 connections declared, but only 114 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:372]
+INFO: [Synth 8-6157] synthesizing module 'design_1_rst_ps8_0_100M_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_rst_ps8_0_100M_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_rst_ps8_0_100M_0' (17#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_rst_ps8_0_100M_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'mb_reset' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:487]
+WARNING: [Synth 8-7071] port 'bus_struct_reset' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:487]
+WARNING: [Synth 8-7071] port 'peripheral_reset' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:487]
+WARNING: [Synth 8-7071] port 'interconnect_aresetn' of module 'design_1_rst_ps8_0_100M_0' is unconnected for instance 'rst_ps8_0_100M' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:487]
+WARNING: [Synth 8-7023] instance 'rst_ps8_0_100M' of module 'design_1_rst_ps8_0_100M_0' has 10 connections declared, but only 6 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:487]
+INFO: [Synth 8-6157] synthesizing module 'design_1_zynq_ultra_ps_e_0_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_zynq_ultra_ps_e_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_zynq_ultra_ps_e_0_0' (18#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/.Xil/Vivado-777046-andre/realtime/design_1_zynq_ultra_ps_e_0_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'maxigp0_awuser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:494]
+WARNING: [Synth 8-7071] port 'maxigp0_aruser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:494]
+WARNING: [Synth 8-7071] port 'maxigp1_awuser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:494]
+WARNING: [Synth 8-7071] port 'maxigp1_aruser' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:494]
+WARNING: [Synth 8-7071] port 'saxigp2_bid' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:494]
+WARNING: [Synth 8-7071] port 'saxigp2_rid' of module 'design_1_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:494]
+WARNING: [Synth 8-7023] instance 'zynq_ultra_ps_e_0' of module 'design_1_zynq_ultra_ps_e_0_0' has 123 connections declared, but only 117 given [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:494]
+INFO: [Synth 8-6155] done synthesizing module 'design_1' (19#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/synth/design_1.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_wrapper' (20#1) [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/hdl/design_1_wrapper.v:12]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2894.824 ; gain = 97.656 ; free physical = 3685 ; free virtual = 16469
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2849.961 ; gain = 94.594 ; free physical = 151 ; free virtual = 16632
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2915.637 ; gain = 118.469 ; free physical = 3680 ; free virtual = 16465
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2868.773 ; gain = 113.406 ; free physical = 149 ; free virtual = 16629
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2915.637 ; gain = 118.469 ; free physical = 3680 ; free virtual = 16465
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2868.773 ; gain = 113.406 ; free physical = 149 ; free virtual = 16629
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2915.637 ; gain = 0.000 ; free physical = 3672 ; free virtual = 16457
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2868.773 ; gain = 0.000 ; free physical = 153 ; free virtual = 16627
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -130,8 +123,6 @@ Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/pro
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_auto_pc_1_1/design_1_auto_pc_1/design_1_auto_pc_1_in_context.xdc] for cell 'design_1_i/ps8_0_axi_periph/s01_couplers/auto_pc'
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_rst_ps8_0_100M_0_1/design_1_rst_ps8_0_100M_0/design_1_rst_ps8_0_100M_0_in_context.xdc] for cell 'design_1_i/rst_ps8_0_100M'
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_rst_ps8_0_100M_0_1/design_1_rst_ps8_0_100M_0/design_1_rst_ps8_0_100M_0_in_context.xdc] for cell 'design_1_i/rst_ps8_0_100M'
-Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0/design_1_system_ila_0_0_in_context.xdc] for cell 'design_1_i/system_ila_0'
-Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_system_ila_0_0/design_1_system_ila_0_0/design_1_system_ila_0_0_in_context.xdc] for cell 'design_1_i/system_ila_0'
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_AXI_lite_Slave_0_0_1/design_1_AXI_lite_Slave_0_0/design_1_AXI_lite_Slave_0_0_in_context.xdc] for cell 'design_1_i/AXI_lite_Slave_0'
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_AXI_lite_Slave_0_0_1/design_1_AXI_lite_Slave_0_0/design_1_AXI_lite_Slave_0_0_in_context.xdc] for cell 'design_1_i/AXI_lite_Slave_0'
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_auto_us_df_0/design_1_auto_us_df_0/design_1_auto_us_df_0_in_context.xdc] for cell 'design_1_i/axi_interconnect_0/s00_couplers/auto_us_df'
@@ -140,19 +131,21 @@ Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/pro
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_MI_memoryInterface_A_0_0_1/design_1_MI_memoryInterface_A_0_0/design_1_MI_memoryInterface_A_0_0_in_context.xdc] for cell 'design_1_i/MI_memoryInterface_A_0'
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_ddr_interface_0_0_1/design_1_ddr_interface_0_0/design_1_ddr_interface_0_0_in_context.xdc] for cell 'design_1_i/ddr_interface_0'
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.gen/sources_1/bd/design_1/ip/design_1_ddr_interface_0_0_1/design_1_ddr_interface_0_0/design_1_ddr_interface_0_0_in_context.xdc] for cell 'design_1_i/ddr_interface_0'
+Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.srcs/constrs_1/new/constrains.xdc]
+Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.srcs/constrs_1/new/constrains.xdc]
 Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/dont_touch.xdc]
 Finished Parsing XDC File [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/dont_touch.xdc]
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/dont_touch.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/design_1_wrapper_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/design_1_wrapper_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2976.402 ; gain = 0.000 ; free physical = 4431 ; free virtual = 17221
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2928.539 ; gain = 0.000 ; free physical = 915 ; free virtual = 17379
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2976.402 ; gain = 0.000 ; free physical = 4431 ; free virtual = 17221
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2928.539 ; gain = 0.000 ; free physical = 915 ; free virtual = 17379
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2976.402 ; gain = 179.234 ; free physical = 4516 ; free virtual = 17305
+Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2928.539 ; gain = 173.172 ; free physical = 1018 ; free virtual = 17474
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
@@ -160,7 +153,7 @@ Start Loading Part and Timing Information
 Loading part: xczu7ev-ffvc1156-2-e
 INFO: [Synth 8-6742] Reading net delay rules and data
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2976.402 ; gain = 179.234 ; free physical = 4521 ; free virtual = 17310
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2928.539 ; gain = 173.172 ; free physical = 1022 ; free virtual = 17478
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -174,17 +167,16 @@ Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/ps8_0_axi_periph/s01_c
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/ps8_0_axi_periph/s01_couplers/auto_pc. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/ps8_0_axi_periph. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/rst_ps8_0_100M. (constraint file  auto generated constraint).
-Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/system_ila_0. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/AXI_lite_Slave_0. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/axi_interconnect_0/s00_couplers/auto_us_df. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/axi_interconnect_0. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/MI_memoryInterface_A_0. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for design_1_i/ddr_interface_0. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2976.402 ; gain = 179.234 ; free physical = 4518 ; free virtual = 17308
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2928.539 ; gain = 173.172 ; free physical = 1022 ; free virtual = 17479
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2976.402 ; gain = 179.234 ; free physical = 4518 ; free virtual = 17309
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 2928.539 ; gain = 173.172 ; free physical = 1020 ; free virtual = 17479
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -206,25 +198,25 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 2976.402 ; gain = 179.234 ; free physical = 4500 ; free virtual = 17300
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2928.539 ; gain = 173.172 ; free physical = 1007 ; free virtual = 17470
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3435.988 ; gain = 638.820 ; free physical = 3835 ; free virtual = 16710
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 3393.125 ; gain = 637.758 ; free physical = 499 ; free virtual = 16961
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3435.988 ; gain = 638.820 ; free physical = 3835 ; free virtual = 16710
+Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 3393.125 ; gain = 637.758 ; free physical = 499 ; free virtual = 16961
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3833 ; free virtual = 16707
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 3414.172 ; gain = 658.805 ; free physical = 496 ; free virtual = 16959
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -242,37 +234,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3831 ; free virtual = 16706
+Finished IO Insertion : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.109 ; gain = 664.742 ; free physical = 483 ; free virtual = 16947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3831 ; free virtual = 16706
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.109 ; gain = 664.742 ; free physical = 483 ; free virtual = 16947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3831 ; free virtual = 16706
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.109 ; gain = 664.742 ; free physical = 483 ; free virtual = 16947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3831 ; free virtual = 16706
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.109 ; gain = 664.742 ; free physical = 483 ; free virtual = 16947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3831 ; free virtual = 16706
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.109 ; gain = 664.742 ; free physical = 483 ; free virtual = 16947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3831 ; free virtual = 16706
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.109 ; gain = 664.742 ; free physical = 483 ; free virtual = 16947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -292,8 +284,7 @@ Report BlackBoxes:
 |8     |design_1_MI_memoryInterface_A_0_0 |         1|
 |9     |design_1_ddr_interface_0_0        |         1|
 |10    |design_1_rst_ps8_0_100M_0         |         1|
-|11    |design_1_system_ila_0_0           |         1|
-|12    |design_1_zynq_ultra_ps_e_0_0      |         1|
+|11    |design_1_zynq_ultra_ps_e_0_0      |         1|
 +------+----------------------------------+----------+
 
 Report Cell Usage: 
@@ -307,31 +298,28 @@ Report Cell Usage:
 |7     |design_1_auto_us_df             |     1|
 |8     |design_1_ddr_interface_0        |     1|
 |9     |design_1_rst_ps8_0_100M         |     1|
-|10    |design_1_system_ila_0           |     1|
-|11    |design_1_xbar                   |     1|
-|12    |design_1_zynq_ultra_ps_e_0      |     1|
+|10    |design_1_xbar                   |     1|
+|11    |design_1_zynq_ultra_ps_e_0      |     1|
 +------+--------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.027 ; gain = 665.859 ; free physical = 3831 ; free virtual = 16706
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.109 ; gain = 664.742 ; free physical = 483 ; free virtual = 16947
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 3463.027 ; gain = 605.094 ; free physical = 3873 ; free virtual = 16748
-Synthesis Optimization Complete : Time (s): cpu = 00:00:25 ; elapsed = 00:00:27 . Memory (MB): peak = 3463.035 ; gain = 665.859 ; free physical = 3873 ; free virtual = 16748
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 3420.109 ; gain = 604.977 ; free physical = 525 ; free virtual = 16988
+Synthesis Optimization Complete : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 3420.117 ; gain = 664.742 ; free physical = 525 ; free virtual = 16988
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 3463.035 ; gain = 0.000 ; free physical = 3960 ; free virtual = 16835
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.02 . Memory (MB): peak = 3420.117 ; gain = 0.000 ; free physical = 612 ; free virtual = 17075
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3505.684 ; gain = 0.000 ; free physical = 3881 ; free virtual = 16756
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3461.734 ; gain = 0.000 ; free physical = 535 ; free virtual = 16998
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete, checksum: 4835f0ae
+Synth Design complete, checksum: 8a728e73
 INFO: [Common 17-83] Releasing license: Synthesis
-65 Infos, 27 Warnings, 0 Critical Warnings and 0 Errors encountered.
+57 Infos, 29 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:35 ; elapsed = 00:00:33 . Memory (MB): peak = 3517.652 ; gain = 912.648 ; free physical = 4020 ; free virtual = 16895
-INFO: [Common 17-600] The following parameters have non-default value.
-tcl.collectionResultDisplayLimit
+synth_design: Time (s): cpu = 00:00:32 ; elapsed = 00:00:30 . Memory (MB): peak = 3475.672 ; gain = 852.734 ; free physical = 674 ; free virtual = 17136
 INFO: [Common 17-1381] The checkpoint '/home/andre/DenoisingLidar/vivado_projects/project_ddr_new/project_ddr_new.runs/synth_1/design_1_wrapper.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_wrapper_utilization_synth.rpt -pb design_1_wrapper_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Nov  2 00:37:22 2021...
+INFO: [Common 17-206] Exiting Vivado at Wed Nov  3 16:52:04 2021...
