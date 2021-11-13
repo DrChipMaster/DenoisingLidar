@@ -25,19 +25,18 @@ Main goal of this module
 
 module validator_core #(parameter N = 16,
                         DISTANCE_MODULES = 8,
-                        NEIGHBOR_TRESHOLD = 20,   //default 22
+                        NEIGHBOR_TRESHOLD = 50,//default 22
                         MIN_SEARCH_RADIUS = 1,
                         MULTI_PARAMETER=1,
                         ANGULAR_RESOLUTION=8,   //Manually calculate, suposed to be 0.3 
-                        INTENSITY_TRESHOLD = 3,
+                        INTENSITY_TRESHOLD = 4,
                         SEARCH_RADIUS_R = 50,
-                        NEIGHBOR_TRESHOLD_R = 5
+                        NEIGHBOR_TRESHOLD_R = 8
                         )
 
                        (
                         input i_clock,
                         input i_reset,
-                        input wire [N-1:0] point_pos,
                         input wire [N-1:0] i_point_x,
                         input wire [N-1:0] i_point_y,
                         input wire [N-1:0] i_point_z,
@@ -67,7 +66,7 @@ module validator_core #(parameter N = 16,
             o_inlier  <= 0;
             o_outlier <= 0;
         end
-        else if(pause==0&& o_inlier ==0 && o_outlier==0)
+        else if(pause==0)
         begin
             cycles = cycles +DISTANCE_MODULES;
             if((filter_selector >=1) && (i_point_i > INTENSITY_TRESHOLD)) begin                      //0->DROR 1->LIOR 2->DLIOR
@@ -110,7 +109,7 @@ module validator_core #(parameter N = 16,
         begin
             for (j = 0; j<DISTANCE_MODULES;j = j+1)  //compare all the results from the distance modules
             begin
-                if (distances[j]<=search_radius && pause==0)
+                if (distances[j]<=search_radius)
                     neighbor_counter = neighbor_counter+1;
             end
         end           
