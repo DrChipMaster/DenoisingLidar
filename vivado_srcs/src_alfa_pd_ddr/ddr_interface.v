@@ -109,7 +109,7 @@ reg cache_updated;
 
 //reg updating_l1cache;
 //reg updating_l1_feeder_cache;
-reg[1:0] feeder_l1_cache_status;  //0 -> outdated; 1-> updating; 2->updated; 
+//reg[1:0] feeder_l1_cache_status;  //0 -> outdated; 1-> updating; 2->updated; 
 reg[1:0] cluster_l1_cache_status;  //0 -> outdated; 1-> updating; 2->updated; 
 
 //reg[8:0] l1_cache_window_index;

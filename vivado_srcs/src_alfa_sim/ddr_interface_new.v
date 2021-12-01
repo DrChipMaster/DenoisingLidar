@@ -2,8 +2,8 @@
 
 module ddr_interface #(parameter N = 16,
                     DISTANCE_MODULES = 1,
-                    CORE_NUMBER = 2,
-                    CACHE_MULTIPLIER=1,
+                    CORE_NUMBER = 19,
+                    CACHE_MULTIPLIER=2,
                     CACHE_FEEDER_MULTIPLIER=1,
                     AXI_MODULE_OUTPUTS = 15,
                     DDR_BASE_ADDRESS =32'h00000000                    
@@ -43,10 +43,10 @@ module ddr_interface #(parameter N = 16,
                     );
 
 
-reg[N*CORE_NUMBER-1:0] l1_cache_x[15*CACHE_MULTIPLIER-1:0];
-reg[N*CORE_NUMBER-1:0] l1_cache_y[15*CACHE_MULTIPLIER-1:0];
-reg[N*CORE_NUMBER-1:0] l1_cache_z[15*CACHE_MULTIPLIER-1:0];
-reg[N*CORE_NUMBER-1:0] l1_cache_i[15*CACHE_MULTIPLIER-1:0];
+reg[N-1:0] l1_cache_x[15*CACHE_MULTIPLIER-1:0];
+reg[N-1:0] l1_cache_y[15*CACHE_MULTIPLIER-1:0];
+reg[N-1:0] l1_cache_z[15*CACHE_MULTIPLIER-1:0];
+reg[N-1:0] l1_cache_i[15*CACHE_MULTIPLIER-1:0];
 
 
 reg[N*DISTANCE_MODULES-1:0] l1_fcache_x[15*CACHE_FEEDER_MULTIPLIER-1:0];
@@ -106,7 +106,7 @@ wire Controller_done;
 wire fifo_empty;
 reg[CACHE_MULTIPLIER-1:0] update_cycle;
 
-wire[CACHE_MULTIPLIER-1:0] cycle_offset;
+wire[N-1:0] cycle_offset;
 
 
 
@@ -158,7 +158,6 @@ integer index;
 always @(posedge clock) begin
     if(i_read_TxnDone && read_cache)
     begin
-        point_pointer_base <= o_readAdress-DDR_BASE_ADDRESS;
         //Updating x l1 cache
         l1_cache_x[0+cycle_offset] <= i_AMU_P0[15:0];
         l1_cache_x[1+cycle_offset] <= i_AMU_P1[15:0];
@@ -225,7 +224,7 @@ always @(posedge clock) begin
         l1_cache_i[14+cycle_offset] <= i_AMU_P14[63:48];
     end
     else if (rst==0) begin
-        for (index= 0;index<CACHE_MULTIPLIER ;index = index+1) begin
+        for (index= 0;index<CACHE_MULTIPLIER*AXI_MODULE_OUTPUTS ;index = index+CACHE_MULTIPLIER) begin
             l1_cache_x[0+index] <= 0;
             l1_cache_x[1+index] <= 0;
             l1_cache_x[2+index] <= 0;
@@ -298,12 +297,12 @@ always @(posedge clock) begin
      begin
             update_cycle <= update_cycle + 1;
      end
-    else if (rst==0) begin
+    else if (rst==0|| (update_cycle > CACHE_MULTIPLIER) || (state!=1)&&(state !=3 && parallel_fetch_feeder_cache==0)) begin
         update_cycle <=0;
      end
-    else if (init_read_owner==0) begin
-            update_cycle <=0;
-    end
+    //else if (init_read_owner==0) begin
+    //        update_cycle <=0;
+    //end
 
 end
 reg hold_cache;
@@ -421,13 +420,16 @@ always @(posedge clock) begin    //update l1 feeder cache
 end
 
 assign o_initreadtxn = (init_fetch_cache || init_fetch_fcache)?1:0;
-wire restart_axi_cache;
-assign restart_axi_cache = (i_read_TxnDone && (update_cycle < CACHE_MULTIPLIER-1)&& (only_1read==0) )?1:0;
-wire restart_axi_fcache;
-assign restart_axi_fcache = (i_read_TxnDone && (update_cycle < CACHE_MULTIPLIER-1)&& (only_1read==0) )?1:0;
+//wire restart_axi_cache;
+//assign restart_axi_cache = (i_read_TxnDone && (update_cycle+1 <= CACHE_MULTIPLIER-1) )?1:0;
+//wire restart_axi_fcache;
+//assign restart_axi_fcache = (i_read_TxnDone && (update_cycle <= CACHE_MULTIPLIER-1)&& (only_1read==0) )?1:0;
 
-
+reg restart_axi_cache;
+reg restart_axi_fcache;
 always @(posedge clock) begin    //axi addr and owner block
+    restart_axi_cache <= (i_read_TxnDone && (update_cycle < CACHE_MULTIPLIER-1) && (only_1read==0) )?1:0;
+    restart_axi_fcache <= (i_read_TxnDone && (update_cycle < CACHE_FEEDER_MULTIPLIER-1) && (only_1read==0) )?1:0;
     if (i_read_TxnDone && init_read_owner>0 && only_1read==0) begin
         init_read_owner<=0;
     end
@@ -437,6 +439,7 @@ always @(posedge clock) begin    //axi addr and owner block
     end
     else if (state==1) begin
         if (state1_start == 0) begin
+            point_pointer_base <= point_pointer;
             o_readAdress <= ((point_pointer)) +DDR_BASE_ADDRESS;
             init_read_owner <=1;
             init_fetch_cache <=1;
@@ -493,7 +496,7 @@ integer i;
 always @(posedge clock) begin    //State 2 block (update cluster cache)
     if (state == 2) begin
 
-        if (points_to_update >=AXI_MODULE_OUTPUTS*CACHE_MULTIPLIER-1) begin
+        if (points_to_update+CORE_NUMBER >=AXI_MODULE_OUTPUTS*CACHE_MULTIPLIER-1) begin
             l1_cache_window_index <=0;
         end
         else begin
@@ -505,7 +508,7 @@ always @(posedge clock) begin    //State 2 block (update cluster cache)
                 cache_z = l1_cache_z[points_to_update];
                 cache_i = l1_cache_i[points_to_update];
             end
-            else begin
+            else if(i+points_to_update<AXI_MODULE_OUTPUTS*CACHE_MULTIPLIER)begin
                 cache_x = cache_x + (l1_cache_x[i+points_to_update]<<(i*N));
                 cache_y = cache_y + (l1_cache_y[i+points_to_update]<<(i*N));
                 cache_z = cache_z + (l1_cache_z[i+points_to_update]<<(i*N));
@@ -525,7 +528,7 @@ end
 
 
 wire state3_finish;
-assign state3_finish = (i_read_TxnDone && (update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1) && only_1read==0 )?1:0;
+assign state3_finish = (i_read_TxnDone && (update_cycle+1 > CACHE_FEEDER_MULTIPLIER-1) && only_1read==0 )?1:0;
 always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
     if ((state == 3) || (((parallel_fetch_feeder_cache == 1)&&(state==5)))&&l1_feeder_cache_window_index==0) begin
         if (state3_start==0 && (init_read_owner ==0))begin   //gives the first start
@@ -534,20 +537,20 @@ always @(posedge clock) begin  //state 3 block (Fetch feeder l1 cache)
         end
         else if (state3_finish) begin  //module finish, cleaning
             state3_start <=0;
-            if (feeder_pos + AXI_MODULE_OUTPUTS> i_pointcloud_size ) begin
+            if (feeder_pos + AXI_MODULE_OUTPUTS>= i_pointcloud_size-CORE_NUMBER ) begin
                 feeder_pos<=0;
             end
             else begin
-                feeder_pos <= feeder_pos + (update_cycle+1)*AXI_MODULE_OUTPUTS;  //Update feeder_pos
+                feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;  //Update feeder_pos
             end
         end
     end
     else if (init_read_owner == 2 && i_read_TxnDone && only_1read==0) begin
-        if (feeder_pos + AXI_MODULE_OUTPUTS> i_pointcloud_size ) begin
+        if (feeder_pos + AXI_MODULE_OUTPUTS>= i_pointcloud_size-CORE_NUMBER ) begin
                 feeder_pos<=0;
             end
             else begin
-                feeder_pos <= feeder_pos + (update_cycle)*AXI_MODULE_OUTPUTS;  //Update feeder_pos
+                feeder_pos <= feeder_pos + AXI_MODULE_OUTPUTS;  //Update feeder_pos
             end
     end
     else if(state ==0) begin
@@ -599,7 +602,7 @@ end
 
 
 
-
+reg delay_update_cache;
 always @(posedge clock) begin //state 5 block (Signal handling)   //mark for debug
     if (rst == 1) begin
         if (state==5) begin
@@ -613,19 +616,25 @@ always @(posedge clock) begin //state 5 block (Signal handling)   //mark for deb
             else if (start_state5 == 0) begin
                 parallel_fetch_feeder_cache <= 1;
                 if ((l1_feeder_cache_window_index) <(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER)) begin
-                        parallel_update_feeder_cache <=1;
+                        //parallel_update_feeder_cache <=1;
+                        delay_update_cache <=1;
                 end
                 else begin
                         parallel_update_feeder_cache <=0;
                 end
                 start_state5 <=1;
             end
+            else if(delay_update_cache) begin
+                delay_update_cache <=0;
+                parallel_update_feeder_cache <=1;
+            end
             else if ((l1_feeder_cache_window_index+DISTANCE_MODULES) >=(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER)) begin
                 parallel_update_feeder_cache <= 0;
                 parallel_fetch_feeder_cache <= 1;
             end
-            else if (i_read_TxnDone && (update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1)&&init_read_owner==2) begin
-                parallel_update_feeder_cache <=1;
+            else if (i_read_TxnDone && (update_cycle+1 > CACHE_FEEDER_MULTIPLIER-1) &&init_read_owner==2) begin
+                //parallel_update_feeder_cache <=1;
+                delay_update_cache <=1;
                 parallel_fetch_feeder_cache <= 1;
             end
             else if (Controller_done) begin
@@ -644,6 +653,7 @@ always @(posedge clock) begin //state 5 block (Signal handling)   //mark for deb
         parallel_fetch_feeder_cache <=0;
         parallel_update_feeder_cache <=0;
         start_state5 <=0;
+        delay_update_cache <=0;
     end
 end
 
@@ -714,13 +724,13 @@ always @(posedge clock) begin
               end
           end 
           1:begin //Fetch l1 cache
-              if (i_read_TxnDone && (update_cycle+1 >= CACHE_MULTIPLIER-1) &&(state1_start==1)&& only_1read == 0) begin   //Se recebeu uma trançasao, e nao precisa de fazer mais nenhuma transaçao
+              if (i_read_TxnDone && (update_cycle+1 > CACHE_MULTIPLIER-1) &&(state1_start==1)&& only_1read == 0) begin   //Se recebeu uma trançasao, e nao precisa de fazer mais nenhuma transaçao
                   next_state<=2;
                   state<=7;
               end
           end
           2:begin // update cluster cache
-                if((points_to_update) >=(AXI_MODULE_OUTPUTS*CACHE_MULTIPLIER-1))
+                if((points_to_update+CORE_NUMBER) >=(AXI_MODULE_OUTPUTS*CACHE_MULTIPLIER-1))
                 begin
                    state <=1;
                 end
@@ -771,12 +781,12 @@ always @(posedge clock) begin
                   end
               end
               else if (stored_update_cache) begin
-                  if (i_read_TxnDone && (update_cycle+1 >= CACHE_FEEDER_MULTIPLIER-1)) begin
+                  if (i_read_TxnDone && (update_cycle+1 > CACHE_FEEDER_MULTIPLIER-1)) begin
                       state <=2;
                       stored_update_cache <=0;
                   end
               end
-              else if (parallel_update_feeder_cache && ((l1_feeder_cache_window_index+DISTANCE_MODULES) <(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER))) begin
+              else if ((parallel_update_feeder_cache||delay_update_cache) && ((l1_feeder_cache_window_index+DISTANCE_MODULES) <(AXI_MODULE_OUTPUTS*CACHE_FEEDER_MULTIPLIER))) begin
                   pause <=0;
               end
               else begin

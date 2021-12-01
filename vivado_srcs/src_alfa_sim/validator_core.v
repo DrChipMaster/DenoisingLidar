@@ -37,6 +37,7 @@ module validator_core #(parameter N = 16,
                        (
                         input i_clock,
                         input i_reset,
+                        input wire [N-1:0] point_pos,
                         input wire [N-1:0] i_point_x,
                         input wire [N-1:0] i_point_y,
                         input wire [N-1:0] i_point_z,
@@ -66,7 +67,7 @@ module validator_core #(parameter N = 16,
             o_inlier  <= 0;
             o_outlier <= 0;
         end
-        else if(pause==0)
+        else if(pause==0&& o_inlier ==0 && o_outlier==0)
         begin
             cycles = cycles +DISTANCE_MODULES;
             if((filter_selector >=1) && (i_point_i > INTENSITY_TRESHOLD)) begin                      //0->DROR 1->LIOR 2->DLIOR
@@ -109,7 +110,7 @@ module validator_core #(parameter N = 16,
         begin
             for (j = 0; j<DISTANCE_MODULES;j = j+1)  //compare all the results from the distance modules
             begin
-                if (distances[j]<=search_radius)
+                if (distances[j]<=search_radius && pause==0)
                     neighbor_counter = neighbor_counter+1;
             end
         end           

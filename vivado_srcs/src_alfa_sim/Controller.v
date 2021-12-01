@@ -50,7 +50,7 @@ module Controller #(parameter N = 16,
     reg [N-1:0] point_z [CORE_NUMBER-1:0];
     reg [N-1:0] point_i [CORE_NUMBER-1:0];
 
-    reg [N-1:0] fifo_buffer[CORE_NUMBER-1:0];
+    reg [N-1:0] fifo_buffer[CORE_NUMBER*3-1:0];
     reg [N-1:0] point_pos_buffer [CORE_NUMBER-1:0];
     
     reg [N-1:0]fifo_write_size;
@@ -68,7 +68,7 @@ module Controller #(parameter N = 16,
     
     reg [N-1:0] output_to_fifo ;
     
-
+    reg[N*2-1:0] internal_point_pos;
     
     reg[N-1:0]  finish_counter;
     
@@ -80,6 +80,11 @@ module Controller #(parameter N = 16,
     integer i,k;
     reg [N-1:0] noise_points;
 reg starting;
+reg[N-1:0] fifo_size;
+
+
+
+
     always @(posedge clock)
     begin
         if (reset == 1)
@@ -89,7 +94,8 @@ reg starting;
             output_to_fifo     <= 0;
             write_fifo         <= 0;
             fifo_write_size    <= 0;
-            fifo_reset <=0;
+            fifo_size          <=0;
+            fifo_reset <=1;
             blocked <=0;
             noise_points <=0;
             for (i = 0;i<CORE_NUMBER;i = i+1)   // Give points to all cores
@@ -99,29 +105,31 @@ reg starting;
                 point_y[i]    <=0; //cache_y[(i+1)*N-1 -:N];
                 point_z[i]    <=0; //cache_z[(i+1)*N-1 -:N];
                 point_i[i]    <=0; //cache_i[(i+1)*N-1 -:N];
-                point_pos_buffer[i] =i+1;
+                point_pos_buffer[i] =i;
 
             end
             update_cache <=1;
-            for (i = 0;i<CORE_NUMBER;i = i+1)
+            for (i = 0;i<CORE_NUMBER*3;i = i+1)
             begin
                 fifo_buffer[i] <= 0;     // Clear the fifo buffer
             end
-            point_pos <= 0;
+            internal_point_pos <= 0;
             starting <=1;
             //point_pos_buffer[0] = i;
         end
         else if (done == 0  )  // Prevent controller from overdoing point validation 
         begin
-
+           fifo_reset <=0;
            pre_update_cache = 0;
            if(pause==0 && blocked ==0)
            begin
            if (starting) begin
-                //point_pos <= CORE_NUMBER-1;
+//                //point_pos <= CORE_NUMBER-1;
                 starting<=0;
             end
+            write_fifo <=0;
             finish_counter     = 0;
+            fifo_write_size = fifo_size;
             for (i = 0;i<CORE_NUMBER;i = i+1)    // Analize every core output
             begin
                 if (((inlier[i] == 1 || outlier[i] == 1) &&  reset_core[i] == 0)|| starting==1)   // core finished and needs new point
@@ -129,11 +137,11 @@ reg starting;
                     
                     if (outlier[i] == 1)   // if the point is an outlier save it in the fif o buffer and update the fif o buffer size
                     begin
-                        fifo_buffer[fifo_write_size] = point_pos_buffer[i];
+                        fifo_buffer[fifo_write_size] <= point_pos_buffer[i];
                         fifo_write_size              = fifo_write_size +1;
                     end
-                    point_pos           = point_pos + 1;   //update core base point and saves the pointer
-                    point_pos_buffer[i] = point_pos  ;
+                    point_pos_buffer[i]          <= internal_point_pos  ;
+                    internal_point_pos           = internal_point_pos + 1;   //update core base point and saves the pointer                    
                     point_x[i] <= cache_x[(finish_counter+1)*N-1 -:N];
                     point_y[i] <= cache_y[(finish_counter+1)*N-1 -:N];
                     point_z[i] <= cache_z[(finish_counter+1)*N-1 -:N];
@@ -148,29 +156,30 @@ reg starting;
                         if (reset_core[i] == 1)  
                             reset_core[i] <= 0;
                     end
+            fifo_size <= fifo_write_size;
             end
             blocked <= pre_update_cache;
             end
             else begin
                 blocked <=0;
+                if (fifo_size >= 1 )   // fifo_buffer has enough points to store
+                    begin
+                        write_fifo <= 1;
+                        noise_points <= noise_points+1;
+                        output_to_fifo <= fifo_buffer[fifo_size-1];
+                        fifo_size <= fifo_size-1; // update fifo buffer lenght
+                    end
+                    else begin
+                        write_fifo <= 0;  //disable fifo write
+                        if (internal_point_pos>=point_cloud_size-CORE_NUMBER)  // check if point cloud validation was finished
+                        begin
+                            write_fifo <= 0; 
+                            done       <= 1;  // flag that controller has finished
+                        end
+                    end 
             end
             update_cache <= pre_update_cache;
-                
-            if (fifo_write_size >= 1 )   // fifo_buffer has enough points to store
-            begin
-                write_fifo <= 1;
-                noise_points <= noise_points+1;
-                output_to_fifo <= fifo_buffer[fifo_write_size-1];
-                fifo_write_size = fifo_write_size-1; // update fifo buffer lenght
-            end
-            else write_fifo <= 0;  //disable fifo write
-            
-            if (point_pos>=point_cloud_size)  // check if point cloud validation was finished
-            begin
-                write_fifo <= 0; 
-                done       <= 1;  // flag that controller has finished
-            end
-                
+               
             end
 //            if(cache_updated ==1)
 //                update_cache=0;
@@ -178,6 +187,13 @@ reg starting;
         end
 
 
+always @(posedge clock)
+begin
+if(reset)
+    point_pos <=0;
+else
+    point_pos<= internal_point_pos;
+end
 
             
             
@@ -224,6 +240,7 @@ reg starting;
                 #(.N(N),.DISTANCE_MODULES(DISTANCE_MODULES)) core(
                 .i_clock(clock),
                 .i_reset(reset_core[j]),
+                .point_pos(point_pos_buffer[j]),
                 .i_point_x(point_x[j]),
                 .i_point_y(point_y[j]),
                 .i_point_z(point_z[j]),

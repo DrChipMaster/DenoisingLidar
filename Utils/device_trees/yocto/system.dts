@@ -1769,21 +1769,18 @@
     #size-cells = <1>;
     ranges;
     ddr_memp0: amp_memp@0f000000 {
-     reg = <0x0f000000 0x010000>;
-    };
-    ddr_appcpu1: amp_appcpu1@0f010000 {
-     reg = <0x0f010000 0x050000>;
-    };    
+     reg = <0x0f000000 0x060000>;
+    };   
   };
  
   memp0: ae_memp@0f000000 {
     compatible = "ae,ddr_memp_1.0.a";
-    reg = <0x0f000000 0x010000>;   
+    reg = <0x0f000000 0x060000>;   
     memory-region = <&ddr_memp0>; 
     rd_irq= <2>;
     wr_irq= <1>;
     mem_addr=<0x0F000000>;
-    mem_size=<0x010000>;
+    mem_size=<0x060000>;
   };
 
 };
