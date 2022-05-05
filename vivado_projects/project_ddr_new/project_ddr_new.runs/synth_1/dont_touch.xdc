@@ -21,14 +21,14 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_ps
 # IP: bd/design_1/ip/design_1_rst_ps8_0_100M_0_1/design_1_rst_ps8_0_100M_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_rst_ps8_0_100M_0 || ORIG_REF_NAME==design_1_rst_ps8_0_100M_0} -quiet] -quiet
 
-# IP: bd/design_1/ip/design_1_AXI_lite_Slave_0_0_1/design_1_AXI_lite_Slave_0_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_AXI_lite_Slave_0_0 || ORIG_REF_NAME==design_1_AXI_lite_Slave_0_0} -quiet] -quiet
-
 # IP: bd/design_1/ip/design_1_axi_interconnect_0_0_1/design_1_axi_interconnect_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_axi_interconnect_0_0 || ORIG_REF_NAME==design_1_axi_interconnect_0_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_MI_memoryInterface_A_0_0_1/design_1_MI_memoryInterface_A_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_MI_memoryInterface_A_0_0 || ORIG_REF_NAME==design_1_MI_memoryInterface_A_0_0} -quiet] -quiet
+
+# IP: bd/design_1/ip/design_1_AXI_lite_Slave_0_0_1/design_1_AXI_lite_Slave_0_0.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_AXI_lite_Slave_0_0 || ORIG_REF_NAME==design_1_AXI_lite_Slave_0_0} -quiet] -quiet
 
 # IP: bd/design_1/ip/design_1_ddr_interface_0_0_1/design_1_ddr_interface_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_ddr_interface_0_0 || ORIG_REF_NAME==design_1_ddr_interface_0_0} -quiet] -quiet

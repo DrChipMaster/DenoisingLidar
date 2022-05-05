@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2021.1.1 (lin64) Build 3286242 Wed Jul 28 13:09:46 MDT 2021
-| Date             : Wed Nov  3 16:55:43 2021
+| Date             : Tue Dec  7 14:32:12 2021
 | Host             : andre running 64-bit Ubuntu 20.04.3 LTS
 | Command          : report_power -file design_1_wrapper_power_routed.rpt -pb design_1_wrapper_power_summary_routed.pb -rpx design_1_wrapper_power_routed.rpx
 | Design           : design_1_wrapper
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 3.495        |
+| Total On-Chip Power (W)  | 3.710        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 2.803        |
-| Device Static (W)        | 0.692        |
+| Dynamic (W)              | 3.016        |
+| Device Static (W)        | 0.694        |
 | Effective TJA (C/W)      | 1.0          |
-| Max Ambient (C)          | 96.6         |
-| Junction Temperature (C) | 28.4         |
+| Max Ambient (C)          | 96.4         |
+| Junction Temperature (C) | 28.6         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,24 +52,24 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.028 |        3 |       --- |             --- |
-| CLB Logic                |     0.047 |    26182 |       --- |             --- |
-|   LUT as Logic           |     0.042 |    10707 |    230400 |            4.65 |
-|   CARRY8                 |     0.003 |      442 |     28800 |            1.53 |
-|   Register               |     0.002 |    10750 |    460800 |            2.33 |
+| Clocks                   |     0.047 |        3 |       --- |             --- |
+| CLB Logic                |     0.144 |    55526 |       --- |             --- |
+|   LUT as Logic           |     0.128 |    29905 |    230400 |           12.98 |
+|   CARRY8                 |     0.013 |     2156 |     28800 |            7.49 |
+|   Register               |     0.002 |    14606 |    460800 |            3.17 |
 |   LUT as Distributed RAM |    <0.001 |      200 |    101760 |            0.20 |
 |   LUT as Shift Register  |    <0.001 |       91 |    101760 |            0.09 |
-|   BUFG                   |    <0.001 |        5 |        64 |            7.81 |
-|   Others                 |     0.000 |      328 |       --- |             --- |
-|   F7/F8 Muxes            |     0.000 |     1582 |    230400 |            0.69 |
-| Signals                  |     0.061 |    20773 |       --- |             --- |
+|   BUFG                   |    <0.001 |        7 |        64 |           10.94 |
+|   Others                 |     0.000 |      460 |       --- |             --- |
+|   F7/F8 Muxes            |     0.000 |     1728 |    230400 |            0.75 |
+| Signals                  |     0.141 |    47511 |       --- |             --- |
 | Block RAM                |     0.010 |       12 |       312 |            3.85 |
-| DSPs                     |     0.015 |       20 |      1728 |            1.16 |
+| DSPs                     |     0.033 |       80 |      1728 |            4.63 |
 | PS8                      |     2.641 |        1 |       --- |             --- |
-| Static Power             |     0.692 |          |           |                 |
+| Static Power             |     0.694 |          |           |                 |
 |   PS Static              |     0.099 |          |           |                 |
-|   PL Static              |     0.594 |          |           |                 |
-| Total                    |     3.495 |          |           |                 |
+|   PL Static              |     0.595 |          |           |                 |
+| Total                    |     3.710 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -79,7 +79,7 @@ Table of Contents
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source          | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint          |       0.850 |     0.341 |       0.189 |      0.152 |       NA    | Unspecified | NA         |
+| Vccint          |       0.850 |     0.594 |       0.440 |      0.153 |       NA    | Unspecified | NA         |
 | Vccint_io       |       0.850 |     0.071 |       0.000 |      0.071 |       NA    | Unspecified | NA         |
 | Vccbram         |       0.850 |     0.003 |       0.001 |      0.002 |       NA    | Unspecified | NA         |
 | Vccaux          |       1.800 |     0.147 |       0.000 |      0.147 |       NA    | Unspecified | NA         |
@@ -167,20 +167,20 @@ Table of Contents
 +----------------------------+-----------+
 | Name                       | Power (W) |
 +----------------------------+-----------+
-| design_1_wrapper           |     2.803 |
-|   design_1_i               |     2.803 |
-|     MI_memoryInterface_A_0 |     0.006 |
-|       inst                 |     0.006 |
-|     axi_interconnect_0     |     0.013 |
-|       s00_couplers         |     0.013 |
-|     ddr_interface_0        |     0.122 |
-|       inst                 |     0.122 |
-|     ps8_0_axi_periph       |     0.015 |
-|       s00_couplers         |     0.006 |
+| design_1_wrapper           |     3.016 |
+|   design_1_i               |     3.016 |
+|     MI_memoryInterface_A_0 |     0.007 |
+|       inst                 |     0.007 |
+|     axi_interconnect_0     |     0.014 |
+|       s00_couplers         |     0.014 |
+|     ddr_interface_0        |     0.336 |
+|       inst                 |     0.336 |
+|     ps8_0_axi_periph       |     0.016 |
+|       s00_couplers         |     0.007 |
 |       s01_couplers         |     0.007 |
-|       xbar                 |     0.001 |
-|     zynq_ultra_ps_e_0      |     2.646 |
-|       inst                 |     2.646 |
+|       xbar                 |     0.002 |
+|     zynq_ultra_ps_e_0      |     2.643 |
+|       inst                 |     2.643 |
 +----------------------------+-----------+
 
 

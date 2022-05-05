@@ -1,7 +1,7 @@
 // Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2021.1.1 (lin64) Build 3286242 Wed Jul 28 13:09:46 MDT 2021
-// Date        : Fri Oct 29 16:40:11 2021
+// Date        : Fri Nov  5 15:33:22 2021
 // Host        : andre running 64-bit Ubuntu 20.04.3 LTS
 // Command     : write_verilog -force -mode synth_stub -rename_top design_1_auto_ds_1 -prefix
 //               design_1_auto_ds_1_ design_1_auto_ds_1_stub.v
